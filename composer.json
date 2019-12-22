@@ -1,0 +1,39 @@
+{
+  "name": "ashallendesign/short-url",
+  "description": "A Laravel package for creating shortened URLs for your web apps.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ash Allen",
+      "email": "mail@ashallendesign.co.uk"
+    }
+  ],
+  "keywords": [
+    "ashallendesign",
+    "short-urls",
+    "url-shortener",
+    "laravel",
+    "laravel-package"
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.0",
+    "orchestra/testbench": "^4.0",
+    "phpunit/phpunit": "^8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "AshAllenDesign\\ShortUrl\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "AshAllenDesign\\ShortUrl\\Providers\\ShortUrlProvider"
+      ]
+    }
+  }
+}
