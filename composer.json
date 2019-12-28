@@ -2,6 +2,7 @@
   "name": "ashallendesign/short-url",
   "description": "A Laravel package for creating shortened URLs for your web apps.",
   "type": "library",
+  "homepage": "https://github.com/ash-jc-allen/short-url",
   "license": "MIT",
   "authors": [
     {
@@ -17,7 +18,10 @@
     "laravel-package"
   ],
   "require": {
-    "php": "^7.1"
+    "php": "^7.2",
+    "nesbot/carbon": "~2.0",
+    "illuminate/container": "^5.8|^6.0",
+    "illuminate/database": "^5.8|^6.0"
   },
   "require-dev": {
     "mockery/mockery": "^1.0",
@@ -26,13 +30,13 @@
   },
   "autoload": {
     "psr-4": {
-      "AshAllenDesign\\ShortUrl\\": "src/"
+      "AshAllenDesign\\ShortURL\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "AshAllenDesign\\ShortUrl\\Providers\\ShortUrlProvider"
+        "AshAllenDesign\\ShortURL\\Providers\\ShortURLProvider"
       ]
     }
   }
