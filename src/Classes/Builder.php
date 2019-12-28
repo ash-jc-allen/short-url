@@ -33,6 +33,11 @@ class Builder
      */
     private $secure = true;
 
+    public function __construct()
+    {
+        $this->validateURLLengthParameter();
+    }
+
     /**
      * Set the destination URL that the shortened URL
      * will redirect to.
@@ -89,9 +94,6 @@ class Builder
      */
     public function make(): string
     {
-
-        // TODO ADD A SHORT URL TO THE DATABASE.
-        // TODO BUILD THE SHORT URL AND RETURN IT.
         if (!$this->destinationUrl) {
             throw new ShortUrlException('No destination URL has been set.');
         }
@@ -102,17 +104,20 @@ class Builder
 
         $storedUrl = $this->insertShortURLIntoDatabase();
 
-        // TODO CHECK THAT A URL DOES NOT ALREADY EXIST.
-        // TODO GIVE THE OPTION IN THE CONFIG TO SET THE DEFAULT CHARACTER LENGTH. DEFAULT TO 5.
-
         return $storedUrl->short_url;
     }
 
-    private function insertShortURLIntoDatabase(): ShortURL
+    /**
+     * Store the short URL in the database. Start by
+     * trying to find a unique key that isn't
+     * already in use in the database by
+     * another short URL.
+     *
+     * @return ShortURL
+     */
+    protected function insertShortURLIntoDatabase(): ShortURL
     {
         do {
-            // TODO EXTRACT THE ROUTE IN TO THE CONFIG SO THAT THE USER CAN DECIDE WHAT THEY WANT.
-            // TODO MAKE SURE THAT THE URL_LENGTH IS AN INTEGER. TRY AND JUST CAST IT.
             $shortUrl = config('app.url').'/short/'.Str::random(config('short-url.url_length'));
         } while (ShortURL::where('short_url', $shortUrl)->exists());
 
@@ -121,5 +126,24 @@ class Builder
             'short_url'       => $shortUrl,
             'single_use'      => $this->singleUse,
         ]);
+    }
+
+    /**
+     * Validate that the URL Length parameter specified
+     * in the config is an integer that is above 0.
+     *
+     * @throws ShortUrlException
+     */
+    protected function validateURLLengthParameter(): void
+    {
+        $urlLength = config('short-url.url_length');
+
+        if (!is_int($urlLength)) {
+            throw new ShortUrlException('The config URL length is not a valid integer.');
+        }
+
+        if ($urlLength <= 0) {
+            throw new ShortUrlException('The config URL length must be above 0.');
+        }
     }
 }
