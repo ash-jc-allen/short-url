@@ -33,6 +33,14 @@ class Builder
      */
     private $secure = true;
 
+    /**
+     * Builder constructor.
+     *
+     * When constructing this class, ensure that the
+     * config variables are validated.
+     *
+     * @throws ShortUrlException
+     */
     public function __construct()
     {
         $this->validateURLLengthParameter();
