@@ -12,7 +12,7 @@ return [
     |      - Using a length of 5 would result in yourdomain.com/XXXXX
     |
     */
-    'length'   => 5,
+    'url_length'   => 5,
 
     /*
     |--------------------------------------------------------------------------

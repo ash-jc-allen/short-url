@@ -4,6 +4,7 @@ namespace AshAllenDesign\ShortURL\Classes;
 
 use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
+use Illuminate\Support\Str;
 
 class Builder
 {
@@ -37,7 +38,7 @@ class Builder
      * will redirect to.
      *
      * @param string $url
-     * @return \AshAllenDesign\ShortURL\Classes\Builder
+     * @return Builder
      */
     public function destinationUrl(string $url): self
     {
@@ -54,7 +55,7 @@ class Builder
      * more than once.
      *
      * @param bool $isSingleUse
-     * @return \AshAllenDesign\ShortURL\Classes\Builder
+     * @return Builder
      */
     public function singleUse(bool $isSingleUse = true): self
     {
@@ -68,7 +69,7 @@ class Builder
      * URL should be forced to use HTTPS.
      *
      * @param bool $isSecure
-     * @return \AshAllenDesign\ShortURL\Classes\Builder
+     * @return Builder
      */
     public function secure(bool $isSecure = true): self
     {
@@ -81,10 +82,11 @@ class Builder
      * Attempt to build a shortened URL and return it.
      *
      * @return string
-     * @throws \AshAllenDesign\ShortURL\Exceptions\ShortUrlException
+     * @throws ShortUrlException
      */
     public function make(): string
     {
+
         // TODO ADD A SHORT URL TO THE DATABASE.
         // TODO BUILD THE SHORT URL AND RETURN IT.
         if (! $this->destinationUrl) {
@@ -108,8 +110,8 @@ class Builder
         do {
             // TODO EXTRACT THE ROUTE IN TO THE CONFIG SO THAT THE USER CAN DECIDE WHAT THEY WANT.
             // TODO MAKE SURE THAT THE URL_LENGTH IS AN INTEGER. TRY AND JUST CAST IT.
-            $shortUrl = config('app.url').'/s/'.str_random('short-url.url_length');
-        } while (ShortUrl::where('short_url', $shortUrl));
+            $shortUrl = config('app.url').'/short/'.Str::random(config('short-url.url_length'));
+        } while (ShortURL::where('short_url', $shortUrl)->exists());
 
         return ShortURL::create([
             'destination_url' => $this->destinationUrl,
