@@ -37,12 +37,15 @@ class Builder
      * Set the destination URL that the shortened URL
      * will redirect to.
      *
-     * @param string $url
+     * @param  string  $url
      * @return Builder
+     * @throws ShortUrlException
      */
     public function destinationUrl(string $url): self
     {
-        // TODO VALIDATE THAT THE URL BEGINS WITH HTTPS OR HTTP!
+        if (!Str::startsWith($url, ['http://', 'https://'])) {
+            throw new ShortUrlException('The destination URL must begin with http:// or https://');
+        }
 
         $routeName = null;
         $this->destinationUrl = $url;
@@ -54,7 +57,7 @@ class Builder
      * Set whether if the shortened URL can be accessed
      * more than once.
      *
-     * @param bool $isSingleUse
+     * @param  bool  $isSingleUse
      * @return Builder
      */
     public function singleUse(bool $isSingleUse = true): self
@@ -68,7 +71,7 @@ class Builder
      * Set whether if the destination URL and shortened
      * URL should be forced to use HTTPS.
      *
-     * @param bool $isSecure
+     * @param  bool  $isSecure
      * @return Builder
      */
     public function secure(bool $isSecure = true): self
@@ -89,7 +92,7 @@ class Builder
 
         // TODO ADD A SHORT URL TO THE DATABASE.
         // TODO BUILD THE SHORT URL AND RETURN IT.
-        if (! $this->destinationUrl) {
+        if (!$this->destinationUrl) {
             throw new ShortUrlException('No destination URL has been set.');
         }
 
