@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -12,13 +13,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string destination_url
  * @property string short_url
  * @property boolean single_use
- * @property \Carbon\Carbon created_at
- * @property \Carbon\Carbon updated_at
+ * @property Carbon created_at
+ * @property Carbon updated_at
  *
  * @package AshAllenDesign\ShortURL\Models
  */
 class ShortURL extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'short_urls';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -52,7 +60,7 @@ class ShortURL extends Model
     /**
      * A short URL can be visited many times.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function visits(): HasMany
     {

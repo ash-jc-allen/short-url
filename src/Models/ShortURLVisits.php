@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,9 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string operating_system_version
  * @property string browser
  * @property string browser_version
- * @property \Carbon\Carbon visited_at
- * @property \Carbon\Carbon created_at
- * @property \Carbon\Carbon updated_at
+ * @property Carbon visited_at
+ * @property Carbon created_at
+ * @property Carbon updated_at
  *
  * @package AshAllenDesign\ShortURL\Models
  */
@@ -61,7 +62,7 @@ class ShortURLVisits extends Model
     /**
      * A URL visit belongs to one specific shortened URL.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function shortURL(): BelongsTo
     {
