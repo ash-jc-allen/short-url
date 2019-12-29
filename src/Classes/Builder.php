@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Support\Str;
@@ -47,12 +48,16 @@ class Builder
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @throws ShortUrlException
+     * @param  Validation  $validation
+     * @throws ValidationException
      */
-    public function __construct()
+    public function __construct(Validation $validation = null)
     {
-        // TODO Validate the config variables.
-        $this->validateURLLengthParameter();
+        if (!$validation) {
+            $validation = new Validation();
+        }
+
+        $validation->validateConfig();
     }
 
     /**
@@ -163,24 +168,5 @@ class Builder
             'single_use'      => $this->singleUse,
             'track_visits'    => $this->trackVisits,
         ]);
-    }
-
-    /**
-     * Validate that the URL Length parameter specified
-     * in the config is an integer that is above 0.
-     *
-     * @throws ShortUrlException
-     */
-    protected function validateURLLengthParameter(): void
-    {
-        $urlLength = config('short-url.url_length');
-
-        if (!is_int($urlLength)) {
-            throw new ShortUrlException('The config URL length is not a valid integer.');
-        }
-
-        if ($urlLength <= 0) {
-            throw new ShortUrlException('The config URL length must be above 0.');
-        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Http\Request;
@@ -20,10 +21,21 @@ class Resolver
     /**
      * Resolver constructor.
      *
+     * When constructing this class, ensure that the
+     * config variables are validated.
+     *
      * @param  Agent  $agent
+     * @param  Validation  $validation
+     * @throws ValidationException
      */
-    public function __construct(Agent $agent)
+    public function __construct(Agent $agent, Validation $validation = null)
     {
+        if (!$validation) {
+            $validation = new Validation();
+        }
+
+        $validation->validateConfig();
+
         $this->agent = $agent;
     }
 
