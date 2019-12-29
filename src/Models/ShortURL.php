@@ -7,18 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class ShortURL
+ * Class ShortURL.
  *
  * @property int id
  * @property string destination_url
  * @property string short_url
  * @property string url_key
- * @property boolean single_use
- * @property boolean track_visits
+ * @property bool single_use
+ * @property bool track_visits
  * @property Carbon created_at
  * @property Carbon updated_at
- *
- * @package AshAllenDesign\ShortURL\Models
  */
 class ShortURL extends Model
 {
@@ -39,7 +37,7 @@ class ShortURL extends Model
         'short_url',
         'url_key',
         'single_use',
-        'track_visits'
+        'track_visits',
     ];
 
     /**
@@ -59,7 +57,7 @@ class ShortURL extends Model
      */
     protected $casts = [
         'single_use'   => 'boolean',
-        'track_visits' => 'boolean'
+        'track_visits' => 'boolean',
     ];
 
     /**

@@ -29,7 +29,7 @@ class Validation
     {
         $urlLength = config('short-url.url_length');
 
-        if (!is_int($urlLength)) {
+        if (! is_int($urlLength)) {
             throw new ValidationException('The config URL length is not a valid integer.');
         }
 
@@ -51,12 +51,12 @@ class Validation
     {
         $trackingOptions = config('short-url.tracking');
 
-        if (!is_bool($trackingOptions['default_enabled'])) {
+        if (! is_bool($trackingOptions['default_enabled'])) {
             throw new ValidationException('The default_enabled config variable must be a boolean.');
         }
 
         foreach ($trackingOptions['fields'] as $trackingOption => $value) {
-            if (!is_bool($value)) {
+            if (! is_bool($value)) {
                 throw new ValidationException('The '.$trackingOption.' config variable must be a boolean.');
             }
         }

@@ -33,6 +33,6 @@ return [
             'operating_system_version' => true,
             'browser'                  => true,
             'browser_version'          => true,
-        ]
+        ],
     ],
 ];
