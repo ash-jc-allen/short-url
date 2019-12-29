@@ -2,8 +2,8 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
-use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
+use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Support\Str;
 
@@ -61,7 +61,7 @@ class Builder
      */
     public function __construct(Validation $validation = null)
     {
-        if (!$validation) {
+        if (! $validation) {
             $validation = new Validation();
         }
 
@@ -78,7 +78,7 @@ class Builder
      */
     public function destinationUrl(string $url): self
     {
-        if (!Str::startsWith($url, ['http://', 'https://'])) {
+        if (! Str::startsWith($url, ['http://', 'https://'])) {
             throw new ShortUrlException('The destination URL must begin with http:// or https://');
         }
 
@@ -151,7 +151,7 @@ class Builder
      */
     public function make(): string
     {
-        if (!$this->destinationUrl) {
+        if (! $this->destinationUrl) {
             throw new ShortUrlException('No destination URL has been set.');
         }
 

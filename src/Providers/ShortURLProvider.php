@@ -3,7 +3,6 @@
 namespace AshAllenDesign\ShortURL\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Route;
 
 class ShortURLProvider extends ServiceProvider
 {
@@ -14,7 +13,6 @@ class ShortURLProvider extends ServiceProvider
      */
     public function register(): void
     {
-
     }
 
     /**
