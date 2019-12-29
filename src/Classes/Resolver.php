@@ -5,9 +5,28 @@ namespace AshAllenDesign\ShortURL\Classes;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class Resolver
 {
+    /**
+     * A class that can be used to try and detect the
+     * browser and operating system of the visitor.
+     *
+     * @var Agent
+     */
+    private $agent;
+
+    /**
+     * Resolver constructor.
+     *
+     * @param  Agent  $agent
+     */
+    public function __construct(Agent $agent)
+    {
+        $this->agent = $agent;
+    }
+
     /**
      * @param  Request  $request
      * @param  ShortURL  $shortURL
@@ -22,6 +41,8 @@ class Resolver
     }
 
     /**
+     * Record the visit in the database.
+     *
      * @param  Request  $request
      * @param  ShortURL  $shortURL
      */
@@ -30,11 +51,13 @@ class Resolver
         $visit = new ShortURLVisit();
 
         $visit->short_url_id = $shortURL->id;
+
+        // TODO Make the tracking part an optional parameter.
         $visit->ip_address = $request->ip();
-        $visit->operating_system = 'hello123';
-        $visit->operating_system_version = 'hello123';
-        $visit->browser = 'hello123';
-        $visit->browser_version = 'hello123';
+        $visit->operating_system = $this->agent->platform();
+        $visit->operating_system_version = $this->agent->version($this->agent->platform());
+        $visit->browser = $this->agent->browser();
+        $visit->browser_version = $this->agent->version($this->agent->browser());
         $visit->visited_at = now();
 
         $visit->save();
