@@ -34,6 +34,12 @@
       "AshAllenDesign\\ShortURL\\": "src/"
     }
   },
+
+  "autoload-dev": {
+    "psr-4": {
+      "AshAllenDesign\\ShortURL\\Tests\\": "tests/"
+    }
+  },
   "extra": {
     "laravel": {
       "providers": [
