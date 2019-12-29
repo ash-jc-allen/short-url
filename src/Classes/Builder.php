@@ -126,12 +126,13 @@ class Builder
     protected function insertShortURLIntoDatabase(): ShortURL
     {
         do {
-            $shortUrl = config('app.url').'/short/'.Str::random(config('short-url.url_length'));
-        } while (ShortURL::where('short_url', $shortUrl)->exists());
+            $urlKey = Str::random(config('short-url.url_length'));
+        } while (ShortURL::where('url_key', $urlKey)->exists());
 
         return ShortURL::create([
             'destination_url' => $this->destinationUrl,
-            'short_url'       => $shortUrl,
+            'short_url'       => config('app.url').'/short/'.$urlKey,
+            'url_key'         => $urlKey,
             'single_use'      => $this->singleUse,
         ]);
     }

@@ -16,6 +16,7 @@ class CreateShortUrlVisitsTable extends Migration
         Schema::create('short_url_visits', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('short_url_id');
+            $table->string('ip_address');
             $table->string('operating_system');
             $table->string('operating_system_version');
             $table->string('browser');

@@ -3,6 +3,7 @@
 namespace AshAllenDesign\ShortURL\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Route;
 
 class ShortURLProvider extends ServiceProvider
 {
@@ -27,5 +28,7 @@ class ShortURLProvider extends ServiceProvider
         $this->mergeConfigFrom(dirname(__DIR__, 1).'/Config/short-url.php', 'short-url');
 
         $this->loadMigrationsFrom(__DIR__.'/../Migrations');
+
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
     }
 }

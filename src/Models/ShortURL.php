@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int id
  * @property string destination_url
  * @property string short_url
+ * @property string url_key
  * @property boolean single_use
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -35,6 +36,7 @@ class ShortURL extends Model
     protected $fillable = [
         'destination_url',
         'short_url',
+        'url_key',
         'single_use',
     ];
 
@@ -64,6 +66,6 @@ class ShortURL extends Model
      */
     public function visits(): HasMany
     {
-        return $this->hasMany(ShortURLVisits::class);
+        return $this->hasMany(ShortURLVisit::class, 'short_url_id');
     }
 }

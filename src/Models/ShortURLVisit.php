@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class ShortURLVisits
+ * Class ShortURLVisit
  *
  * @property int id
  * @property int short_url_id
@@ -22,8 +22,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @package AshAllenDesign\ShortURL\Models
  */
-class ShortURLVisits extends Model
+class ShortURLVisit extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'short_url_visits';
+
     /**
      * The attributes that are mass assignable.
      *
