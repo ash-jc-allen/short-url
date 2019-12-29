@@ -43,6 +43,14 @@ class Builder
     private $trackVisits = null;
 
     /**
+     * This can hold a custom URL key that might be
+     * explicitly set for this URL.
+     *
+     * @var string|null
+     */
+    private $urlKey = null;
+
+    /**
      * Builder constructor.
      *
      * When constructing this class, ensure that the
@@ -123,6 +131,19 @@ class Builder
     }
 
     /**
+     * Explicitly set a URL key for this short URL.
+     *
+     * @param  string  $key
+     * @return $this
+     */
+    public function urlKey(string $key): self
+    {
+        $this->urlKey = urlencode($key);
+
+        return $this;
+    }
+
+    /**
      * Attempt to build a shortened URL and return it.
      *
      * @return string
@@ -142,6 +163,8 @@ class Builder
             $this->trackVisits = config('short-url.tracking.default_enabled');
         }
 
+        $this->urlKey ? $this->checkKeyDoesNotExist() : $this->generateRandomURLKey();
+
         $storedUrl = $this->insertShortURLIntoDatabase();
 
         return $storedUrl->short_url;
@@ -157,16 +180,37 @@ class Builder
      */
     protected function insertShortURLIntoDatabase(): ShortURL
     {
-        do {
-            $urlKey = Str::random(config('short-url.url_length'));
-        } while (ShortURL::where('url_key', $urlKey)->exists());
-
         return ShortURL::create([
             'destination_url' => $this->destinationUrl,
-            'short_url'       => config('app.url').'/short/'.$urlKey,
-            'url_key'         => $urlKey,
+            'short_url'       => config('app.url').'/short/'.$this->urlKey,
+            'url_key'         => $this->urlKey,
             'single_use'      => $this->singleUse,
             'track_visits'    => $this->trackVisits,
         ]);
+    }
+
+    /**
+     * Using the URL key length defined in the config,
+     * generate a unique and random key for the URL.
+     */
+    protected function generateRandomURLKey(): void
+    {
+        do {
+            $this->urlKey = Str::random(config('short-url.key_length'));
+        } while (ShortURL::where('url_key', $this->urlKey)->exists());
+    }
+
+    /**
+     * Check whether if a short URL already exists in
+     * the database with this explicitly defined
+     * URL key.
+     *
+     * @throws ShortUrlException
+     */
+    protected function checkKeyDoesNotExist(): void
+    {
+        if (ShortURL::where('url_key', $this->urlKey)->exists()) {
+            throw new ShortUrlException('A short URL with this key already exists.');
+        }
     }
 }
