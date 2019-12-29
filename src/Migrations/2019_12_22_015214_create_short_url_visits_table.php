@@ -16,11 +16,11 @@ class CreateShortUrlVisitsTable extends Migration
         Schema::create('short_url_visits', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('short_url_id');
-            $table->string('ip_address');
-            $table->string('operating_system');
-            $table->string('operating_system_version');
-            $table->string('browser');
-            $table->string('browser_version');
+            $table->string('ip_address')->nullable();
+            $table->string('operating_system')->nullable();
+            $table->string('operating_system_version')->nullable();
+            $table->string('browser')->nullable();
+            $table->string('browser_version')->nullable();
             $table->timestamp('visited_at');
             $table->timestamps();
 

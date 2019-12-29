@@ -37,7 +37,7 @@ class Resolver
             abort(404);
         }
 
-        if($shortURL->track_visits) {
+        if ($shortURL->track_visits) {
             $this->recordVisit($request, $shortURL);
         }
     }
@@ -53,13 +53,11 @@ class Resolver
         $visit = new ShortURLVisit();
 
         $visit->short_url_id = $shortURL->id;
-
-        // TODO CHECK EACH INDIVIDUAL PIECE FOR TRACKING.
-        $visit->ip_address = $request->ip();
-        $visit->operating_system = $this->agent->platform();
-        $visit->operating_system_version = $this->agent->version($this->agent->platform());
-        $visit->browser = $this->agent->browser();
-        $visit->browser_version = $this->agent->version($this->agent->browser());
+        $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
+        $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
+        $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
+        $visit->browser = config('short-url.fields.tracking.browser') ? $this->agent->browser() : null;
+        $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
         $visit->visited_at = now();
 
         $visit->save();

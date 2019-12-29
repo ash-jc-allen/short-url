@@ -25,7 +25,7 @@ return [
     |
     */
     'tracking'   => [
-        'default_enabled' => false,
+        'default_enabled' => true,
 
         'fields' => [
             'ip_address'               => true,
