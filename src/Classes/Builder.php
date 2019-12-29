@@ -34,6 +34,14 @@ class Builder
     private $secure = true;
 
     /**
+     * Whether or not if the short URL should track
+     * statistics about the visitors.
+     *
+     * @var bool|null
+     */
+    private $trackVisits = null;
+
+    /**
      * Builder constructor.
      *
      * When constructing this class, ensure that the
@@ -43,6 +51,7 @@ class Builder
      */
     public function __construct()
     {
+        // TODO Validate the config variables.
         $this->validateURLLengthParameter();
     }
 
@@ -95,6 +104,20 @@ class Builder
     }
 
     /**
+     * Set whether if the short URL should track some
+     * statistics of the visitors.
+     *
+     * @param  bool  $trackUrlVisits
+     * @return $this
+     */
+    public function trackVisits(bool $trackUrlVisits = true): self
+    {
+        $this->trackVisits = $trackUrlVisits;
+
+        return $this;
+    }
+
+    /**
      * Attempt to build a shortened URL and return it.
      *
      * @return string
@@ -108,6 +131,10 @@ class Builder
 
         if ($this->secure) {
             $this->destinationUrl = str_replace('http://', 'https://', $this->destinationUrl);
+        }
+
+        if ($this->trackVisits === null) {
+            $this->trackVisits = config('short-url.tracking.default_enabled');
         }
 
         $storedUrl = $this->insertShortURLIntoDatabase();
@@ -134,6 +161,7 @@ class Builder
             'short_url'       => config('app.url').'/short/'.$urlKey,
             'url_key'         => $urlKey,
             'single_use'      => $this->singleUse,
+            'track_visits'    => $this->trackVisits,
         ]);
     }
 

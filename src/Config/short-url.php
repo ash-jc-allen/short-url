@@ -12,22 +12,27 @@ return [
     |      - Using a length of 5 would result in yourdomain.com/XXXXX
     |
     */
-    'url_length'   => 5,
+    'url_length' => 5,
 
     /*
     |--------------------------------------------------------------------------
     | Tracking
     |--------------------------------------------------------------------------
     |
-    | Define which parameters are recorded if a shortened URL has
-    | tracking enabled.
+    | Define which fields are recorded if a shortened URL has
+    | tracking enabled. Also define whether if tracking
+    | is enabled by default.
     |
     */
-    'tracking' => [
-        'ip_address'               => true,
-        'operating_system'         => true,
-        'operating_system_version' => true,
-        'browser'                  => true,
-        'browser_version'          => true,
+    'tracking'   => [
+        'default_enabled' => false,
+
+        'fields' => [
+            'ip_address'               => true,
+            'operating_system'         => true,
+            'operating_system_version' => true,
+            'browser'                  => true,
+            'browser_version'          => true,
+        ]
     ],
 ];

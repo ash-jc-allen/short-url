@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string short_url
  * @property string url_key
  * @property boolean single_use
+ * @property boolean track_visits
  * @property Carbon created_at
  * @property Carbon updated_at
  *
@@ -38,6 +39,7 @@ class ShortURL extends Model
         'short_url',
         'url_key',
         'single_use',
+        'track_visits'
     ];
 
     /**
@@ -56,7 +58,8 @@ class ShortURL extends Model
      * @var array
      */
     protected $casts = [
-        'single_use' => 'boolean',
+        'single_use'   => 'boolean',
+        'track_visits' => 'boolean'
     ];
 
     /**

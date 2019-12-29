@@ -37,7 +37,9 @@ class Resolver
             abort(404);
         }
 
-        $this->recordVisit($request, $shortURL);
+        if($shortURL->track_visits) {
+            $this->recordVisit($request, $shortURL);
+        }
     }
 
     /**
@@ -52,7 +54,7 @@ class Resolver
 
         $visit->short_url_id = $shortURL->id;
 
-        // TODO Make the tracking part an optional parameter.
+        // TODO CHECK EACH INDIVIDUAL PIECE FOR TRACKING.
         $visit->ip_address = $request->ip();
         $visit->operating_system = $this->agent->platform();
         $visit->operating_system_version = $this->agent->version($this->agent->platform());
