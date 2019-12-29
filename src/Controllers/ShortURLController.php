@@ -22,7 +22,6 @@ class ShortURLController
 
         $resolver->handleVisit(request(), $shortURL);
 
-        // TODO Change this to a 301 redirect.
-        return redirect($shortURL->destination_url);
+        return redirect($shortURL->destination_url, 301);
     }
 }
