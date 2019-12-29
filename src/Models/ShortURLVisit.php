@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class ShortURLVisit.
+ * Class ShortURLVisit
  *
  * @property int id
  * @property int short_url_id
@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon visited_at
  * @property Carbon created_at
  * @property Carbon updated_at
+ *
+ * @package AshAllenDesign\ShortURL\Models
  */
 class ShortURLVisit extends Model
 {

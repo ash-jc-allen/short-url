@@ -3,8 +3,8 @@
 namespace AshAllenDesign\ShortURL\Classes;
 
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
-use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
+use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 
@@ -30,7 +30,7 @@ class Resolver
      */
     public function __construct(Agent $agent, Validation $validation = null)
     {
-        if (! $validation) {
+        if (!$validation) {
             $validation = new Validation();
         }
 
