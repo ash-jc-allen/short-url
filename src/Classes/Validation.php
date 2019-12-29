@@ -27,7 +27,7 @@ class Validation
      */
     protected function validateURLLength(): bool
     {
-        $urlLength = config('short-url.url_length');
+        $urlLength = config('short-url.key_length');
 
         if (!is_int($urlLength)) {
             throw new ValidationException('The config URL length is not a valid integer.');
