@@ -2,12 +2,12 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
-use AshAllenDesign\ShortURL\Exceptions\ValidationException;
-use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
-use AshAllenDesign\ShortURL\Models\ShortURL;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use AshAllenDesign\ShortURL\Classes\Builder;
+use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
+use AshAllenDesign\ShortURL\Exceptions\ValidationException;
+use AshAllenDesign\ShortURL\Models\ShortURL;
+use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 
 class BuilderTest extends TestCase
@@ -99,7 +99,7 @@ class BuilderTest extends TestCase
             'destination_url' => 'https://destination.com/ashallendesign',
             'url_key'         => 'urlkey123',
             'single_use'      => false,
-            'track_visits'    => false
+            'track_visits'    => false,
         ]);
 
         $this->expectException(ShortUrlException::class);
@@ -143,7 +143,7 @@ class BuilderTest extends TestCase
             'url_key'         => 'customKey',
             'destination_url' => 'https://domain.com',
             'track_visits'    => false,
-            'single_use'      => false
+            'single_use'      => false,
         ]);
     }
 }

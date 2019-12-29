@@ -24,7 +24,7 @@ class ShortURLController extends TestCase
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => true,
-            'track_visits'    => true
+            'track_visits'    => true,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');

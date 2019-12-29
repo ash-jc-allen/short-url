@@ -3,8 +3,8 @@
 namespace AshAllenDesign\ShortURL\Tests\Unit;
 
 use AshAllenDesign\ShortURL\Providers\ShortURLProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Illuminate\Foundation\Application;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -32,7 +32,7 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('database.default', 'testdb');
         $app['config']->set('database.connections.testdb', [
             'driver' => 'sqlite',
-            'database' => ':memory:'
+            'database' => ':memory:',
         ]);
     }
 }
