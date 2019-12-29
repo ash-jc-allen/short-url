@@ -15,7 +15,7 @@ class Validation
      */
     public function validateConfig(): bool
     {
-        return $this->validateURLLength() && $this->validateTrackingOptions();
+        return $this->validateKeyLength() && $this->validateTrackingOptions();
     }
 
     /**
@@ -25,7 +25,7 @@ class Validation
      * @return bool
      * @throws ValidationException
      */
-    protected function validateURLLength(): bool
+    protected function validateKeyLength(): bool
     {
         $urlLength = config('short-url.key_length');
 
