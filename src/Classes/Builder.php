@@ -82,7 +82,6 @@ class Builder
             throw new ShortUrlException('The destination URL must begin with http:// or https://');
         }
 
-        $routeName = null;
         $this->destinationUrl = $url;
 
         return $this;
@@ -146,10 +145,10 @@ class Builder
     /**
      * Attempt to build a shortened URL and return it.
      *
-     * @return string
+     * @return ShortURL
      * @throws ShortUrlException
      */
-    public function make(): string
+    public function make(): ShortURL
     {
         if (! $this->destinationUrl) {
             throw new ShortUrlException('No destination URL has been set.');
@@ -165,9 +164,12 @@ class Builder
 
         $this->urlKey ? $this->checkKeyDoesNotExist() : $this->generateRandomURLKey();
 
-        $storedUrl = $this->insertShortURLIntoDatabase();
+        $shortURL = $this->insertShortURLIntoDatabase();
 
-        return $storedUrl->short_url;
+        $this->urlKey = null;
+        $this->trackVisits = null;
+
+        return $shortURL;
     }
 
     /**
