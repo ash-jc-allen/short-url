@@ -2,7 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
-use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
+use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Support\Str;
@@ -74,12 +74,12 @@ class Builder
      *
      * @param  string  $url
      * @return Builder
-     * @throws ShortUrlException
+     * @throws ShortURLException
      */
     public function destinationUrl(string $url): self
     {
         if (!Str::startsWith($url, ['http://', 'https://'])) {
-            throw new ShortUrlException('The destination URL must begin with http:// or https://');
+            throw new ShortURLException('The destination URL must begin with http:// or https://');
         }
 
         $this->destinationUrl = $url;
@@ -146,12 +146,12 @@ class Builder
      * Attempt to build a shortened URL and return it.
      *
      * @return ShortURL
-     * @throws ShortUrlException
+     * @throws ShortURLException
      */
     public function make(): ShortURL
     {
         if (!$this->destinationUrl) {
-            throw new ShortUrlException('No destination URL has been set.');
+            throw new ShortURLException('No destination URL has been set.');
         }
 
         if ($this->secure) {
@@ -207,12 +207,12 @@ class Builder
      * the database with this explicitly defined
      * URL key.
      *
-     * @throws ShortUrlException
+     * @throws ShortURLException
      */
     protected function checkKeyDoesNotExist(): void
     {
         if (ShortURL::where('url_key', $this->urlKey)->exists()) {
-            throw new ShortUrlException('A short URL with this key already exists.');
+            throw new ShortURLException('A short URL with this key already exists.');
         }
     }
 }

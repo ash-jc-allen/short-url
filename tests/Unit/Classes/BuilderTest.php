@@ -3,7 +3,7 @@
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
-use AshAllenDesign\ShortURL\Exceptions\ShortUrlException;
+use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
@@ -28,7 +28,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function exception_is_thrown_if_the_destination_url_does_not_begin_with_http_or_https()
     {
-        $this->expectException(ShortUrlException::class);
+        $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The destination URL must begin with http:// or https://');
 
         $builder = new Builder();
@@ -38,7 +38,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function exception_is_thrown_if_no_destination_url_is_set()
     {
-        $this->expectException(ShortUrlException::class);
+        $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('No destination URL has been set.');
 
         $builder = new Builder();
@@ -102,7 +102,7 @@ class BuilderTest extends TestCase
             'track_visits'      => false,
         ]);
 
-        $this->expectException(ShortUrlException::class);
+        $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('A short URL with this key already exists.');
 
         $builder = new Builder();
