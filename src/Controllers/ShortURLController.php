@@ -11,10 +11,10 @@ class ShortURLController
 {
     /**
      * Redirect the user to the intended destination
-     * URL. If custom routing is enabled but the
-     * visitor has attempted to use the default
-     * route provided by the package, return
-     * HTTP 404 and abort.
+     * URL. If the default route has been disabled
+     * in the config but the controller has been
+     * reached using that route, return HTTP
+     * 404.
      *
      * @param  Request  $request
      * @param  Resolver  $resolver
@@ -24,7 +24,7 @@ class ShortURLController
     public function __invoke(Request $request, Resolver $resolver, string $shortURLKey): RedirectResponse
     {
         if ($request->route()->getName() === 'short-url.invoke'
-            && config('short-url.custom_routing_enabled')) {
+            && config('short-url.disable_default_route')) {
             abort(404);
         }
 

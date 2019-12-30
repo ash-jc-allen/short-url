@@ -34,7 +34,7 @@ class ShortURLController extends TestCase
     /** @test */
     public function request_is_aborted_if_custom_routing_is_enabled_but_the_default_route_has_been_used()
     {
-        Config::set('short-url.custom_routing_enabled', true);
+        Config::set('short-url.disable_default_route', true);
 
         ShortURL::create([
             'destination_url'   => 'https://google.com',
