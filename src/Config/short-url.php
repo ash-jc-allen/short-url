@@ -4,6 +4,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom Routing
+    |--------------------------------------------------------------------------
+    |
+    | If custom routing isn't enabled, the short URLs can be
+    | navigated to with the route: /short/{shortURLKey}.
+    | If custom routing is enabled, this route is
+    | blocked in the controller so that you can
+    | define your own custom route. Read the
+    | docs for more information.
+    |
+    |
+    */
+    'custom_routing_enabled' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | URL Length
     |--------------------------------------------------------------------------
     |
