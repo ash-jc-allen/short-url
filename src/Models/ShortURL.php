@@ -3,6 +3,7 @@
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -68,5 +69,30 @@ class ShortURL extends Model
     public function visits(): HasMany
     {
         return $this->hasMany(ShortURLVisit::class, 'short_url_id');
+    }
+
+    /**
+     * A helper method that can be used for finding
+     * a ShortURL model with the given URL key.
+     *
+     * @param  string  $URLKey
+     * @return ShortURL|null
+     */
+    public static function findByKey(string $URLKey): ?self
+    {
+        return self::where('url_key', $URLKey)->first();
+    }
+
+    /**
+     * A helper method that can be used for finding
+     * all of the ShortURL models with the given
+     * destination URL.
+     *
+     * @param  string  $destinationURL
+     * @return Collection
+     */
+    public static function findByDestinationURL(string $destinationURL): Collection
+    {
+        return self::where('destination_url', $destinationURL)->get();
     }
 }
