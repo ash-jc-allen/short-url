@@ -56,4 +56,16 @@ class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
+
+    /** @test */
+    public function exception_is_thrown_if_the_disable_default_route_option_is_not_a_boolean()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The disable_default_route config variable must be a boolean.');
+
+        Config::set('short-url.disable_default_route', 'INVALID');
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
 }

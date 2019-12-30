@@ -5,6 +5,7 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 
 class ShortURLController extends TestCase
 {
@@ -20,13 +21,29 @@ class ShortURLController extends TestCase
     public function visitor_is_redirected_to_the_destination_url()
     {
         ShortURL::create([
-            'destination_url' => 'https://google.com',
-            'short_url'       => config('app.url').'/short/12345',
-            'url_key'         => '12345',
-            'single_use'      => true,
-            'track_visits'    => true,
+            'destination_url'   => 'https://google.com',
+            'default_short_url' => config('app.url').'/short/12345',
+            'url_key'           => '12345',
+            'single_use'        => true,
+            'track_visits'      => true,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
+    }
+
+    /** @test */
+    public function request_is_aborted_if_custom_routing_is_enabled_but_the_default_route_has_been_used()
+    {
+        Config::set('short-url.disable_default_route', true);
+
+        ShortURL::create([
+            'destination_url'   => 'https://google.com',
+            'default_short_url' => config('app.url').'/short/12345',
+            'url_key'           => '12345',
+            'single_use'        => true,
+            'track_visits'      => true,
+        ]);
+
+        $this->get('/short/12345')->assertNotFound();
     }
 }

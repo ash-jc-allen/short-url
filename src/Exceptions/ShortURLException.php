@@ -10,6 +10,6 @@ use Exception;
  * A generic exception that can be used within the
  * package.
  */
-class ShortUrlException extends Exception
+class ShortURLException extends Exception
 {
 }

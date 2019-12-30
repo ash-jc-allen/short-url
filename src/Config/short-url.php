@@ -4,6 +4,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom Routing
+    |--------------------------------------------------------------------------
+    |
+    | If the default route is disabled, this prevents any visitors
+    | from using the default route that comes with this library.
+    | This allows you to define your own route that points to
+    | the controller at:
+
+    | AshAllenDesign\ShortURL\Controllers\ShortURLController
+    |
+    */
+    'disable_default_route' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | URL Length
     |--------------------------------------------------------------------------
     |
