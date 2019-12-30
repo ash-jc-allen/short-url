@@ -95,11 +95,11 @@ class BuilderTest extends TestCase
     public function exception_is_thrown_if_the_url_key_is_explicitly_set_and_already_exists_in_the_db()
     {
         ShortURL::create([
-            'short_url'       => 'https://short.com/urlkey123',
-            'destination_url' => 'https://destination.com/ashallendesign',
-            'url_key'         => 'urlkey123',
-            'single_use'      => false,
-            'track_visits'    => false,
+            'default_short_url' => 'https://short.com/urlkey123',
+            'destination_url'   => 'https://destination.com/ashallendesign',
+            'url_key'           => 'urlkey123',
+            'single_use'        => false,
+            'track_visits'      => false,
         ]);
 
         $this->expectException(ShortUrlException::class);
@@ -139,11 +139,11 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'short_url'       => config('app.url').'/short/customKey',
-            'url_key'         => 'customKey',
-            'destination_url' => 'https://domain.com',
-            'track_visits'    => false,
-            'single_use'      => false,
+            'default_short_url' => config('app.url').'/short/customKey',
+            'url_key'           => 'customKey',
+            'destination_url'   => 'https://domain.com',
+            'track_visits'      => false,
+            'single_use'        => false,
         ]);
     }
 }

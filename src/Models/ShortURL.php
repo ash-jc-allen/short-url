@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property int id
  * @property string destination_url
- * @property string short_url
+ * @property string default_short_url
  * @property string url_key
  * @property bool single_use
  * @property bool track_visits
@@ -35,7 +35,7 @@ class ShortURL extends Model
      */
     protected $fillable = [
         'destination_url',
-        'short_url',
+        'default_short_url',
         'url_key',
         'single_use',
         'track_visits',

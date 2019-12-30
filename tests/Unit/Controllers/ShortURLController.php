@@ -20,11 +20,11 @@ class ShortURLController extends TestCase
     public function visitor_is_redirected_to_the_destination_url()
     {
         ShortURL::create([
-            'destination_url' => 'https://google.com',
-            'short_url'       => config('app.url').'/short/12345',
-            'url_key'         => '12345',
-            'single_use'      => true,
-            'track_visits'    => true,
+            'destination_url'   => 'https://google.com',
+            'default_short_url' => config('app.url').'/short/12345',
+            'url_key'           => '12345',
+            'single_use'        => true,
+            'track_visits'      => true,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');

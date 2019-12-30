@@ -61,7 +61,7 @@ class Builder
      */
     public function __construct(Validation $validation = null)
     {
-        if (! $validation) {
+        if (!$validation) {
             $validation = new Validation();
         }
 
@@ -78,7 +78,7 @@ class Builder
      */
     public function destinationUrl(string $url): self
     {
-        if (! Str::startsWith($url, ['http://', 'https://'])) {
+        if (!Str::startsWith($url, ['http://', 'https://'])) {
             throw new ShortUrlException('The destination URL must begin with http:// or https://');
         }
 
@@ -150,7 +150,7 @@ class Builder
      */
     public function make(): ShortURL
     {
-        if (! $this->destinationUrl) {
+        if (!$this->destinationUrl) {
             throw new ShortUrlException('No destination URL has been set.');
         }
 
@@ -183,11 +183,11 @@ class Builder
     protected function insertShortURLIntoDatabase(): ShortURL
     {
         return ShortURL::create([
-            'destination_url' => $this->destinationUrl,
-            'short_url'       => config('app.url').'/short/'.$this->urlKey,
-            'url_key'         => $this->urlKey,
-            'single_use'      => $this->singleUse,
-            'track_visits'    => $this->trackVisits,
+            'destination_url'   => $this->destinationUrl,
+            'default_short_url' => config('app.url').'/short/'.$this->urlKey,
+            'url_key'           => $this->urlKey,
+            'single_use'        => $this->singleUse,
+            'track_visits'      => $this->trackVisits,
         ]);
     }
 
