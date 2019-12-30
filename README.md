@@ -129,18 +129,136 @@ To enforce HTTPS, you can use the ``` ->secure() ``` method when building the sh
 
 The example below show how to create a secure shortened URL:
  ```php
- $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
  
- $shortURLObject = $builder->destinationUrl('https://destination.com')->secure()->make();
+$shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->make();
+
+// Desination URL: https://destination.com
  ```
 
 ### Using the Shortened URLs
+#### Default Route and Controller
+By default, the shortened URLs that are created use the package's route and controller. The routes use the following structure:
+``` https://webapp.com/short/{urlKey} ```. This route uses the single-use controller that is found at 
+``` \AshAllenDesign\ShortURL\Controllers\ShortURLController ```.
+
+#### Custom Route
+You may wish to use a different routing structure for your shortened URLs other than the default URLs that are created.
+For example, you might want to use ``` https://webapp.com/s/{urlKey} ``` or ``` https://webapp.com/{urlKey} ```. You can
+customise this to suit the needs of your project.
+
+To use the custom routing all you need to do is add a web route to your project that points to the ShortURLController and
+uses the ``` {shortURLKey} ``` field.
+
+The example below shows how you could add a custom route to your ``` web.php ``` file to use the shortened URLs:
+```php
+Route::get('/custom/{shortURLKey}', '\AshAllenDesign\ShortURL\Controllers\ShortURLController');
+```
+
+Note: If you use your own custom routing, you might want to disable the default route that the app provides. Details are
+provided for this in the [Customisation](#customisation) section below.
+
+### Tracking
+If tracking is enabled for a shortened URL, each time the link is visited, a new ShortURLVisit row in the database will
+be created. By default, the package is set to record the following fields of a visitor:
+
+- IP Address
+- Browser Name
+- Browser Version
+- Operating System Name
+- Operating System Version
+
+Each of these fields can be toggled in the config files so that you only record the fields you need. Details on how to 
+do this are provided for this in the [Customisation](#customisation) section below.
 
 ### Customisation
-#### Customising the Config
-#### Custom Routing
+#### Disabling the Default Route
+If you have added your own custom route to your project, you may want to block the default route that the package provides.
+You can do this by setting the setting the following value in the config:
+
+```
+'disable_default_route' => true,
+```
+If the default route is disabled, any visitors who go to the ```/short/{urlKey}``` route will receive a HTTP 404.
+
+#### Default URL Key Length 
+When building a shortened URL, you have the option to define your own URL key or to randomly generate one. If one is
+randomly generated, the length of it is determined from the config.
+
+For example, to create a shortened URL with a key length of 10 characters, you could set the following in the config:
+
+```
+'key_length' => 10,
+``` 
+
+By default, the shortened URLs that are created have a key length of 5.
+
+#### Tracking Visits
+By default, the package enables tracking of all the available fields on each URL built. However, this can be toggled in
+the config file.
+##### Default Tracking
+To disable tracking by default on all future short URLs that are generated, set the following in the config:
+```
+'tracking'   => [
+        'default_enabled' => true,
+        ...
+]
+```
+Note: Disabling tracking by default won't disable tracking for any shortened URLs that already exist. It will only apply
+to all shortened URLs that are created after the config update.
+
+##### Tracking Fields
+You can toggle the fields that are tracked for each visitor by changing them in the config.
+
+For example, the snippet below shows how we could record all of the fields apart from the IP address of the visitor:
+
+```
+'tracking'   => [
+        ...
+        'fields' => [
+            'ip_address'               => false,
+            'operating_system'         => true,
+            'operating_system_version' => true,
+            'browser'                  => true,
+            'browser_version'          => true,
+        ],
+    ],
+```
+
+Note: Updating the tracked fields will affect all existing and new shortened URLs.
+
+### Helper Methods
+#### Visits
+The ShortURL model includes a relationship (that you can use just like any other Laravel model relation) for getting the
+visits for a shortened URL.
+
+To get the visits using the relationship, use ``` ->visits ``` or ``` ->visits() ```. The example snippet belows shows how:
+
+```php
+$shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::find(1);
+$visits = $shortURL->visits;
+``` 
+#### Find by URL Key
+To find the ShortURL model that corresponds to a given shortened URL key, you can use the ``` ->findByKey() ``` method.
+
+For example, to find the ShortURL model of a shortened URL that has the key ``` abc123 ```, you could use the following:
+```php
+$shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::findByKey('abc123');
+``` 
+
+#### Find by Destination URL
+To the ShortURL models that redirect to a given destination URL, you can use the ``` ->findByDestinationURL() ``` method.
+
+For example, to find all of the ShortURL models of shortened URLs that redirect to ``` https://destination.com ```, you could use
+the following:
+
+```php
+$shortURLs = \AshAllenDesign\ShortURL\Models\ShortURL::findByDestinationURL('https://destination.com');
+```
 
 ## Testing
+
+To run the package's unit tests, run the following command:
 
 ``` bash
 vendor/bin/phpunit
