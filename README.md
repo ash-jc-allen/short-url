@@ -14,7 +14,31 @@
 
 - [Overview](#overview)
 - [Installation](#installation)
+    - [Requirements](#requirements)
+    - [Install the Package](#install-the-package)
+    - [Publish the Config](#publish-the-config)
+    - [Migrate the Database](#migrate-the-database)
 - [Usage](#usage)
+    - [Building Shortened URLs](#building-shortened-urls)
+        - [Quick Start](#quick-start)
+        - [Custom Keys](#custom-keys)
+        - [Tracking Visitors](#tracking-visitors)
+        - [Single Use](#single-use)
+        - [Enforce HTTPS](#enforce-https)
+    - [Using the Shortened URLs](#using-the-shortened-urls)
+        - [Default Route and Controller](#default-route-and-controller)
+        - [Custom Route](#custom-route)
+    - [Tracking](#tracking)
+    - [Customisation](#customisation)
+        - [Disabling the Default Route](#disabling-the-default-route)
+        - [Default URL Key Length](#default-url-key-length)
+        - [Tracking Visits](#tracking-visits)
+            - [Default Tracking](#default-tracking)
+            - [Tracking Fields](#tracking-fields)
+    - [Helper Methods](#helper-methods)
+        - [Visits](#visits)
+        - [Find by URL Key](#find-by-url-key)
+        - [Find by Destination URL](#find-by-destination-url)
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
@@ -196,6 +220,7 @@ By default, the shortened URLs that are created have a key length of 5.
 #### Tracking Visits
 By default, the package enables tracking of all the available fields on each URL built. However, this can be toggled in
 the config file.
+
 ##### Default Tracking
 To disable tracking by default on all future short URLs that are generated, set the following in the config:
 ```
