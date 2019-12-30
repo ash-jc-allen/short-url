@@ -11,7 +11,10 @@ class ShortURLController
 {
     /**
      * Redirect the user to the intended destination
-     * URL.
+     * URL. If custom routing is enabled but the
+     * visitor has attempted to use the default
+     * route provided by the package, return
+     * HTTP 404 and abort.
      *
      * @param  Request  $request
      * @param  Resolver  $resolver
