@@ -78,7 +78,7 @@ class ShortURL extends Model
      * @param  string  $URLKey
      * @return ShortURL|null
      */
-    public static function findByKey(string $URLKey): ?ShortURL
+    public static function findByKey(string $URLKey): ?self
     {
         return self::where('url_key', $URLKey)->first();
     }
