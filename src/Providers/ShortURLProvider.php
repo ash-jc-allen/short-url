@@ -2,6 +2,8 @@
 
 namespace AshAllenDesign\ShortURL\Providers;
 
+use AshAllenDesign\ShortURL\Classes\Validation;
+use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use Illuminate\Support\ServiceProvider;
 
 class ShortURLProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class ShortURLProvider extends ServiceProvider
      * Bootstrap any application services.
      *
      * @return void
+     * @throws ValidationException
      */
     public function boot(): void
     {
@@ -28,5 +31,7 @@ class ShortURLProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../Migrations');
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+
+        (new Validation())->validateConfig();
     }
 }

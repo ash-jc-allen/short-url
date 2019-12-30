@@ -24,26 +24,34 @@ class Resolver
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Agent  $agent
-     * @param  Validation  $validation
+     * @param  Agent|null  $agent
+     * @param  Validation|null  $validation
      * @throws ValidationException
      */
-    public function __construct(Agent $agent, Validation $validation = null)
+    public function __construct(Agent $agent = null, Validation $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
         }
 
-        $validation->validateConfig();
+        $this->agent = $agent ?? new Agent();
 
-        $this->agent = $agent;
+        $validation->validateConfig();
     }
 
     /**
+     * Handle the visit. If the short URL is a single
+     * use URL and has already been visited, abort
+     * the request. If the short URL has tracking
+     * enabled, track the visit in the database.
+     * If this method is executed successfully,
+     * return true.
+     *
      * @param  Request  $request
      * @param  ShortURL  $shortURL
+     * @return bool
      */
-    public function handleVisit(Request $request, ShortURL $shortURL): void
+    public function handleVisit(Request $request, ShortURL $shortURL): bool
     {
         if ($shortURL->single_use && count($shortURL->visits)) {
             abort(404);
@@ -52,6 +60,8 @@ class Resolver
         if ($shortURL->track_visits) {
             $this->recordVisit($request, $shortURL);
         }
+
+        return true;
     }
 
     /**
@@ -59,8 +69,9 @@ class Resolver
      *
      * @param  Request  $request
      * @param  ShortURL  $shortURL
+     * @return ShortURLVisit
      */
-    protected function recordVisit(Request $request, ShortURL $shortURL): void
+    protected function recordVisit(Request $request, ShortURL $shortURL): ShortURLVisit
     {
         $visit = new ShortURLVisit();
 
@@ -68,10 +79,12 @@ class Resolver
         $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
         $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
         $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
-        $visit->browser = config('short-url.fields.tracking.browser') ? $this->agent->browser() : null;
+        $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
         $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
         $visit->visited_at = now();
 
         $visit->save();
+
+        return $visit;
     }
 }

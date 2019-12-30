@@ -17,7 +17,7 @@ class CreateShortUrlsTable extends Migration
             $table->bigIncrements('id');
             $table->string('destination_url');
             $table->string('url_key');
-            $table->string('short_url');
+            $table->string('default_short_url');
             $table->boolean('single_use');
             $table->boolean('track_visits');
             $table->timestamps();

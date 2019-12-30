@@ -15,7 +15,9 @@ class Validation
      */
     public function validateConfig(): bool
     {
-        return $this->validateURLLength() && $this->validateTrackingOptions();
+        return $this->validateKeyLength()
+               && $this->validateTrackingOptions()
+               && $this->validateDefaultRouteOption();
     }
 
     /**
@@ -25,7 +27,7 @@ class Validation
      * @return bool
      * @throws ValidationException
      */
-    protected function validateURLLength(): bool
+    protected function validateKeyLength(): bool
     {
         $urlLength = config('short-url.key_length');
 
@@ -59,6 +61,22 @@ class Validation
             if (! is_bool($value)) {
                 throw new ValidationException('The '.$trackingOption.' config variable must be a boolean.');
             }
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate that the disable_default_route option
+     * is a boolean.
+     *
+     * @return bool
+     * @throws ValidationException
+     */
+    protected function validateDefaultRouteOption(): bool
+    {
+        if (! is_bool(config('short-url.disable_default_route'))) {
+            throw new ValidationException('The disable_default_route config variable must be a boolean.');
         }
 
         return true;
