@@ -39,7 +39,7 @@ class ResolverTest extends TestCase
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => true,
-            'track_visits'    => true
+            'track_visits'    => true,
         ]);
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
@@ -58,7 +58,7 @@ class ResolverTest extends TestCase
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => true,
-            'track_visits'    => true
+            'track_visits'    => true,
         ]);
 
         $request = Request::create(config('app.url').'/short/12345');
@@ -77,7 +77,7 @@ class ResolverTest extends TestCase
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => false,
-            'track_visits'    => true
+            'track_visits'    => true,
         ]);
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
@@ -97,7 +97,7 @@ class ResolverTest extends TestCase
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => false,
-            'track_visits'    => false
+            'track_visits'    => false,
         ]);
 
         $request = Request::create(config('app.url').'/short/12345');
@@ -117,7 +117,7 @@ class ResolverTest extends TestCase
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => false,
-            'track_visits'    => true
+            'track_visits'    => true,
         ]);
 
         $request = Request::create(config('app.url').'/short/12345');
@@ -153,13 +153,12 @@ class ResolverTest extends TestCase
         Config::set('short-url.tracking.fields.ip_address', false);
         Config::set('short-url.tracking.fields.browser_version', false);
 
-
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
             'short_url'       => config('app.url').'/short/12345',
             'url_key'         => '12345',
             'single_use'      => false,
-            'track_visits'    => true
+            'track_visits'    => true,
         ]);
 
         $request = Request::create(config('app.url').'/short/12345');

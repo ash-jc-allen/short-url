@@ -37,7 +37,6 @@ class Resolver
         $this->agent = $agent ?? new Agent();
 
         $validation->validateConfig();
-
     }
 
     /**
