@@ -104,7 +104,7 @@ $shortURL = $shortURLObject->default_short_url;
 // Short URL: https://webapp.com/short/custom-key
 ```
 
-Note: All of the URL keys are unique, so you cannot use a key that has already exists in the database for another shortened
+Note: All of the URL keys are unique, so you cannot use a key that already exists in the database for another shortened
 URL.
 
 #### Tracking Visitors
@@ -145,7 +145,7 @@ The example below shows how to create a single use shortened URL:
  ```
 
 #### Enforce HTTPS
-When building a shortened URL, you might want to enforce that enforce that the visitor is redirected to the HTTPS version
+When building a shortened URL, you might want to enforce that the visitor is redirected to the HTTPS version
 of the destination URL. This can be particularly useful if you're allowing your web app users to create their own shortened
 URLS.
 
@@ -272,7 +272,7 @@ $shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::findByKey('abc123');
 ``` 
 
 #### Find by Destination URL
-To the ShortURL models that redirect to a given destination URL, you can use the ``` ->findByDestinationURL() ``` method.
+To find the ShortURL models that redirect to a given destination URL, you can use the ``` ->findByDestinationURL() ``` method.
 
 For example, to find all of the ShortURL models of shortened URLs that redirect to ``` https://destination.com ```, you could use
 the following:
@@ -291,7 +291,7 @@ vendor/bin/phpunit
 
 ## Security
 
-If you find any security related, please contact me directly at [mail@ashallendesign.co.uk](mailto:mail@ashallendesign.co.uk) to report it.
+If you find any security related issues, please contact me directly at [mail@ashallendesign.co.uk](mailto:mail@ashallendesign.co.uk) to report it.
 
 ## Contribution
 
