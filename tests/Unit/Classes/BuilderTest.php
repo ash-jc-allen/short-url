@@ -9,6 +9,7 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
+use ShortURLBuilder;
 
 class BuilderTest extends TestCase
 {
@@ -133,6 +134,24 @@ class BuilderTest extends TestCase
     {
         $builder = new Builder();
         $shortURL = $builder->destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => config('app.url').'/short/customKey',
+            'url_key'           => 'customKey',
+            'destination_url'   => 'https://domain.com',
+            'track_visits'      => false,
+            'single_use'        => false,
+        ]);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_and_stored_in_the_database_using_the_facade()
+    {
+        ShortURLBuilder::destinationUrl('http://domain.com')
             ->urlKey('customKey')
             ->secure()
             ->trackVisits(false)
