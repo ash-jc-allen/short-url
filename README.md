@@ -4,7 +4,7 @@
 <img src="https://ashallendesign.co.uk/images/custom/short-url-logo.png" width="400">
 </p>
 
-<div style="text-align:center">
+<p align="center">
 
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/v/ashallendesign/short-url.svg?style=flat-square" alt="Latest Version on Packagist"></a>
 <a href="https://travis-ci.org/ash-jc-allen/short-url"><img src="https://img.shields.io/travis/ash-jc-allen/short-url/master.svg?style=flat-square" alt="Build Status"></a>
@@ -12,7 +12,7 @@
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/php-v/ashallendesign/short-url?style=flat-square" alt="PHP from Packagist"></a>
 <a href="https://github.com/ash-jc-allen/short-url/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ash-jc-allen/short-url?style=flat-square" alt="GitHub license"></a>
 
-</div>
+</p>
 
 ## Table of Contents
 
