@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Providers;
 
+use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,11 @@ class ShortURLProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->mergeConfigFrom(__DIR__.'/../../config/short-url.php', 'short-url');
+
+        $this->app->bind('short-url.builder', function () {
+            return new Builder();
+        });
     }
 
     /**
@@ -29,7 +35,6 @@ class ShortURLProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/short-url.php' => config_path('short-url.php'),
         ], 'config');
-        $this->mergeConfigFrom(__DIR__.'/../../config/short-url.php', 'short-url');
 
         // Migrations
         $this->publishes([
