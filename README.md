@@ -1,5 +1,3 @@
-# Short URL
-
 <p align="center">
 <img src="https://ashallendesign.co.uk/images/custom/short-url-logo.png" width="400">
 </p>
