@@ -27,13 +27,13 @@ class ShortURLProvider extends ServiceProvider
     {
         // Config
         $this->publishes([
-            __DIR__.'/../../config/short-url.php' => config_path('short-url.php')
+            __DIR__.'/../../config/short-url.php' => config_path('short-url.php'),
         ], 'config');
         $this->mergeConfigFrom(__DIR__.'/../../config/short-url.php', 'short-url');
 
         // Migrations
         $this->publishes([
-            __DIR__.'/../../database/migrations' => database_path('migrations')
+            __DIR__.'/../../database/migrations' => database_path('migrations'),
         ], 'migrations');
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
