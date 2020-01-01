@@ -7,7 +7,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 
-class ShortURLController extends TestCase
+class ShortURLControllerTest extends TestCase
 {
     use RefreshDatabase;
 
