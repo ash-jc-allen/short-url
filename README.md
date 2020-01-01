@@ -16,7 +16,7 @@
 - [Installation](#installation)
     - [Requirements](#requirements)
     - [Install the Package](#install-the-package)
-    - [Publish the Config](#publish-the-config)
+    - [Publish the Config and Migrations](#publish-the-config-and-migrations)
     - [Migrate the Database](#migrate-the-database)
 - [Usage](#usage)
     - [Building Shortened URLs](#building-shortened-urls)
@@ -63,8 +63,8 @@ You can install the package via Composer:
 composer require ashallendesign/short-url
 ```
 
-### Publish the Config
-You can then publish the package's config file (so that you can make changes to it) by using the following command:
+### Publish the Config and Migrations
+You can then publish the package's config file and database migrations (so that you can make changes to them) by using the following command:
 ```bash
 php artisan vendor:publish --provider="AshAllenDesign\ShortURL\Providers\ShortURLProvider"
 ```
