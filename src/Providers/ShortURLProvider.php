@@ -25,12 +25,20 @@ class ShortURLProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->publishes([dirname(__DIR__, 1).'/Config/short-url.php' => config_path('short-url.php')]);
-        $this->mergeConfigFrom(dirname(__DIR__, 1).'/Config/short-url.php', 'short-url');
+        // Config
+        $this->publishes([
+            __DIR__.'/../../config/short-url.php' => config_path('short-url.php')
+        ], 'config');
+        $this->mergeConfigFrom(__DIR__.'/../../config/short-url.php', 'short-url');
 
-        $this->loadMigrationsFrom(__DIR__.'/../Migrations');
+        // Migrations
+        $this->publishes([
+            __DIR__.'/../../database/migrations' => database_path('migrations')
+        ], 'migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
-        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+        // Routes
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
         (new Validation())->validateConfig();
     }
