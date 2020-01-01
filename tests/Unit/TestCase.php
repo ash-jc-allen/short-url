@@ -31,7 +31,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageAliases($app)
     {
         return [
-            'ShortURLBuilder' => BuilderFacade::class
+            'ShortURLBuilder' => BuilderFacade::class,
         ];
     }
 
@@ -46,7 +46,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         $app['config']->set('database.default', 'testdb');
         $app['config']->set('database.connections.testdb', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
         ]);
     }
