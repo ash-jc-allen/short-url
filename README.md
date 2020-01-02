@@ -160,6 +160,29 @@ $shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->
 // Desination URL: https://destination.com
  ```
 
+#### Facade
+If you prefer to use facades in Laravel, you can choose to use the provided ```ShortURLBuilder ``` facade instead of instantiating the ``` Builder```
+class manually.
+
+The example below shows an example of how you could use the facade to create a shortened URL:
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use ShortURLBuilder;
+
+class Controller
+{
+    public function index()
+    {
+        $shortURLObject = ShortURLBuilder::destinationUrl('https://destination.com')->make();
+        ...
+    }
+}
+```
+
 ### Using the Shortened URLs
 #### Default Route and Controller
 By default, the shortened URLs that are created use the package's route and controller. The routes use the following structure:

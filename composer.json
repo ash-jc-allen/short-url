@@ -34,7 +34,6 @@
       "AshAllenDesign\\ShortURL\\": "src/"
     }
   },
-
   "autoload-dev": {
     "psr-4": {
       "AshAllenDesign\\ShortURL\\Tests\\": "tests/"
@@ -44,7 +43,10 @@
     "laravel": {
       "providers": [
         "AshAllenDesign\\ShortURL\\Providers\\ShortURLProvider"
-      ]
+      ],
+      "aliases": {
+        "ShortURLBuilder": "AshAllenDesign\\ShortURL\\Facades\\BuilderFacade"
+      }
     }
   }
 }

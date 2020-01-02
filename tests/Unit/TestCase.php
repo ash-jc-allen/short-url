@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit;
 
+use AshAllenDesign\ShortURL\Facades\BuilderFacade;
 use AshAllenDesign\ShortURL\Providers\ShortURLProvider;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -21,6 +22,20 @@ abstract class TestCase extends OrchestraTestCase
     }
 
     /**
+     * Get package aliases.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            'ShortURLBuilder' => BuilderFacade::class,
+        ];
+    }
+
+    /**
      * Define environment setup.
      *
      * @param  Application  $app
@@ -31,7 +46,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         $app['config']->set('database.default', 'testdb');
         $app['config']->set('database.connections.testdb', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
         ]);
     }
