@@ -51,19 +51,30 @@ class Builder
     private $urlKey = null;
 
     /**
+     * The class that is used for generating the
+     * random URL keys.
+     *
+     * @var KeyGenerator
+     */
+    private $keyGenerator;
+
+    /**
      * Builder constructor.
      *
      * When constructing this class, ensure that the
      * config variables are validated.
      *
      * @param  Validation  $validation
+     * @param  KeyGenerator|null  $keyGenerator
      * @throws ValidationException
      */
-    public function __construct(Validation $validation = null)
+    public function __construct(Validation $validation = null, KeyGenerator $keyGenerator = null)
     {
-        if (! $validation) {
+        if (!$validation) {
             $validation = new Validation();
         }
+
+        $this->keyGenerator = $keyGenerator ?? new KeyGenerator();
 
         $validation->validateConfig();
     }
@@ -162,7 +173,11 @@ class Builder
             $this->trackVisits = config('short-url.tracking.default_enabled');
         }
 
-        $this->urlKey ? $this->checkKeyDoesNotExist() : $this->generateRandomURLKey();
+        if (! $this->urlKey) {
+            $this->urlKey = $this->keyGenerator->generateRandom();
+        }
+
+        $this->checkKeyDoesNotExist();
 
         $shortURL = $this->insertShortURLIntoDatabase();
 
@@ -189,17 +204,6 @@ class Builder
             'single_use'        => $this->singleUse,
             'track_visits'      => $this->trackVisits,
         ]);
-    }
-
-    /**
-     * Using the URL key length defined in the config,
-     * generate a unique and random key for the URL.
-     */
-    protected function generateRandomURLKey(): void
-    {
-        do {
-            $this->urlKey = Str::random(config('short-url.key_length'));
-        } while (ShortURL::where('url_key', $this->urlKey)->exists());
     }
 
     /**
