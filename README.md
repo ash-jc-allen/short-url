@@ -25,6 +25,7 @@
         - [Tracking Visitors](#tracking-visitors)
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
+        - [Facade](#facade)
     - [Using the Shortened URLs](#using-the-shortened-urls)
         - [Default Route and Controller](#default-route-and-controller)
         - [Custom Route](#custom-route)
