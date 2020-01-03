@@ -43,6 +43,7 @@
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
+- [Credits](#credits)
 - [License](#license)
     
 ## Overview
@@ -331,6 +332,13 @@ If you find any security related issues, please contact me directly at [mail@ash
 If you wish to make any changes or improvements to the package, feel free to make a pull request.
 
 Note: A contribution guide will be added soon.
+
+## Credits
+
+- [Ash Allen](https://ashallendesign.co.uk)
+- [Jess Pickup](https://jesspickup.co.uk) (Logo)
+- [Nathan Giesbrecht](https://github.com/NathanGiesbrecht)
+- [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
 
 ## License
 
