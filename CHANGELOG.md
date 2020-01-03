@@ -1,5 +1,14 @@
 # Changelog
 
+**1.2.0 (released 2020-01-03):**
+- Renamed the underlying facade class from ``` BuilderFacade ``` to ``` ShortURLBuilder ``` for consistency.
+
+    Note: This isn't
+    changing the name of the facade. It's just changing the underlying class name for if you want to use ``` use AshAllenDesign\ShortURL\Facades\ShortURLBuilder; ```
+    rather than ``` use ShortURLBuilder; ```.
+
+- Added methods to the facade docblock. This will display the methods in the IDE's autocomplete.
+
 **1.1.0 (released 2020-01-03):**
 - Enforced a minimum length of 3 for the URL ``` key_length ``` that is specified in the config.
 - Included [hashids/hasids](https://github.com/vinkla/hashids) as a dependency. This is now used for generating the random, unique URL keys.
