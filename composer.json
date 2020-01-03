@@ -22,7 +22,8 @@
     "nesbot/carbon": "~2.0",
     "illuminate/container": "^5.8|^6.0",
     "illuminate/database": "^5.8|^6.0",
-    "jenssegers/agent": "^2.6"
+    "jenssegers/agent": "^2.6",
+    "hashids/hashids": "^4.0"
   },
   "require-dev": {
     "mockery/mockery": "^1.0",

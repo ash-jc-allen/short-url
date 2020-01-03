@@ -43,6 +43,7 @@
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
+- [Credits](#credits)
 - [License](#license)
     
 ## Overview
@@ -231,7 +232,9 @@ If the default route is disabled, any visitors who go to the ```/short/{urlKey}`
 
 #### Default URL Key Length 
 When building a shortened URL, you have the option to define your own URL key or to randomly generate one. If one is
-randomly generated, the length of it is determined from the config.
+randomly generated, the minimum length of it is determined from the config.
+
+A minimum key length of 3 has been enforced for performance reasons. 
 
 For example, to create a shortened URL with a key length of 10 characters, you could set the following in the config:
 
@@ -240,6 +243,13 @@ For example, to create a shortened URL with a key length of 10 characters, you c
 ``` 
 
 By default, the shortened URLs that are created have a key length of 5.
+
+Please be aware that the key length that you specify in the config is only a desirable length. It acts as a minimum length
+rather than a fixed length. For example, if the ``` key_length ``` is set to 3 in the config and there is a unique 3 character
+long key that hasn't been used yet, the key created will be 3 characters long. However, if all of the possible 3 character long
+keys are taken, a 4 character key will be created.
+
+The [Hashids](https://github.com/vinkla/hashids) library is used to assist with creating the URL keys.
 
 #### Tracking Visits
 By default, the package enables tracking of all the available fields on each URL built. However, this can be toggled in
@@ -322,6 +332,13 @@ If you find any security related issues, please contact me directly at [mail@ash
 If you wish to make any changes or improvements to the package, feel free to make a pull request.
 
 Note: A contribution guide will be added soon.
+
+## Credits
+
+- [Ash Allen](https://ashallendesign.co.uk)
+- [Jess Pickup](https://jesspickup.co.uk) (Logo)
+- [Nathan Giesbrecht](https://github.com/NathanGiesbrecht)
+- [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
 
 ## License
 
