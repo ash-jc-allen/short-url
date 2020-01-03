@@ -70,7 +70,7 @@ class Builder
      */
     public function __construct(Validation $validation = null, KeyGenerator $keyGenerator = null)
     {
-        if (!$validation) {
+        if (! $validation) {
             $validation = new Validation();
         }
 
