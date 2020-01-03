@@ -46,7 +46,7 @@
         "AshAllenDesign\\ShortURL\\Providers\\ShortURLProvider"
       ],
       "aliases": {
-        "ShortURLBuilder": "AshAllenDesign\\ShortURL\\Facades\\BuilderFacade"
+        "ShortURLBuilder": "AshAllenDesign\\ShortURL\\Facades\\ShortURLBuilder"
       }
     }
   }
