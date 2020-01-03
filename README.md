@@ -44,6 +44,7 @@
 - [Security](#security)
 - [Contribution](#contribution)
 - [Credits](#credits)
+- [Changelog](#changelog)
 - [License](#license)
     
 ## Overview
@@ -339,6 +340,9 @@ Note: A contribution guide will be added soon.
 - [Jess Pickup](https://jesspickup.co.uk) (Logo)
 - [Nathan Giesbrecht](https://github.com/NathanGiesbrecht)
 - [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
+
+## Changelog
+Check the [CHANGELOG](CHANGELOG.md) to get more information about the latest changes.
 
 ## License
 
