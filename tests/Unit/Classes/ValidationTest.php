@@ -22,12 +22,12 @@ class ValidationTest extends TestCase
     }
 
     /** @test */
-    public function exception_is_thrown_if_the_key_length_is_zero_or_below()
+    public function exception_is_thrown_if_the_key_length_is_below_3()
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config URL length must be above 0.');
+        $this->expectExceptionMessage('The config URL length must be 3 or above.');
 
-        Config::set('short-url.key_length', 0);
+        Config::set('short-url.key_length', 2);
 
         $validation = new Validation();
         $validation->validateConfig();

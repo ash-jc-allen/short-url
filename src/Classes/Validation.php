@@ -35,8 +35,8 @@ class Validation
             throw new ValidationException('The config URL length is not a valid integer.');
         }
 
-        if ($urlLength <= 0) {
-            throw new ValidationException('The config URL length must be above 0.');
+        if ($urlLength < 3) {
+            throw new ValidationException('The config URL length must be 3 or above.');
         }
 
         return true;
