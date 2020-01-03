@@ -22,9 +22,17 @@ return [
     | URL Length
     |--------------------------------------------------------------------------
     |
-    | The character length of the shortened URL.
+    | The character length of the shortened URL. The 'key_length' must be
+    | at least 3. However, for performance reasons, it is recommended to
+    | not use a 'key_length' lower than 5.
+    |
     | e.g. - Using a length of 3 would result in yourdomain.com/XXX
     |      - Using a length of 5 would result in yourdomain.com/XXXXX
+    |
+    | Note: This is the desired length and will act as a minimum
+    |       length, not as a fixed length. For example, if all
+    |       of the possible 3 character-length keys have been
+    |       used, a 4 character long key will be created.
     |
     */
     'key_length' => 5,
