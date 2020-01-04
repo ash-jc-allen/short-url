@@ -2,7 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit;
 
-use AshAllenDesign\ShortURL\Facades\BuilderFacade;
+use AshAllenDesign\ShortURL\Facades\ShortURLBuilder;
 use AshAllenDesign\ShortURL\Providers\ShortURLProvider;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -31,7 +31,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageAliases($app)
     {
         return [
-            'ShortURLBuilder' => BuilderFacade::class,
+            'ShortURLBuilder' => ShortURLBuilder::class,
         ];
     }
 
