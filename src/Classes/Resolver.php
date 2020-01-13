@@ -30,7 +30,7 @@ class Resolver
      */
     public function __construct(Agent $agent = null, Validation $validation = null)
     {
-        if (!$validation) {
+        if (! $validation) {
             $validation = new Validation();
         }
 
