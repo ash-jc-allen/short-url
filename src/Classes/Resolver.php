@@ -30,7 +30,7 @@ class Resolver
      */
     public function __construct(Agent $agent = null, Validation $validation = null)
     {
-        if (! $validation) {
+        if (!$validation) {
             $validation = new Validation();
         }
 
@@ -53,19 +53,21 @@ class Resolver
      */
     public function handleVisit(Request $request, ShortURL $shortURL): bool
     {
-        if ($shortURL->single_use && count($shortURL->visits)) {
+        if ($shortURL->single_use && $shortURL->visits()->count()) {
             abort(404);
         }
 
-        if ($shortURL->track_visits) {
-            $this->recordVisit($request, $shortURL);
-        }
+        $this->recordVisit($request, $shortURL);
 
         return true;
     }
 
     /**
-     * Record the visit in the database.
+     * Record the visit in the database. We record basic
+     * information of the visit if tracking even if
+     * tracking is not enabled. We do this so that
+     * we can check if single-use URLs have been
+     * visited before.
      *
      * @param  Request  $request
      * @param  ShortURL  $shortURL
@@ -76,12 +78,15 @@ class Resolver
         $visit = new ShortURLVisit();
 
         $visit->short_url_id = $shortURL->id;
-        $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
-        $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
-        $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
-        $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
-        $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
         $visit->visited_at = now();
+
+        if ($shortURL->track_visits) {
+            $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
+            $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
+            $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
+            $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
+            $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
+        }
 
         $visit->save();
 

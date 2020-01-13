@@ -90,7 +90,7 @@ class ResolverTest extends TestCase
     }
 
     /** @test */
-    public function visit_is_not_recorded_if_url_does_not_have_tracking_enabled()
+    public function visit_details_are_not_recorded_if_url_does_not_have_tracking_enabled()
     {
         $shortURL = ShortURL::create([
             'destination_url'   => 'https://google.com',
@@ -106,7 +106,14 @@ class ResolverTest extends TestCase
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
-        $this->assertEquals(0, ShortURLVisit::count());
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id'             => $shortURL->id,
+            'ip_address'               => null,
+            'operating_system'         => null,
+            'operating_system_version' => null,
+            'browser'                  => null,
+            'browser_version'          => null,
+        ]);
     }
 
     /** @test */
@@ -183,5 +190,29 @@ class ResolverTest extends TestCase
             'browser'                  => 'Firefox',
             'browser_version'          => null,
         ]);
+    }
+
+    /** @test */
+    public function request_is_aborted_if_url_is_single_use_and_the_tracking_is_not_enabled()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'   => 'https://google.com',
+            'default_short_url' => config('app.url').'/short/12345',
+            'url_key'           => '12345',
+            'single_use'        => true,
+            'track_visits'      => false,
+        ]);
+
+        $request = Request::create(config('app.url').'/short/12345');
+
+        $resolver = new Resolver();
+
+        // Visit the URL for the first time. This should be allowed.
+        $resolver->handleVisit($request, $shortURL);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        // Visit the URL for the second time. This should be aborted.
+        $resolver->handleVisit($request, $shortURL);
     }
 }
