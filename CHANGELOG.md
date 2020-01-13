@@ -1,5 +1,9 @@
 # Changelog
 
+**1.2.1 (released 2020-01-13):**
+- Fixed a bug that allowed multiple visits to a single-use URL if the URL's visit tracking was disabled.
+[Pull Request #23](https://github.com/ash-jc-allen/short-url/pull/23)
+
 **1.2.0 (released 2020-01-03):**
 - Renamed the underlying facade class from ``` BuilderFacade ``` to ``` ShortURLBuilder ``` for consistency.
 
