@@ -316,6 +316,23 @@ the following:
 $shortURLs = \AshAllenDesign\ShortURL\Models\ShortURL::findByDestinationURL('https://destination.com');
 ```
 
+### Events
+
+#### Short URL Visited
+ 
+Each time a short URL is visited, the following event is fired that can be listened on:
+```
+AshAllenDesign\ShortURL\Events\ShortURLVisited
+```
+
+If you are redirecting users with a ``` 301 ``` HTTP status code, it's possible that this event will NOT be fired
+if a visitor has already visited this short URL before. This is due to the fact that most browsers will cache the
+intended destination URL as a 'permanent redirect' and won't actually visit the short URL first.
+
+For better results, use the ``` 302 ``` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
+This means that the short URL will be visited in the browser and the event will be dispatched as expected before redirecting
+to the destination URL.
+
 ## Testing
 
 To run the package's unit tests, run the following command:
