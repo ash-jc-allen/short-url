@@ -145,6 +145,7 @@ class BuilderTest extends TestCase
             'destination_url'   => 'https://domain.com',
             'track_visits'      => false,
             'single_use'        => false,
+            'redirect_status_code' => 301,
         ]);
     }
 
@@ -158,11 +159,50 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
-            'url_key'           => 'customKey',
-            'destination_url'   => 'https://domain.com',
-            'track_visits'      => false,
-            'single_use'        => false,
+            'default_short_url'    => config('app.url').'/short/customKey',
+            'url_key'              => 'customKey',
+            'destination_url'      => 'https://domain.com',
+            'track_visits'         => false,
+            'single_use'           => false,
+            'redirect_status_code' => 301,
+        ]);
+    }
+
+    /** @test */
+    public function correct_redirect_status_code_is_stored_if_explicitly_set()
+    {
+        ShortURLBuilder::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->redirectStatusCode(302)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url'    => config('app.url').'/short/customKey',
+            'url_key'              => 'customKey',
+            'destination_url'      => 'https://domain.com',
+            'track_visits'         => false,
+            'single_use'           => false,
+            'redirect_status_code' => 302,
+        ]);
+    }
+
+    /** @test */
+    public function exception_is_thrown_if_the_redirect_status_code_is_not_valid()
+    {
+        $this->expectException(ShortURLException::class);
+        $this->expectExceptionMessage('The redirect status code must be a valid redirect HTTP status code.');
+
+        ShortURLBuilder::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->redirectStatusCode(-100)
+            ->make();
+
+        $this->assertDatabaseMissing('short_urls', [
+            'destination_url'      => 'https://domain.com',
         ]);
     }
 }
