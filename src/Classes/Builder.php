@@ -51,6 +51,14 @@ class Builder
     private $urlKey = null;
 
     /**
+     * The HTTP status code that will be used when
+     * redirecting the user.
+     *
+     * @var int
+     */
+    private $redirectStatusCode = 301;
+
+    /**
      * The class that is used for generating the
      * random URL keys.
      *
@@ -154,6 +162,25 @@ class Builder
     }
 
     /**
+     * Override the HTTP status code that will be used
+     * for redirecting the visitor.
+     *
+     * @param  int  $statusCode
+     * @return $this
+     * @throws ShortURLException
+     */
+    public function redirectStatusCode(int $statusCode)
+    {
+        if ($statusCode < 300 || $statusCode > 399) {
+            throw new ShortURLException('The redirect status code must be a valid redirect HTTP status code.');
+        }
+
+        $this->redirectStatusCode = $statusCode;
+
+        return $this;
+    }
+
+    /**
      * Attempt to build a shortened URL and return it.
      *
      * @return ShortURL
@@ -198,11 +225,12 @@ class Builder
     protected function insertShortURLIntoDatabase(): ShortURL
     {
         return ShortURL::create([
-            'destination_url'   => $this->destinationUrl,
-            'default_short_url' => config('app.url').'/short/'.$this->urlKey,
-            'url_key'           => $this->urlKey,
-            'single_use'        => $this->singleUse,
-            'track_visits'      => $this->trackVisits,
+            'destination_url'      => $this->destinationUrl,
+            'default_short_url'    => config('app.url').'/short/'.$this->urlKey,
+            'url_key'              => $this->urlKey,
+            'single_use'           => $this->singleUse,
+            'track_visits'         => $this->trackVisits,
+            'redirect_status_code' => $this->redirectStatusCode,
         ]);
     }
 

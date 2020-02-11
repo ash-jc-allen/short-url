@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string url_key
  * @property bool single_use
  * @property bool track_visits
+ * @property int redirect_status_code
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -39,6 +40,7 @@ class ShortURL extends Model
         'url_key',
         'single_use',
         'track_visits',
+        'redirect_status_code',
     ];
 
     /**
