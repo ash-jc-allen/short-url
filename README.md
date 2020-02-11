@@ -25,6 +25,7 @@
         - [Tracking Visitors](#tracking-visitors)
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
+        - [Redirect Status Code](#redirect-status-code)
         - [Facade](#facade)
     - [Using the Shortened URLs](#using-the-shortened-urls)
         - [Default Route and Controller](#default-route-and-controller)
@@ -40,6 +41,8 @@
         - [Visits](#visits)
         - [Find by URL Key](#find-by-url-key)
         - [Find by Destination URL](#find-by-destination-url)
+    - [Events](#events)
+        - [Short URL Visited](#short-url-visited)
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
@@ -161,6 +164,18 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->make();
 
 // Desination URL: https://destination.com
+ ```
+
+#### Redirect Status Code
+
+By default, all short URLs are redirected with a ``` 301 ``` HTTP status code. But, this can be overridden when building
+the shortened URL using the ``` ->redirectStatusCode() ``` method.
+
+The example below shows how to create a shortened URL with a redirect HTTP status code of ``` 302 ```:
+ ```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+ 
+$shortURLObject = $builder->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
  ```
 
 #### Facade
