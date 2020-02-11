@@ -2,10 +2,12 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Events\ShortURLVisited;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Jenssegers\Agent\Agent;
 
 class Resolver
@@ -57,7 +59,9 @@ class Resolver
             abort(404);
         }
 
-        $this->recordVisit($request, $shortURL);
+        $visit = $this->recordVisit($request, $shortURL);
+
+        Event::dispatch(new ShortURLVisited($shortURL, $visit));
 
         return true;
     }
