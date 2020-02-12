@@ -232,6 +232,7 @@ be created. By default, the package is set to record the following fields of a v
 - Browser Version
 - Operating System Name
 - Operating System Version
+- Referer URL (the URL that the visitor originally came from)
 
 Each of these fields can be toggled in the config files so that you only record the fields you need. Details on how to 
 do this are provided for this in the [Customisation](#customisation) section below.
@@ -296,6 +297,7 @@ For example, the snippet below shows how we could record all of the fields apart
             'operating_system_version' => true,
             'browser'                  => true,
             'browser_version'          => true,
+            'referer_url'              => true,
         ],
     ],
 ```
