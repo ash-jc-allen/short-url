@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string browser
  * @property string browser_version
  * @property Carbon visited_at
+ * @property Carbon referer_url
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -42,6 +43,7 @@ class ShortURLVisit extends Model
         'browser',
         'browser_version',
         'visited_at',
+        'referer_url',
     ];
 
     /**

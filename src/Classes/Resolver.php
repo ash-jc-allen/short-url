@@ -90,6 +90,7 @@ class Resolver
             $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
             $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
             $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
+            $visit->referer_url = config('short-url.tracking.fields.referer_url') ? $request->headers->get('referer') : null;
         }
 
         $visit->save();
