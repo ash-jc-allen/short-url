@@ -172,7 +172,7 @@ class ResolverTest extends TestCase
         ]);
 
         $request = Request::create(config('app.url').'/short/12345', 'GET', [], [], [], [
-            'HTTP_referer' => 'https://google.com'
+            'HTTP_referer' => 'https://google.com',
         ]);
 
         // Mock the Agent class so that we don't have
@@ -234,7 +234,7 @@ class ResolverTest extends TestCase
         ]);
 
         $request = Request::create(config('app.url').'/short/12345', 'GET', [], [], [], [
-            'HTTP_referer' => 'https://google.com'
+            'HTTP_referer' => 'https://google.com',
         ]);
 
         // Mock the Agent class so that we don't have
