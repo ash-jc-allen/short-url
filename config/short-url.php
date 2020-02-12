@@ -35,7 +35,7 @@ return [
     |       used, a 4 character long key will be created.
     |
     */
-    'key_length' => 5,
+    'key_length'            => 5,
 
     /*
     |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ return [
     | is enabled by default.
     |
     */
-    'tracking'   => [
+    'tracking'              => [
         'default_enabled' => true,
 
         'fields' => [
@@ -56,6 +56,7 @@ return [
             'operating_system_version' => true,
             'browser'                  => true,
             'browser_version'          => true,
+            'referer_url'              => true,
         ],
     ],
 ];
