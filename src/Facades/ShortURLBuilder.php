@@ -13,6 +13,7 @@ use RuntimeException;
  * @method static self secure(bool $isSecure = true)
  * @method static self trackVisits(bool $trackVisits = true)
  * @method static self urlKey(string $key)
+ * @method static self redirectStatusCode(int $statusCode)
  * @method static ShortURL make()
  *
  * @see Builder

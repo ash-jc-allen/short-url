@@ -24,11 +24,12 @@ class ShortURLControllerTest extends TestCase
     public function visitor_is_redirected_to_the_destination_url()
     {
         ShortURL::create([
-            'destination_url'   => 'https://google.com',
-            'default_short_url' => config('app.url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => true,
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 301,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
@@ -40,11 +41,12 @@ class ShortURLControllerTest extends TestCase
         Config::set('short-url.disable_default_route', true);
 
         ShortURL::create([
-            'destination_url'   => 'https://google.com',
-            'default_short_url' => config('app.url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => true,
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 301,
         ]);
 
         $this->get('/short/12345')->assertNotFound();
@@ -56,11 +58,12 @@ class ShortURLControllerTest extends TestCase
         Event::fake();
 
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
-            'default_short_url' => config('app.url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => true,
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 301,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
@@ -79,5 +82,20 @@ class ShortURLControllerTest extends TestCase
 
             return true;
         });
+    }
+
+    /** @test */
+    public function visitor_is_redirected_with_correct_status_code()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 302,
+        ]);
+
+        $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
     }
 }
