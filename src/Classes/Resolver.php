@@ -85,16 +85,58 @@ class Resolver
         $visit->visited_at = now();
 
         if ($shortURL->track_visits) {
-            $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
-            $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
-            $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
-            $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
-            $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
-            $visit->referer_url = config('short-url.tracking.fields.referer_url') ? $request->headers->get('referer') : null;
+            $this->trackVisit($shortURL, $visit, $request);
         }
 
         $visit->save();
 
         return $visit;
+    }
+
+    /**
+     * Check which fields should be tracked and then
+     * store them if needed. Otherwise, add them
+     * as null.
+     *
+     * @param  ShortURL  $shortURL
+     * @param  ShortURLVisit  $visit
+     * @param  Request  $request
+     */
+    protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
+    {
+        $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
+        $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
+        $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
+        $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
+        $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
+        $visit->referer_url = config('short-url.tracking.fields.referer_url') ? $request->headers->get('referer') : null;
+        $visit->device_type = config('short-url.tracking.fields.device_type') ? $this->guessDeviceType() : null;
+    }
+
+    /**
+     * Guess and return the device type that was used to
+     * visit the short URL.
+     *
+     * @return string
+     */
+    protected function guessDeviceType(): string
+    {
+        if ($this->agent->isDesktop()) {
+            return ShortURLVisit::DEVICE_TYPE_DESKTOP;
+        }
+
+        if ($this->agent->isMobile()) {
+            return ShortURLVisit::DEVICE_TYPE_MOBILE;
+        }
+
+        if ($this->agent->isTablet()) {
+            return ShortURLVisit::DEVICE_TYPE_TABLET;
+        }
+
+        if ($this->agent->isRobot()) {
+            return ShortURLVisit::DEVICE_TYPE_ROBOT;
+        }
+
+        return '';
     }
 }
