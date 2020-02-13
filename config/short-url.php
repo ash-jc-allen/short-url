@@ -57,6 +57,7 @@ return [
             'browser'                  => true,
             'browser_version'          => true,
             'referer_url'              => true,
+            'device_type'              => true,
         ],
     ],
 ];
