@@ -104,13 +104,33 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
-        $visit->ip_address = config('short-url.tracking.fields.ip_address') ? $request->ip() : null;
-        $visit->operating_system = config('short-url.tracking.fields.operating_system') ? $this->agent->platform() : null;
-        $visit->operating_system_version = config('short-url.tracking.fields.operating_system_version') ? $this->agent->version($this->agent->platform()) : null;
-        $visit->browser = config('short-url.tracking.fields.browser') ? $this->agent->browser() : null;
-        $visit->browser_version = config('short-url.tracking.fields.browser_version') ? $this->agent->version($this->agent->browser()) : null;
-        $visit->referer_url = config('short-url.tracking.fields.referer_url') ? $request->headers->get('referer') : null;
-        $visit->device_type = config('short-url.tracking.fields.device_type') ? $this->guessDeviceType() : null;
+        if (config('short-url.tracking.fields.ip_address')) {
+            $visit->ip_address = $request->ip();
+        }
+
+        if (config('short-url.tracking.fields.operating_system')) {
+            $visit->operating_system = $this->agent->platform();
+        }
+
+        if (config('short-url.tracking.fields.operating_system_version')) {
+            $visit->operating_system_version = $this->agent->version($this->agent->platform());
+        }
+
+        if (config('short-url.tracking.fields.browser')) {
+            $visit->browser = $this->agent->browser();
+        }
+
+        if (config('short-url.tracking.fields.browser_version')) {
+            $visit->browser_version = $this->agent->version($this->agent->browser());
+        }
+
+        if (config('short-url.tracking.fields.referer_url')) {
+            $visit->referer_url = $request->headers->get('referer');
+        }
+
+        if (config('short-url.tracking.fields.device_type')) {
+            $visit->device_type = $this->guessDeviceType();
+        }
     }
 
     /**
