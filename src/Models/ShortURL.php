@@ -17,6 +17,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool single_use
  * @property bool track_visits
  * @property int redirect_status_code
+ * @property bool track_ip_address
+ * @property bool track_operating_system
+ * @property bool track_operating_system_version
+ * @property bool track_browser
+ * @property bool track_browser_version
+ * @property bool track_referer_url
+ * @property bool track_device_type
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -41,6 +48,13 @@ class ShortURL extends Model
         'single_use',
         'track_visits',
         'redirect_status_code',
+        'track_ip_address',
+        'track_operating_system',
+        'track_operating_system_version',
+        'track_browser',
+        'track_browser_version',
+        'track_referer_url',
+        'track_device_type',
     ];
 
     /**
@@ -59,8 +73,15 @@ class ShortURL extends Model
      * @var array
      */
     protected $casts = [
-        'single_use'   => 'boolean',
-        'track_visits' => 'boolean',
+        'single_use'                     => 'boolean',
+        'track_visits'                   => 'boolean',
+        'track_ip_address'               => 'boolean',
+        'track_operating_system'         => 'boolean',
+        'track_operating_system_version' => 'boolean',
+        'track_browser'                  => 'boolean',
+        'track_browser_version'          => 'boolean',
+        'track_referer_url'              => 'boolean',
+        'track_device_type'              => 'boolean',
     ];
 
     /**

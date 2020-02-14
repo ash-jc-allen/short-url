@@ -104,31 +104,31 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
-        if (config('short-url.tracking.fields.ip_address')) {
+        if ($shortURL->track_ip_address) {
             $visit->ip_address = $request->ip();
         }
 
-        if (config('short-url.tracking.fields.operating_system')) {
+        if ($shortURL->track_operating_system) {
             $visit->operating_system = $this->agent->platform();
         }
 
-        if (config('short-url.tracking.fields.operating_system_version')) {
+        if ($shortURL->track_operating_system_version) {
             $visit->operating_system_version = $this->agent->version($this->agent->platform());
         }
 
-        if (config('short-url.tracking.fields.browser')) {
+        if ($shortURL->track_browser) {
             $visit->browser = $this->agent->browser();
         }
 
-        if (config('short-url.tracking.fields.browser_version')) {
+        if ($shortURL->track_browser_version) {
             $visit->browser_version = $this->agent->version($this->agent->browser());
         }
 
-        if (config('short-url.tracking.fields.referer_url')) {
+        if ($shortURL->track_referer_url) {
             $visit->referer_url = $request->headers->get('referer');
         }
 
-        if (config('short-url.tracking.fields.device_type')) {
+        if ($shortURL->track_device_type) {
             $visit->device_type = $this->guessDeviceType();
         }
     }

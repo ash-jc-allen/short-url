@@ -58,12 +58,19 @@ class ShortURLControllerTest extends TestCase
         Event::fake();
 
         $shortURL = ShortURL::create([
-            'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
-            'url_key'              => '12345',
-            'single_use'           => true,
-            'track_visits'         => true,
-            'redirect_status_code' => 301,
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('app.url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => true,
+            'track_visits'                   => true,
+            'redirect_status_code'           => 301,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => false,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => false,
+            'track_device_type'              => true,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
@@ -72,7 +79,7 @@ class ShortURLControllerTest extends TestCase
         $visit = ShortURLVisit::first();
 
         Event::assertDispatched(ShortURLVisited::class, function (ShortURLVisited $event) use ($shortURL, $visit) {
-            if ($shortURL->toArray() != $event->shortURL->toArray()) {
+            if ($shortURL->toArray() != $event->shortURL->fresh()->toArray()) {
                 return false;
             }
 
