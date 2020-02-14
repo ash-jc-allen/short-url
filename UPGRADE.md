@@ -17,6 +17,11 @@ command before migrating:
 php artisan vendor:publish --provider="AshAllenDesign\ShortURL\Providers\ShortURLProvider"
 ```
 
+Note: When this migration runs, it will auto-populate any of your existing short URLs to have the tracking values as specified in your
+config. For example, if you have all tracking options except from ``` ip_address ``` enabled in your config, this means
+that all of your existing short URLs in the database will explicitly have all tracking options enabled except from the
+``` ip_address ```. 
+
 ### Config Updates
 Two new tracking fields have now been added to the config file. These fields can be used for tracking the referer URL and
 device type of visitors.
