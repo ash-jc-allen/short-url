@@ -118,4 +118,56 @@ class ShortURL extends Model
     {
         return self::where('destination_url', $destinationURL)->get();
     }
+
+    /**
+     * A helper method to determine whether if tracking
+     * is currently enabled for the short URL.
+     *
+     * @return bool
+     */
+    public function trackingEnabled(): bool
+    {
+        return $this->track_visits;
+    }
+
+    /**
+     * Return an array containing the fields that are
+     * set to be tracked for the short URL.
+     *
+     * @return array
+     */
+    public function trackingFields(): array
+    {
+        $fields = [];
+
+        if ($this->track_ip_address) {
+            $fields[] = 'ip_address';
+        }
+
+        if ($this->track_operating_system) {
+            $fields[] = 'operating_system';
+        }
+
+        if ($this->track_operating_system_version) {
+            $fields[] = 'operating_system_version';
+        }
+
+        if ($this->track_browser) {
+            $fields[] = 'browser';
+        }
+
+        if ($this->track_browser_version) {
+            $fields[] = 'browser_version';
+        }
+
+        if ($this->track_referer_url) {
+            $fields[] = 'referer_url';
+        }
+
+        if ($this->track_device_type) {
+            $fields[] = 'device_type';
+        }
+
+        return $fields;
+    }
 }
