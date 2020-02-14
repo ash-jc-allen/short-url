@@ -204,7 +204,14 @@ class Builder
         return $this;
     }
 
-    public function trackIPAddress(bool $track): self
+    /**
+     * Set whether if the short URL should track the
+     * IP address of the visitor.
+     *
+     * @param  bool  $track
+     * @return $this
+     */
+    public function trackIPAddress(bool $track = true): self
     {
         $this->trackIPAddress = $track;
 
@@ -218,7 +225,7 @@ class Builder
      * @param  bool  $track
      * @return $this
      */
-    public function trackOperatingSystem(bool $track): self
+    public function trackOperatingSystem(bool $track = true): self
     {
         $this->trackOperatingSystem = $track;
 
@@ -232,7 +239,7 @@ class Builder
      * @param  bool  $track
      * @return $this
      */
-    public function trackOperatingSystemVersion(bool $track): self
+    public function trackOperatingSystemVersion(bool $track = true): self
     {
         $this->trackOperatingSystemVersion = $track;
 
@@ -246,7 +253,7 @@ class Builder
      * @param  bool  $track
      * @return $this
      */
-    public function trackBrowser(bool $track): self
+    public function trackBrowser(bool $track = true): self
     {
         $this->trackBrowser = $track;
 
@@ -260,7 +267,7 @@ class Builder
      * @param  bool  $track
      * @return $this
      */
-    public function trackBrowserVersion(bool $track): self
+    public function trackBrowserVersion(bool $track = true): self
     {
         $this->trackBrowserVersion = $track;
 
@@ -274,7 +281,7 @@ class Builder
      * @param  bool  $track
      * @return $this
      */
-    public function trackRefererURL(bool $track): self
+    public function trackRefererURL(bool $track = true): self
     {
         $this->trackRefererURL = $track;
 
@@ -288,7 +295,7 @@ class Builder
      * @param  bool  $track
      * @return $this
      */
-    public function trackDeviceType(bool $track): self
+    public function trackDeviceType(bool $track = true): self
     {
         $this->trackDeviceType = $track;
 
