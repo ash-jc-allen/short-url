@@ -361,7 +361,7 @@ class ResolverTest extends TestCase
         $mock = Mockery::mock(Agent::class)->makePartial();
         $mock->shouldReceive('platform')->never();
         $mock->shouldReceive('browser')->never();
-        $mock->shouldReceive('version')->never();;
+        $mock->shouldReceive('version')->never();
         $mock->shouldReceive('isDesktop')->never();
 
         $resolver = new Resolver($mock);
