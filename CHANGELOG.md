@@ -1,5 +1,14 @@
 # Changelog
 
+**2.0.0 (released 2020-02-14):**
+- Added the functionality to track a visitor's referer URL.
+- Added the functionality to track a user's device type.
+- Added the functionality to explicitly set the tracking options on for each specific short URL. Previously, the options
+were set in the config and affected all new and existing short URLs.
+- Added the functionality to explicitly set the HTTP status code for the redirect.
+- Added a ``` ShortURLVisited``` event that is dispatched when the short URL is used.
+- Added the ``` trackingEnabled() ``` and ``` trackingFields() ``` helper methods to the ``` ShortURL ``` model.
+
 **1.2.1 (released 2020-01-13):**
 - Fixed a bug that allowed multiple visits to a single-use URL if the URL's visit tracking was disabled.
 [Pull Request #23](https://github.com/ash-jc-allen/short-url/pull/23)
