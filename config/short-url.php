@@ -44,7 +44,8 @@ return [
     |
     | Define which fields are recorded if a shortened URL has
     | tracking enabled. Also define whether if tracking
-    | is enabled by default.
+    | is enabled by default. Each of these options can
+    | be overridden when creating a short URL.
     |
     */
     'tracking'              => [
