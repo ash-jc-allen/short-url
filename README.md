@@ -23,6 +23,12 @@
         - [Quick Start](#quick-start)
         - [Custom Keys](#custom-keys)
         - [Tracking Visitors](#tracking-visitors)
+            - [Enabling Tracking](#enabling-tracking)
+            - [Tracking IP Address](#tracking-ip-address)
+            - [Tracking Browser & Browser Version](#tracking-browser--browser-version)
+            - [Tracking Operating System & Operating System Version](#tracking-operating-system--operating-system-version)
+            - [Tracking Device Type](#tracking-device-type)
+            - [Tracking Referer URL](#tracking-referer-url)
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
         - [Redirect Status Code](#redirect-status-code)
@@ -115,12 +121,18 @@ URL.
 
 #### Tracking Visitors
 You may want to track some data about the visitors that have used the shortened URL. This can be useful for analytics.
-By default, tracking is enabled and all of the available tracking fields are also enabled. You can toggle the different
-parts of the tracking in the config file. Read further on in the [Customisation](#customisation) section to see how to
-customise the default tracking behaviours.
+By default, tracking is enabled and all of the available tracking fields are also enabled. You can toggle the default
+options for the different parts of the tracking in the config file. Read further on in the [Customisation](#customisation)
+section to see how to customise the default tracking behaviours.
+
+Note: Even if the tracking options (such as ``` track_ip_address ```) are enabled for a short URL, they won't be recorded
+unless the ``` track_visits ``` options is enabled. This can come in handy if you want to enable/disable tracking for a
+short URL without needing to individually set each option.
+
+##### Enabling Tracking
 
 If you want to override whether if tracking is enabled or not when creating a shortened URL, you can use the ``` ->trackVisits() ``` method.
-This method simply accepts a boolean.
+This method accepts a boolean but defaults to ``` true ``` if a parameter is not passed.
 
 The example below shows how to enable tracking for the URL and override the config variable:
 ```php
@@ -129,11 +141,87 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->make();
 ```
 
-The example below shows how to disable tracking for the URL and override the config variable:
+The example below shows how to disable tracking for the URL and override the default config variable:
 ```php
 $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 
 $shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits(false)->make();
+```
+
+##### Tracking IP Address
+
+If you want to override whether if IP address tracking is enabled or not when creating a shortened URL, you can use the
+``` ->trackIPAddress() ``` method. This method accepts a boolean but defaults to ``` true ``` if a parameter is not passed.
+
+The example below shows how to enable IP address tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackIPAddress()->make();
+```
+
+##### Tracking Browser & Browser Version
+
+If you want to override whether if browser name and browser version tracking is enabled or not when creating a shortened
+URL, you can use the ``` ->trackBrowser() ``` and ``` ->trackBrowserVersion() ``` methods. This method accepts a boolean
+but defaults to ``` true ``` if a parameter is not passed.
+
+The example below shows how to enable browser name tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackBrowser()->make();
+```
+
+The example below shows how to enable browser version tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackBrowserVersion()->make();
+```
+
+##### Tracking Operating System & Operating System Version
+
+If you want to override whether if operating system name and operating system version tracking is enabled or not when
+creating a shortened URL, you can use the ``` ->trackOperatingSystem() ``` and ``` ->trackOperatingSystemVersion() ```
+methods. These methods accept a boolean but default to ``` true ``` if a parameter is not passed.
+
+The example below shows how to enable operating system name tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystem()->make();
+```
+
+The example below shows how to enable operating system version tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystemVersion()->make();
+```
+
+##### Tracking Device Type
+
+If you want to override whether if device type tracking is enabled or not when creating a shortened URL, you can use the
+``` ->trackDeviceType() ``` method. This method accepts a boolean but defaults to ``` true ``` if a parameter is not passed.
+
+The example below shows how to enable device type tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackDeviceType()->make();
+```
+
+##### Tracking Referer URL
+
+If you want to override whether if referer URL tracking is enabled or not when creating a shortened URL, you can use the
+``` ->trackRefererURL() ``` method. This method accepts a boolean but defaults to ``` true ``` if a parameter is not passed.
+
+The example below shows how to enable referer URL tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackRefererURL()->make();
 ```
 
 #### Single Use
@@ -285,7 +373,8 @@ Note: Disabling tracking by default won't disable tracking for any shortened URL
 to all shortened URLs that are created after the config update.
 
 ##### Tracking Fields
-You can toggle the fields that are tracked for each visitor by changing them in the config.
+You can toggle the default options for each of fields that can be tracked by changing them in the config. These options
+can then be overridden for each short URL at the point of creation, as shown in the [Tracking Visitors](#tracking-visitors) section.
 
 For example, the snippet below shows how we could record all of the fields apart from the IP address of the visitor:
 
@@ -303,8 +392,6 @@ For example, the snippet below shows how we could record all of the fields apart
         ],
     ],
 ```
-
-Note: Updating the tracked fields will affect all existing and new shortened URLs.
 
 ### Helper Methods
 #### Visits
