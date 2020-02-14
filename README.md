@@ -47,6 +47,8 @@
         - [Visits](#visits)
         - [Find by URL Key](#find-by-url-key)
         - [Find by Destination URL](#find-by-destination-url)
+        - [Tracking Enabled](#tracking-enabled)
+        - [Tracked Fields](#tracked-fields)
     - [Events](#events)
         - [Short URL Visited](#short-url-visited)
 - [Testing](#testing)
@@ -422,6 +424,32 @@ the following:
 ```php
 $shortURLs = \AshAllenDesign\ShortURL\Models\ShortURL::findByDestinationURL('https://destination.com');
 ```
+
+#### Tracking Enabled
+To check if tracking is enabled for a short URL, you can use the ``` ->trackingEnabled() ``` method. It will return ``` true ```
+if tracking is enabled, and ``` false ``` if not.
+
+The following example shows how to check if a short URL has tracking enabled:
+
+```php
+$shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
+$shortURL->trackingEnabled();
+``` 
+
+#### Tracked Fields
+To check which fields are enabled for tracking for a short URL, you can use the ``` ->trackingFields() ``` method. It
+will return an array with the names of each field that is currently enabled for tracking.
+
+Note: Even if the tracking options (such as ``` track_ip_address ```) are enabled for a short URL and returned, they
+won't be recorded unless the ``` track_visits ``` options is enabled. This can come in handy if you want to enable/disable
+tracking for a short URL without needing to individually set each option.
+
+The following example shows how to get an array of all tracking-enabled fields for a short URL:
+
+```php
+$shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
+$shortURL->trackingFields();
+``` 
 
 ### Events
 
