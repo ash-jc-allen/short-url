@@ -93,6 +93,111 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function track_ip_address_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.ip_address', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackIPAddress(false)->make();
+        $this->assertFalse($shortUrl->track_ip_address);
+
+        Config::set('short-url.tracking.fields.ip_address', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackIPAddress()->make();
+        $this->assertTrue($shortUrl->track_ip_address);
+    }
+
+    /** @test */
+    public function track_browser_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.browser', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackBrowser(false)->make();
+        $this->assertFalse($shortUrl->track_browser);
+
+        Config::set('short-url.tracking.fields.browser', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackBrowser()->make();
+        $this->assertTrue($shortUrl->track_browser);
+    }
+
+    /** @test */
+    public function track_browser_version_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.browser_version', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackBrowserVersion(false)->make();
+        $this->assertFalse($shortUrl->track_browser_version);
+
+        Config::set('short-url.tracking.fields.browser_version', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackBrowserVersion()->make();
+        $this->assertTrue($shortUrl->track_browser_version);
+    }
+
+    /** @test */
+    public function track_operating_system_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.operating_system', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackOperatingSystem(false)->make();
+        $this->assertFalse($shortUrl->track_operating_system);
+
+        Config::set('short-url.tracking.fields.operating_system', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackOperatingSystem()->make();
+        $this->assertTrue($shortUrl->track_operating_system);
+    }
+
+    /** @test */
+    public function track_operating_system_version_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.operating_system_version', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackOperatingSystemVersion(false)->make();
+        $this->assertFalse($shortUrl->track_operating_system_version);
+
+        Config::set('short-url.tracking.fields.operating_system_version', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackOperatingSystemVersion()->make();
+        $this->assertTrue($shortUrl->track_operating_system_version);
+    }
+
+    /** @test */
+    public function track_referer_url_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.referer_url', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackRefererURL(false)->make();
+        $this->assertFalse($shortUrl->track_referer_url);
+
+        Config::set('short-url.tracking.fields.referer_url', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackRefererURL()->make();
+        $this->assertTrue($shortUrl->track_referer_url);
+    }
+
+    /** @test */
+    public function track_device_type_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.device_type', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackDeviceType(false)->make();
+        $this->assertFalse($shortUrl->track_device_type);
+
+        Config::set('short-url.tracking.fields.device_type', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->trackDeviceType()->make();
+        $this->assertTrue($shortUrl->track_device_type);
+    }
+
+    /** @test */
     public function exception_is_thrown_if_the_url_key_is_explicitly_set_and_already_exists_in_the_db()
     {
         ShortURL::create([
@@ -137,14 +242,26 @@ class BuilderTest extends TestCase
             ->urlKey('customKey')
             ->secure()
             ->trackVisits(false)
+            ->trackDeviceType(true)
+            ->trackRefererURL(false)
+            ->trackBrowser(true)
+            ->trackOperatingSystemVersion(false)
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
-            'url_key'           => 'customKey',
-            'destination_url'   => 'https://domain.com',
-            'track_visits'      => false,
-            'single_use'        => false,
+            'default_short_url'              => config('app.url').'/short/customKey',
+            'url_key'                        => 'customKey',
+            'destination_url'                => 'https://domain.com',
+            'track_visits'                   => false,
+            'single_use'                     => false,
+            'redirect_status_code'           => 301,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => false,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => false,
+            'track_device_type'              => true,
         ]);
     }
 
@@ -158,11 +275,50 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
-            'url_key'           => 'customKey',
-            'destination_url'   => 'https://domain.com',
-            'track_visits'      => false,
-            'single_use'        => false,
+            'default_short_url'    => config('app.url').'/short/customKey',
+            'url_key'              => 'customKey',
+            'destination_url'      => 'https://domain.com',
+            'track_visits'         => false,
+            'single_use'           => false,
+            'redirect_status_code' => 301,
+        ]);
+    }
+
+    /** @test */
+    public function correct_redirect_status_code_is_stored_if_explicitly_set()
+    {
+        ShortURLBuilder::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->redirectStatusCode(302)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url'    => config('app.url').'/short/customKey',
+            'url_key'              => 'customKey',
+            'destination_url'      => 'https://domain.com',
+            'track_visits'         => false,
+            'single_use'           => false,
+            'redirect_status_code' => 302,
+        ]);
+    }
+
+    /** @test */
+    public function exception_is_thrown_if_the_redirect_status_code_is_not_valid()
+    {
+        $this->expectException(ShortURLException::class);
+        $this->expectExceptionMessage('The redirect status code must be a valid redirect HTTP status code.');
+
+        ShortURLBuilder::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->redirectStatusCode(-100)
+            ->make();
+
+        $this->assertDatabaseMissing('short_urls', [
+            'destination_url' => 'https://domain.com',
         ]);
     }
 }

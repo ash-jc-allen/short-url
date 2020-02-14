@@ -35,7 +35,7 @@ return [
     |       used, a 4 character long key will be created.
     |
     */
-    'key_length' => 5,
+    'key_length'            => 5,
 
     /*
     |--------------------------------------------------------------------------
@@ -44,10 +44,11 @@ return [
     |
     | Define which fields are recorded if a shortened URL has
     | tracking enabled. Also define whether if tracking
-    | is enabled by default.
+    | is enabled by default. Each of these options can
+    | be overridden when creating a short URL.
     |
     */
-    'tracking'   => [
+    'tracking'              => [
         'default_enabled' => true,
 
         'fields' => [
@@ -56,6 +57,8 @@ return [
             'operating_system_version' => true,
             'browser'                  => true,
             'browser_version'          => true,
+            'referer_url'              => true,
+            'device_type'              => true,
         ],
     ],
 ];

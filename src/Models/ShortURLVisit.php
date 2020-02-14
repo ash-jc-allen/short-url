@@ -16,12 +16,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string operating_system_version
  * @property string browser
  * @property string browser_version
+ * @property string device_type
  * @property Carbon visited_at
+ * @property Carbon referer_url
  * @property Carbon created_at
  * @property Carbon updated_at
  */
 class ShortURLVisit extends Model
 {
+    const DEVICE_TYPE_MOBILE = 'mobile';
+
+    const DEVICE_TYPE_DESKTOP = 'desktop';
+
+    const DEVICE_TYPE_TABLET = 'tablet';
+
+    const DEVICE_TYPE_ROBOT = 'robot';
+
     /**
      * The table associated with the model.
      *
@@ -42,6 +52,8 @@ class ShortURLVisit extends Model
         'browser',
         'browser_version',
         'visited_at',
+        'referer_url',
+        'device_type',
     ];
 
     /**

@@ -113,6 +113,7 @@ class ResolverTest extends TestCase
             'operating_system_version' => null,
             'browser'                  => null,
             'browser_version'          => null,
+            'referer_url'              => null,
         ]);
     }
 
@@ -120,11 +121,18 @@ class ResolverTest extends TestCase
     public function visit_is_recorded_if_url_has_tracking_enabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
-            'default_short_url' => config('app.url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => false,
-            'track_visits'      => true,
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('app.url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => true,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => true,
+            'track_device_type'              => true,
         ]);
 
         $request = Request::create(config('app.url').'/short/12345');
@@ -137,6 +145,8 @@ class ResolverTest extends TestCase
         $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
         $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
         $mock->shouldReceive('version')->once()->withArgs(['Firefox'])->andReturn('71.0');
+        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(false);
+        $mock->shouldReceive('isMobile')->once()->withNoArgs()->andReturn(true);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -149,26 +159,35 @@ class ResolverTest extends TestCase
             'operating_system_version' => '19.10',
             'browser'                  => 'Firefox',
             'browser_version'          => '71.0',
+            'referer_url'              => null,
+            'device_type'              => 'mobile',
         ]);
     }
 
     /** @test */
-    public function only_specific_fields_are_recorded_if_enabled_in_the_config()
+    public function only_specific_fields_are_recorded_if_enabled()
     {
-        // Disable default tracking for the IP address
-        // and browser version.
-        Config::set('short-url.tracking.fields.ip_address', false);
-        Config::set('short-url.tracking.fields.browser_version', false);
+        // Disable default tracking for the IP address, browser
+        // version and referer URL.
 
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
-            'default_short_url' => config('app.url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => false,
-            'track_visits'      => true,
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('app.url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => true,
+            'track_ip_address'               => false,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => false,
+            'track_referer_url'              => false,
+            'track_device_type'              => true,
         ]);
 
-        $request = Request::create(config('app.url').'/short/12345');
+        $request = Request::create(config('app.url').'/short/12345', 'GET', [], [], [], [
+            'HTTP_referer' => 'https://google.com',
+        ]);
 
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
@@ -177,6 +196,9 @@ class ResolverTest extends TestCase
         $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
         $mock->shouldReceive('browser')->once()->withNoArgs()->andReturn('Firefox');
         $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
+        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(false);
+        $mock->shouldReceive('isMobile')->once()->withNoArgs()->andReturn(false);
+        $mock->shouldReceive('isTablet')->once()->withNoArgs()->andReturn(true);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -189,6 +211,8 @@ class ResolverTest extends TestCase
             'operating_system_version' => '19.10',
             'browser'                  => 'Firefox',
             'browser_version'          => null,
+            'referer_url'              => null,
+            'device_type'              => 'tablet',
         ]);
     }
 
@@ -214,5 +238,145 @@ class ResolverTest extends TestCase
 
         // Visit the URL for the second time. This should be aborted.
         $resolver->handleVisit($request, $shortURL);
+    }
+
+    /** @test */
+    public function referer_url_is_stored_if_it_is_enabled()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('app.url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => true,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => true,
+            'track_device_type'              => true,
+        ]);
+
+        $request = Request::create(config('app.url').'/short/12345', 'GET', [], [], [], [
+            'HTTP_referer' => 'https://google.com',
+        ]);
+
+        // Mock the Agent class so that we don't have
+        // to mock the User-Agent header in the
+        // request.
+        $mock = Mockery::mock(Agent::class)->makePartial();
+        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
+        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
+        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
+
+        $resolver = new Resolver($mock);
+        $result = $resolver->handleVisit($request, $shortURL);
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id'             => $shortURL->id,
+            'ip_address'               => $request->ip(),
+            'operating_system'         => 'Ubuntu',
+            'operating_system_version' => '19.10',
+            'browser'                  => 'Firefox',
+            'browser_version'          => 0,
+            'referer_url'              => 'https://google.com',
+        ]);
+    }
+
+    /** @test */
+    public function device_type_is_stored_if_it_is_enabled()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('app.url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => true,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => true,
+            'track_device_type'              => true,
+        ]);
+
+        $request = Request::create(config('app.url').'/short/12345', 'GET', [], [], [], [
+            'HTTP_referer' => 'https://google.com',
+        ]);
+
+        // Mock the Agent class so that we don't have
+        // to mock the User-Agent header in the
+        // request.
+        $mock = Mockery::mock(Agent::class)->makePartial();
+        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
+        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
+        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
+        $mock->shouldReceive('version')->once()->withArgs(['Firefox'])->andReturn('71.0');
+        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(true);
+
+        $resolver = new Resolver($mock);
+        $result = $resolver->handleVisit($request, $shortURL);
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id'             => $shortURL->id,
+            'ip_address'               => $request->ip(),
+            'operating_system'         => 'Ubuntu',
+            'operating_system_version' => '19.10',
+            'browser'                  => 'Firefox',
+            'browser_version'          => '71.0',
+            'referer_url'              => 'https://google.com',
+            'device_type'              => 'desktop',
+        ]);
+    }
+
+    /** @test */
+    public function fields_are_not_recorded_if_all_are_true_but_track_visits_is_disabled()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('app.url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => false,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => true,
+            'track_device_type'              => true,
+        ]);
+
+        $request = Request::create(config('app.url').'/short/12345', 'GET', [], [], [], [
+            'HTTP_referer' => 'https://google.com',
+        ]);
+
+        // Mock the Agent class so that we don't have
+        // to mock the User-Agent header in the
+        // request.
+        $mock = Mockery::mock(Agent::class)->makePartial();
+        $mock->shouldReceive('platform')->never();
+        $mock->shouldReceive('browser')->never();
+        $mock->shouldReceive('version')->never();
+        $mock->shouldReceive('isDesktop')->never();
+
+        $resolver = new Resolver($mock);
+        $result = $resolver->handleVisit($request, $shortURL);
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id'             => $shortURL->id,
+            'ip_address'               => null,
+            'operating_system'         => null,
+            'operating_system_version' => null,
+            'browser'                  => null,
+            'browser_version'          => null,
+            'referer_url'              => null,
+            'device_type'              => null,
+        ]);
     }
 }

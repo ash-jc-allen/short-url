@@ -16,6 +16,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string url_key
  * @property bool single_use
  * @property bool track_visits
+ * @property int redirect_status_code
+ * @property bool track_ip_address
+ * @property bool track_operating_system
+ * @property bool track_operating_system_version
+ * @property bool track_browser
+ * @property bool track_browser_version
+ * @property bool track_referer_url
+ * @property bool track_device_type
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -39,6 +47,14 @@ class ShortURL extends Model
         'url_key',
         'single_use',
         'track_visits',
+        'redirect_status_code',
+        'track_ip_address',
+        'track_operating_system',
+        'track_operating_system_version',
+        'track_browser',
+        'track_browser_version',
+        'track_referer_url',
+        'track_device_type',
     ];
 
     /**
@@ -57,8 +73,15 @@ class ShortURL extends Model
      * @var array
      */
     protected $casts = [
-        'single_use'   => 'boolean',
-        'track_visits' => 'boolean',
+        'single_use'                     => 'boolean',
+        'track_visits'                   => 'boolean',
+        'track_ip_address'               => 'boolean',
+        'track_operating_system'         => 'boolean',
+        'track_operating_system_version' => 'boolean',
+        'track_browser'                  => 'boolean',
+        'track_browser_version'          => 'boolean',
+        'track_referer_url'              => 'boolean',
+        'track_device_type'              => 'boolean',
     ];
 
     /**
@@ -94,5 +117,57 @@ class ShortURL extends Model
     public static function findByDestinationURL(string $destinationURL): Collection
     {
         return self::where('destination_url', $destinationURL)->get();
+    }
+
+    /**
+     * A helper method to determine whether if tracking
+     * is currently enabled for the short URL.
+     *
+     * @return bool
+     */
+    public function trackingEnabled(): bool
+    {
+        return $this->track_visits;
+    }
+
+    /**
+     * Return an array containing the fields that are
+     * set to be tracked for the short URL.
+     *
+     * @return array
+     */
+    public function trackingFields(): array
+    {
+        $fields = [];
+
+        if ($this->track_ip_address) {
+            $fields[] = 'ip_address';
+        }
+
+        if ($this->track_operating_system) {
+            $fields[] = 'operating_system';
+        }
+
+        if ($this->track_operating_system_version) {
+            $fields[] = 'operating_system_version';
+        }
+
+        if ($this->track_browser) {
+            $fields[] = 'browser';
+        }
+
+        if ($this->track_browser_version) {
+            $fields[] = 'browser_version';
+        }
+
+        if ($this->track_referer_url) {
+            $fields[] = 'referer_url';
+        }
+
+        if ($this->track_device_type) {
+            $fields[] = 'device_type';
+        }
+
+        return $fields;
     }
 }
