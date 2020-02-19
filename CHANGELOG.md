@@ -1,5 +1,9 @@
 # Changelog
 
+**2.1.0 (released 2020-02-19):**
+- Added the key salt (used for generating random URL keys) as a config option. [#32](https://github.com/ash-jc-allen/short-url/pull/32)
+
+
 **2.0.0 (released 2020-02-14):**
 - Added the functionality to track a visitor's referer URL.
 - Added the functionality to track a user's device type.
