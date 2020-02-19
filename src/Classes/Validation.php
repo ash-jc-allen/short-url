@@ -17,7 +17,8 @@ class Validation
     {
         return $this->validateKeyLength()
                && $this->validateTrackingOptions()
-               && $this->validateDefaultRouteOption();
+               && $this->validateDefaultRouteOption()
+               && $this->validateKeySalt();
     }
 
     /**
@@ -37,6 +38,28 @@ class Validation
 
         if ($urlLength < 3) {
             throw new ValidationException('The config URL length must be 3 or above.');
+        }
+
+        return true;
+    }
+
+    /**
+     * Assert that the key salt provided in the config is
+     * valid.
+     *
+     * @return bool
+     * @throws ValidationException
+     */
+    protected function validateKeySalt(): bool
+    {
+        $keySalt = config('short-url.key_salt');
+
+        if (! is_string($keySalt)) {
+            throw new ValidationException('The config key salt must be a string.');
+        }
+
+        if (! strlen($keySalt)) {
+            throw new ValidationException('The config key salt must be at least 1 character long.');
         }
 
         return true;

@@ -68,4 +68,28 @@ class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
+
+    /** @test */
+    public function exception_is_thrown_if_the_key_salt_is_not_a_string()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The config key salt must be a string.');
+
+        Config::set('short-url.key_salt', true);
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
+
+    /** @test */
+    public function exception_is_thrown_if_the_key_salt_is_less_than_one_character_long()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The config key salt must be at least 1 character long.');
+
+        Config::set('short-url.key_salt', '');
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
 }
