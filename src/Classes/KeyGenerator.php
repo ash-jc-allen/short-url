@@ -8,11 +8,6 @@ use Hashids\Hashids;
 class KeyGenerator
 {
     /**
-     * The salt that is used with the Hashids library.
-     */
-    protected const HASH_SALT = 'AshAllenDesign\ShortURL';
-
-    /**
      * The library class that is used for generating
      * the unique hash.
      *
@@ -25,7 +20,7 @@ class KeyGenerator
      */
     public function __construct()
     {
-        $this->hashids = new Hashids(self::HASH_SALT, config('short-url.key_length'));
+        $this->hashids = new Hashids(config('short-url.key_salt'), config('short-url.key_length'));
     }
 
     /**
