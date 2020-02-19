@@ -39,6 +39,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Key Salt
+    |--------------------------------------------------------------------------
+    |
+    | Define the salt that is used to create the unique short
+    | URL keys. This is used to ensure that the randomly
+    | generated keys are unique.
+    |
+    */
+    'key_salt'              => 'AshAllenDesign\ShortURL',
+
+    /*
+    |--------------------------------------------------------------------------
     | Tracking
     |--------------------------------------------------------------------------
     |
