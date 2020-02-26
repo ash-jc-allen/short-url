@@ -409,7 +409,6 @@ class Builder
             $this->destinationUrl = str_replace('http://', 'https://', $this->destinationUrl);
         }
 
-
         if (! $this->urlKey) {
             $this->urlKey = $this->keyGenerator->generateRandom();
         }
