@@ -38,9 +38,9 @@ class Builder
      * and the shortened URL to use HTTPS rather
      * than HTTP.
      *
-     * @var bool
+     * @var bool|null
      */
-    private $secure = true;
+    private $secure = null;
 
     /**
      * Whether or not if the short URL should track
@@ -401,9 +401,14 @@ class Builder
      */
     private function setOptions(): void
     {
+        if ($this->secure === null) {
+            $this->secure = config('short-url.enforce_https');
+        }
+
         if ($this->secure) {
             $this->destinationUrl = str_replace('http://', 'https://', $this->destinationUrl);
         }
+
 
         if (! $this->urlKey) {
             $this->urlKey = $this->keyGenerator->generateRandom();
@@ -464,7 +469,7 @@ class Builder
     {
         $this->urlKey = null;
         $this->singleUse = false;
-        $this->secure = true;
+        $this->secure = null;
         $this->redirectStatusCode = 301;
 
         $this->trackVisits = null;
