@@ -491,6 +491,7 @@ Note: A contribution guide will be added soon.
 - [Ash Allen](https://ashallendesign.co.uk)
 - [Jess Pickup](https://jesspickup.co.uk) (Logo)
 - [Nathan Giesbrecht](https://github.com/NathanGiesbrecht)
+- [Carlos A. Escobar](https://github.com/carlosjs23)
 - [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
 
 ## Changelog
@@ -500,7 +501,6 @@ Check the [CHANGELOG](CHANGELOG.md) to get more information about the latest cha
 ## Upgrading
 
 Check the [UPGRADE](UPGRADE.md) guide to get more information on how to update this library to newer versions.
-
 
 ## License
 
