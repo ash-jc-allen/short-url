@@ -81,6 +81,15 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url()
+    {
+        Config::set('short-url.enforce_https', false);
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->secure()->make();
+        $this->assertEquals('https://domain.com', $shortUrl->destination_url);
+    }
+
+    /** @test */
     public function track_visits_flag_is_set_from_the_config_if_it_is_not_explicitly_set()
     {
         Config::set('short-url.tracking.default_enabled', true);
