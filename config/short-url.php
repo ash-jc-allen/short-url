@@ -11,7 +11,7 @@ return [
     | from using the default route that comes with this library.
     | This allows you to define your own route that points to
     | the controller at:
-
+    |
     | AshAllenDesign\ShortURL\Controllers\ShortURLController
     |
     */
@@ -22,13 +22,13 @@ return [
     | Enforce HTTPS in the destination URL
     |--------------------------------------------------------------------------
     |
-    | Here you may specify if the visitor is redirected to the HTTPS version
-    | of the destination URL. This can be particularly useful if you're allowing
-    | your web app users to create their own shortened URLS and you don't want to
-    | use the secure() method in every occasion.
+    | Here you may specify if the visitor is redirected to the HTTPS
+    | version of the destination URL by default. This option can be
+    | overridden when creating the short URL with the ->secure()
+    | method.
     |
     */
-    'enforce_https' => true,
+    'enforce_https'         => true,
 
     /*
     |--------------------------------------------------------------------------
