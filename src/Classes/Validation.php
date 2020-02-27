@@ -107,8 +107,7 @@ class Validation
     }
 
     /**
-     * Validate that the enforce_https option
-     * is a boolean.
+     * Validate that the enforce_https option is a boolean.
      *
      * @return bool
      * @throws ValidationException
