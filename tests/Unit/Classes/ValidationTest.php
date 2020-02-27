@@ -92,4 +92,16 @@ class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
+
+    /** @test */
+    public function exception_is_thrown_if_the_enforce_https_variable_is_not_a_boolean()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The enforce_https config variable must be a boolean.');
+
+        Config::set('short-url.enforce_https', 'INVALID');
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
 }

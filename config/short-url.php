@@ -19,6 +19,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Enforce HTTPS in the destination URL
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify if the visitor is redirected to the HTTPS version
+    | of the destination URL. This can be particularly useful if you're allowing
+    | your web app users to create their own shortened URLS and you don't want to
+    | use the secure() method in every occasion.
+    |
+    */
+    'enforce_https' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | URL Length
     |--------------------------------------------------------------------------
     |

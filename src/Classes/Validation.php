@@ -18,7 +18,8 @@ class Validation
         return $this->validateKeyLength()
                && $this->validateTrackingOptions()
                && $this->validateDefaultRouteOption()
-               && $this->validateKeySalt();
+               && $this->validateKeySalt()
+               && $this->validateEnforceHttpsOption();
     }
 
     /**
@@ -100,6 +101,22 @@ class Validation
     {
         if (! is_bool(config('short-url.disable_default_route'))) {
             throw new ValidationException('The disable_default_route config variable must be a boolean.');
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate that the enforce_https option
+     * is a boolean.
+     *
+     * @return bool
+     * @throws ValidationException
+     */
+    protected function validateEnforceHttpsOption(): bool
+    {
+        if (! is_bool(config('short-url.enforce_https'))) {
+            throw new ValidationException('The enforce_https config variable must be a boolean.');
         }
 
         return true;

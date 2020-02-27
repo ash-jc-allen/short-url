@@ -55,10 +55,28 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
-    public function destination_url_is_not_changed_to_https_if_secure_flag_has_not_been_set()
+    public function destination_url_is_not_changed_to_https_if_secure_flag_has_been_set_to_false()
     {
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure(false)->make();
+        $this->assertEquals('http://domain.com', $shortUrl->destination_url);
+    }
+
+    /** @test */
+    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_true_from_the_config()
+    {
+        Config::set('short-url.enforce_https', true);
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->make();
+        $this->assertEquals('https://domain.com', $shortUrl->destination_url);
+    }
+
+    /** @test */
+    public function destination_url_is_not_changed_to_https_if_enforce_https_flag_is_set_to_false_from_the_config()
+    {
+        Config::set('short-url.enforce_https', false);
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->make();
         $this->assertEquals('http://domain.com', $shortUrl->destination_url);
     }
 
