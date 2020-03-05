@@ -39,6 +39,22 @@ matrix:
       env: LARAVEL='6.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-lowest'
     - php: 7.4
       env: LARAVEL='6.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-stable'
+    #     Laravel 7.*
+    #       --> PHP 7.2
+    - php: 7.2
+      env: LARAVEL='7.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-lowest'
+    - php: 7.2
+      env: LARAVEL='7.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-stable'
+    #       --> PHP 7.3
+    - php: 7.3
+      env: LARAVEL='7.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-lowest'
+    - php: 7.3
+      env: LARAVEL='7.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-stable'
+    #       --> PHP 7.4
+    - php: 7.4
+      env: LARAVEL='7.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-lowest'
+    - php: 7.4
+      env: LARAVEL='7.*' TESTBENCH='4.*' COMPOSER_FLAGS='--prefer-stable'
 
 before_install:
   - travis_retry composer self-update
