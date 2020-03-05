@@ -34,12 +34,12 @@ class ShortURLProvider extends ServiceProvider
         // Config
         $this->publishes([
             __DIR__.'/../../config/short-url.php' => config_path('short-url.php'),
-        ], 'config');
+        ], 'short-url-config');
 
         // Migrations
         $this->publishes([
             __DIR__.'/../../database/migrations' => database_path('migrations'),
-        ], 'migrations');
+        ], 'short-url-migrations');
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         // Routes
