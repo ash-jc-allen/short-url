@@ -1,5 +1,10 @@
 # Changelog
 
+**2.3.0 (released 2020-03-05):**
+- Added support for Laravel 7. [#38](https://github.com/ash-jc-allen/short-url/pull/38)
+- Updated the asset publishing tags from ``` config ``` and ``` migrations ``` to ``` short-url-config ``` and 
+``` short-url-migrations ```. [#39](https://github.com/ash-jc-allen/short-url/pull/39)
+
 **2.2.0 (released 2020-02-27):**
 - Added a default option to enforce HTTPS on destination URLs as a config option. [#36](https://github.com/ash-jc-allen/short-url/pull/36) 
 
