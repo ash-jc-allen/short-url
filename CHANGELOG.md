@@ -1,5 +1,8 @@
 # Changelog
 
+**2.3.1 (released 2020-03-11):**
+- Updated the documentation to mention that the BC Math or GMP PHP extensions are required. [#43](https://github.com/ash-jc-allen/short-url/pull/43)
+
 **2.3.0 (released 2020-03-05):**
 - Added support for Laravel 7. [#38](https://github.com/ash-jc-allen/short-url/pull/38)
 - Updated the asset publishing tags from ``` config ``` and ``` migrations ``` to ``` short-url-config ``` and 
