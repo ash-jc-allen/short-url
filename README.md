@@ -71,6 +71,8 @@ The package has been developed and tested to work with the following minimum req
 - PHP 7.2
 - Laravel 5.8
 
+Short URL requires either the [BC Math](https://secure.php.net/manual/en/book.bc.php) or [GMP](https://secure.php.net/manual/en/book.gmp.php) PHP extensions in order to work.
+
 ### Install the Package
 You can install the package via Composer:
 
