@@ -3,7 +3,6 @@
 namespace AshAllenDesign\ShortURL\Facades;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
-use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Support\Facades\Facade;
 use RuntimeException;
 
@@ -22,13 +21,11 @@ use RuntimeException;
  * @method static self urlKey(string $key)
  * @method static self redirectStatusCode(int $statusCode)
  * @method static self resetOptions()
- * @method static ShortURL make()
+ * @method static \AshAllenDesign\ShortURL\Models\ShortURL make()
  *
  * @see Builder
- *
- * @deprecated since v3.0.0. This class will be removed in v4.0.0. Use the newer 'ShortURL' facade.
  */
-class ShortURLBuilder extends Facade
+class ShortURL extends Facade
 {
     /**
      * Get the registered name of the component.

@@ -9,7 +9,7 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
-use ShortURLBuilder;
+use ShortURL as ShortURLAlias;
 
 class BuilderTest extends TestCase
 {
@@ -295,7 +295,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_and_stored_in_the_database_using_the_facade()
     {
-        ShortURLBuilder::destinationUrl('http://domain.com')
+        ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
             ->secure()
             ->trackVisits(false)
@@ -314,7 +314,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function correct_redirect_status_code_is_stored_if_explicitly_set()
     {
-        ShortURLBuilder::destinationUrl('http://domain.com')
+        ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
             ->secure()
             ->trackVisits(false)
@@ -337,7 +337,7 @@ class BuilderTest extends TestCase
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The redirect status code must be a valid redirect HTTP status code.');
 
-        ShortURLBuilder::destinationUrl('http://domain.com')
+        ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
             ->secure()
             ->trackVisits(false)
