@@ -25,6 +25,8 @@ use RuntimeException;
  * @method static ShortURL make()
  *
  * @see Builder
+ *
+ * @deprecated since v3.0.0. This class will be removed in v4.0.0. Use the newer 'ShortURL' facade.
  */
 class ShortURLBuilder extends Facade
 {
