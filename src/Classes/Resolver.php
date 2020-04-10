@@ -42,9 +42,8 @@ class Resolver
     }
 
     /**
-     * Handle the visit. If the short URL is a single
-     * use URL and has already been visited, abort
-     * the request. If the short URL has tracking
+     * Handle the visit. Check that the visitor is allowed
+     * to visit the URL. If the short URL has tracking
      * enabled, track the visit in the database.
      * If this method is executed successfully,
      * return true.
@@ -55,13 +54,41 @@ class Resolver
      */
     public function handleVisit(Request $request, ShortURL $shortURL): bool
     {
-        if ($shortURL->single_use && $shortURL->visits()->count()) {
+        if (! $this->shouldAllowAccess($shortURL)) {
             abort(404);
         }
 
         $visit = $this->recordVisit($request, $shortURL);
 
         Event::dispatch(new ShortURLVisited($shortURL, $visit));
+
+        return true;
+    }
+
+    /**
+     * Determine whether if the visitor is allowed access
+     * to the URL. If the short URL is a single use URL
+     * and has already been visited, return false. If
+     * the URL is not activated yet, return false.
+     * If the URL has been deactivated, return
+     * false.
+     *
+     * @param  ShortURL  $shortURL
+     * @return bool
+     */
+    protected function shouldAllowAccess(ShortURL $shortURL): bool
+    {
+        if ($shortURL->single_use && $shortURL->visits()->count()) {
+            return false;
+        }
+
+        if (now()->isBefore($shortURL->activated_at)) {
+            return false;
+        }
+
+        if ($shortURL->deactivated_at && now()->isAfter($shortURL->deactivated_at)) {
+            return false;
+        }
 
         return true;
     }
