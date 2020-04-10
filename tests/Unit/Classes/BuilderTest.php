@@ -81,7 +81,8 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
-    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url()
+    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url(
+    )
     {
         Config::set('short-url.enforce_https', false);
         $builder = new Builder();
@@ -289,6 +290,8 @@ class BuilderTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
+            'activated_at'                   => now(),
+            'deactivated_at'                 => null
         ]);
     }
 
@@ -346,6 +349,99 @@ class BuilderTest extends TestCase
 
         $this->assertDatabaseMissing('short_urls', [
             'destination_url' => 'https://domain.com',
+        ]);
+    }
+
+    /** @test */
+    public function exception_is_thrown_if_the_activation_date_is_in_the_past()
+    {
+        $this->expectException(ShortURLException::class);
+        $this->expectExceptionMessage('The activation date must not be in the past.');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->activateAt(now()->subHour())
+            ->make();
+    }
+
+    /** @test */
+    public function exception_is_thrown_if_the_deactivation_date_is_in_the_past()
+    {
+        $this->expectException(ShortURLException::class);
+        $this->expectExceptionMessage('The deactivation date must not be in the past.');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->deactivateAt(now()->subHour())
+            ->make();
+    }
+
+    /** @test */
+    public function exception_is_thrown_if_the_deactivation_date_is_before_the_activation_date()
+    {
+        $this->expectException(ShortURLException::class);
+        $this->expectExceptionMessage('The deactivation date must not be before the activation date.');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->activateAt(now()->addHour())
+            ->deactivateAt(now()->addMinute())
+            ->make();
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_an_explicit_activation_date()
+    {
+        $activateTime = now()->addHour();
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->activateAt($activateTime)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => config('app.url').'/short/customKey',
+            'url_key'           => 'customKey',
+            'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
+            'deactivated_at'    => null,
+        ]);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_an_explicit_activation_date_and_deactivation_date()
+    {
+        $activateTime = now()->addHour();
+        $deactivateTime = now()->addHours(2);
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->activateAt($activateTime)
+            ->deactivateAt($deactivateTime)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => config('app.url').'/short/customKey',
+            'url_key'           => 'customKey',
+            'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
+            'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
+        ]);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_an_explicit_deactivation_date()
+    {
+        $deactivateTime = now()->addHours(2);
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->deactivateAt($deactivateTime)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => config('app.url').'/short/customKey',
+            'url_key'           => 'customKey',
+            'activated_at'      => now(),
+            'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
     }
 }
