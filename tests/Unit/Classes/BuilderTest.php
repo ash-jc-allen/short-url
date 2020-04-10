@@ -81,8 +81,7 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
-    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url(
-    )
+    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url()
     {
         Config::set('short-url.enforce_https', false);
         $builder = new Builder();
@@ -291,7 +290,7 @@ class BuilderTest extends TestCase
             'track_referer_url'              => false,
             'track_device_type'              => true,
             'activated_at'                   => now(),
-            'deactivated_at'                 => null
+            'deactivated_at'                 => null,
         ]);
     }
 
