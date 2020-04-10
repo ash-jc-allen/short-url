@@ -30,6 +30,7 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 301,
+            'activated_at'         => now()->subMinute(),
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
@@ -47,6 +48,7 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 301,
+            'activated_at'         => now()->subMinute(),
         ]);
 
         $this->get('/short/12345')->assertNotFound();
@@ -71,6 +73,8 @@ class ShortURLControllerTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
+            'activated_at'                   => now()->subMinute(),
+            'deactivated_at'                 => null,
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
@@ -101,6 +105,58 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 302,
+            'activated_at'         => now()->subMinute(),
+        ]);
+
+        $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
+    }
+
+    /** @test */
+    public function request_is_aborted_if_the_activation_date_is_in_the_future()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 302,
+            'activated_at'         => now()->addMinute(),
+            'deactivated_at'       => null,
+        ]);
+
+        $this->get('/short/12345')->assertNotFound();
+    }
+
+    /** @test */
+    public function request_is_aborted_if_the_deactivation_date_is_in_the_past()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 302,
+            'activated_at'         => now()->subMinutes(2),
+            'deactivated_at'       => now()->subMinute(),
+        ]);
+
+        $this->get('/short/12345')->assertNotFound();
+    }
+
+    /** @test */
+    public function visitor_is_redirected_to_the_destination_url_if_the_deactivation_date_is_in_the_future()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'single_use'           => true,
+            'track_visits'         => true,
+            'redirect_status_code' => 302,
+            'activated_at'         => now()->subMinute(),
+            'deactivated_at'       => now()->addMinute(),
         ]);
 
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
