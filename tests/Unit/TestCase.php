@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit;
 
+use AshAllenDesign\ShortURL\Facades\ShortURL;
 use AshAllenDesign\ShortURL\Facades\ShortURLBuilder;
 use AshAllenDesign\ShortURL\Providers\ShortURLProvider;
 use Illuminate\Foundation\Application;
@@ -32,6 +33,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         return [
             'ShortURLBuilder' => ShortURLBuilder::class,
+            'ShortURL'        => ShortURL::class,
         ];
     }
 
