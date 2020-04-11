@@ -5,6 +5,7 @@ namespace AshAllenDesign\ShortURL\Classes;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class Builder
@@ -121,6 +122,22 @@ class Builder
      * @var bool|null
      */
     private $trackDeviceType = null;
+
+    /**
+     * The date and time that the short URL should become
+     * active so that it can be visited.
+     *
+     * @var Carbon|null
+     */
+    private $activateAt = null;
+
+    /**
+     * The date and time that the short URL should be
+     * deactivated so that it cannot be visited.
+     *
+     * @var Carbon|null
+     */
+    private $deactivateAt = null;
 
     /**
      * Builder constructor.
@@ -335,6 +352,48 @@ class Builder
     }
 
     /**
+     * Set the date and time that the short URL should
+     * be activated and allowed to visit.
+     *
+     * @param  Carbon  $activationTime
+     * @return $this
+     * @throws ShortURLException
+     */
+    public function activateAt(Carbon $activationTime): self
+    {
+        if ($activationTime->isPast()) {
+            throw new ShortURLException('The activation date must not be in the past.');
+        }
+
+        $this->activateAt = $activationTime;
+
+        return $this;
+    }
+
+    /**
+     * Set the date and time that the short URL should
+     * be deactivated and not allowed to visit.
+     *
+     * @param  Carbon  $deactivationTime
+     * @return $this
+     * @throws ShortURLException
+     */
+    public function deactivateAt(Carbon $deactivationTime): self
+    {
+        if ($deactivationTime->isPast()) {
+            throw new ShortURLException('The deactivation date must not be in the past.');
+        }
+
+        if ($this->activateAt && $deactivationTime->isBefore($this->activateAt)) {
+            throw new ShortURLException('The deactivation date must not be before the activation date.');
+        }
+
+        $this->deactivateAt = $deactivationTime;
+
+        return $this;
+    }
+
+    /**
      * Attempt to build a shortened URL and return it.
      *
      * @return ShortURL
@@ -378,6 +437,8 @@ class Builder
             'track_browser_version'          => $this->trackBrowserVersion,
             'track_referer_url'              => $this->trackRefererURL,
             'track_device_type'              => $this->trackDeviceType,
+            'activated_at'                   => $this->activateAt,
+            'deactivated_at'                 => $this->deactivateAt,
         ]);
     }
 
@@ -411,6 +472,10 @@ class Builder
 
         if (! $this->urlKey) {
             $this->urlKey = $this->keyGenerator->generateRandom();
+        }
+
+        if (! $this->activateAt) {
+            $this->activateAt = now();
         }
 
         $this->setTrackingOptions();

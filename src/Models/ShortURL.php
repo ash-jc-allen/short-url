@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool track_browser_version
  * @property bool track_referer_url
  * @property bool track_device_type
+ * @property Carbon activated_at
+ * @property Carbon deactivated_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -55,6 +57,8 @@ class ShortURL extends Model
         'track_browser_version',
         'track_referer_url',
         'track_device_type',
+        'activated_at',
+        'deactivated_at',
     ];
 
     /**
@@ -63,6 +67,8 @@ class ShortURL extends Model
      * @var array
      */
     protected $dates = [
+        'activated_at',
+        'deactivated_at',
         'created_at',
         'updated_at',
     ];

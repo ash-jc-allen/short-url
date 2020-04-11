@@ -1,5 +1,9 @@
 # Changelog
 
+**3.0.0 (released 2020-04-11):**
+- Added the functionality to set activation and deactivation times for the short URLs. [#46](https://github.com/ash-jc-allen/short-url/pull/46)
+- Deprecated the ``` ShortURLBuilder ``` facade in favour of a newer ``` ShortURL ``` facade. [#45](https://github.com/ash-jc-allen/short-url/pull/45)
+
 **2.3.1 (released 2020-03-11):**
 - Updated the documentation to mention that the BC Math or GMP PHP extensions are required. [#43](https://github.com/ash-jc-allen/short-url/pull/43)
 
