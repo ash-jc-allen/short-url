@@ -32,6 +32,7 @@
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
         - [Redirect Status Code](#redirect-status-code)
+        - [Activation and Deactivation Times](#activation-and-deactivation-times)
         - [Facade](#facade)
     - [Using the Shortened URLs](#using-the-shortened-urls)
         - [Default Route and Controller](#default-route-and-controller)
@@ -271,9 +272,36 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
  ```
 
+### Activation and Deactivation Times
+
+By default, all short URLs that you create are active until you delete them. However, you may set activation and deactivation
+times for your URLs when you're creating them.
+
+Doing this can be useful for marketing campaigns. For example, you may want to launch a new URL for a marketing campaign on
+a given date and then automatically deactivate that URL when the marketing campaign comes to an end.
+
+The example below shows how to create a shortened URL that will be active from this time tomorrow onwards:
+
+ ```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+ 
+$shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())->make();
+ ```
+
+The example below shows how to create a shortened URL that will be active from this time tomorrow onwards and then is
+deactivated the day after:
+
+ ```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+ 
+$shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())
+                           ->deactivateAt(\Carbon\Carbon::now()->addDays(2))
+                           ->make();
+ ```
+
 #### Facade
-If you prefer to use facades in Laravel, you can choose to use the provided ```ShortURLBuilder ``` facade instead of instantiating the ``` Builder```
-class manually.
+If you prefer to use facades in Laravel, you can choose to use the provided ``` ShortURL ``` facade instead of instantiating
+the ``` Builder ``` class manually.
 
 The example below shows an example of how you could use the facade to create a shortened URL:
 
@@ -282,13 +310,13 @@ The example below shows an example of how you could use the facade to create a s
 
 namespace App\Http\Controllers;
 
-use ShortURLBuilder;
+use ShortURL;
 
 class Controller
 {
     public function index()
     {
-        $shortURLObject = ShortURLBuilder::destinationUrl('https://destination.com')->make();
+        $shortURLObject = ShortURL::destinationUrl('https://destination.com')->make();
         ...
     }
 }
