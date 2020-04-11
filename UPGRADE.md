@@ -32,7 +32,7 @@ fit more with the Laravel naming conventions and consistency, this has now been 
 There is now a newer ``` ShortURL ``` facade which you can use. It works exactly the same and is purely being changed
 for syntactic sugar. Simply, replace anywhere in your application that uses the ``` ShortURLBuilder ``` with ``` ShortURL ```.
 
-Note: The ``` ShortURLBuilder ``` will remain in the v3.* of the library but will be removed in v4.0.0.
+Note: The ``` ShortURLBuilder ``` will remain in version 3.* of the library but will be removed in version 4.0.0.
 
 ## Upgrading from 1.* to 2.0.0
 
