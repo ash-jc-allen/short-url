@@ -251,13 +251,13 @@ URLS.
 
 To enforce HTTPS, you can use the ``` ->secure() ``` method when building the shortened URL.
 
-The example below show how to create a secure shortened URL:
+The example below shows how to create a secure shortened URL:
  ```php
 $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
  
 $shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->make();
 
-// Desination URL: https://destination.com
+// Destination URL: https://destination.com
  ```
 
 #### Redirect Status Code
