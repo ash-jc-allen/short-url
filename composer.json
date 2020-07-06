@@ -20,8 +20,8 @@
   "require": {
     "php": "^7.2",
     "nesbot/carbon": "~2.0",
-    "illuminate/container": "^5.8|^6.0|^7.0",
-    "illuminate/database": "^5.8|^6.0|^7.0",
+    "illuminate/container": "^6.0|^7.0",
+    "illuminate/database": "^6.0|^7.0",
     "jenssegers/agent": "^2.6",
     "hashids/hashids": "^4.0"
   },
