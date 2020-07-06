@@ -1,8 +1,29 @@
 # Upgrade Guide
 
 ## Contents
+- [Upgrading from 3.* to 4.0.0](#upgrading-from-3-to-400)
 - [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300)
 - [Upgrading from 1.* to 2.0.0](#upgrading-from-1-to-200)
+
+## Upgrading from 3.* to 4.0.0
+
+### Laravel - Minimum Required Version
+As of Short URL v4.0.0, Laravel 5.8 is no longer supported. Therefore, you must be using a minimum of Laravel 6.0 to use this library.
+
+### New Config Variable
+Up until now, the values defined in the ``` short-url.php ``` config file were always validated. However, this sometimes caused issues 
+if the application's config was cached before running ``` composer require ```. A new config variable has been added which can
+now be used to toggle whether if the validation should be run. By default, the validation is now disabled.
+
+To enable the validation, you can add the following line to your ``` short-url.php ``` config file:
+
+```
+'validate_config' => true,
+``` 
+
+### Deprecated Facade
+As mentioned in [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300), the ``` ShortURLBuilder ``` facade was deprecated
+and set to be removed. As of Short URL v4.0.0, it has now been removed in favour of the newer ``` ShortURL ``` facade.
 
 ## Upgrading from 2.* to 3.0.0
 

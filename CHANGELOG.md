@@ -1,5 +1,11 @@
 # Changelog
 
+**4.0.0 (released 2020-07-07):**
+- Added a new config value that can be used to toggle the config validation. [#50](https://github.com/ash-jc-allen/short-url/pull/50)
+- Removed support for Laravel 5.8. [#51](https://github.com/ash-jc-allen/short-url/pull/51)
+- Removed the ``` ShortURLBuilder ``` facade that was deprecated in v3.0.0. [#52](https://github.com/ash-jc-allen/short-url/pull/52)
+- Documentation updates. [#48](https://github.com/ash-jc-allen/short-url/pull/48)
+
 **3.0.0 (released 2020-04-11):**
 - Added the functionality to set activation and deactivation times for the short URLs. [#46](https://github.com/ash-jc-allen/short-url/pull/46)
 - Deprecated the ``` ShortURLBuilder ``` facade in favour of a newer ``` ShortURL ``` facade. [#45](https://github.com/ash-jc-allen/short-url/pull/45)
