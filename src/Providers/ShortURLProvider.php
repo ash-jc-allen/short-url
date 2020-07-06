@@ -45,6 +45,8 @@ class ShortURLProvider extends ServiceProvider
         // Routes
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
-        (new Validation())->validateConfig();
+        if (config('short-url') && config('short-url.validate_config')) {
+            (new Validation())->validateConfig();
+        }
     }
 }
