@@ -86,4 +86,16 @@ return [
             'device_type'              => true,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Config Validation
+    |--------------------------------------------------------------------------
+    |
+    | Choose whether if you want the config to be validated. This
+    | can be useful for ensuring that your config values are
+    | safe to use.
+    |
+    */
+    'validate_config' => false,
 ];
