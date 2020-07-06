@@ -21,6 +21,10 @@ To enable the validation, you can add the following line to your ``` short-url.p
 'validate_config' => true,
 ``` 
 
+### Deprecated Facade
+As mentioned in [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300), the ``` ShortURLBuilder ``` facade was deprecated
+and set to be removed. As of Short URL v4.0.0, it has now been removed in favour of the newer ``` ShortURL ``` facade.
+
 ## Upgrading from 2.* to 3.0.0
 
 ### Migrations and Database Changes
