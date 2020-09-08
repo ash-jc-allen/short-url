@@ -20,14 +20,14 @@
   "require": {
     "php": "^7.2",
     "nesbot/carbon": "~2.0",
-    "illuminate/container": "^6.0|^7.0",
-    "illuminate/database": "^6.0|^7.0",
+    "illuminate/container": "^6.0|^7.0|^8.0",
+    "illuminate/database": "^6.0|^7.0|^8.0",
     "jenssegers/agent": "^2.6",
     "hashids/hashids": "^4.0"
   },
   "require-dev": {
     "mockery/mockery": "^1.0",
-    "orchestra/testbench": "^4.0",
+    "orchestra/testbench": "^4.0|^5.0|^6.0",
     "phpunit/phpunit": "^8.2"
   },
   "autoload": {
