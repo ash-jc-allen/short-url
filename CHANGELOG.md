@@ -1,5 +1,8 @@
 # Changelog
 
+**4.1.0 (released 2020-09-08):**
+- Added support for Laravel 8.
+
 **4.0.0 (released 2020-07-07):**
 - Added a new config value that can be used to toggle the config validation. [#50](https://github.com/ash-jc-allen/short-url/pull/50)
 - Removed support for Laravel 5.8. [#51](https://github.com/ash-jc-allen/short-url/pull/51)
