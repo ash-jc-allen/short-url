@@ -31,6 +31,7 @@ matrix:
 
 before_install:
   - travis_retry composer self-update
+  - travis_retry composer require --no-update --no-interaction "illuminate/container:${LARAVEL}" "illuminate/database:${LARAVEL}"
 
 install:
   - travis_retry composer update --prefer-dist --no-interaction --no-suggest
