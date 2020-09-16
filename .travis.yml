@@ -22,8 +22,6 @@ matrix:
     - php: 7.4
       env: LARAVEL='7.*'
     #     Laravel 8.*
-    - php: 7.2
-      env: LARAVEL='8.*'
     - php: 7.3
       env: LARAVEL='8.*'
     - php: 7.4
@@ -31,6 +29,7 @@ matrix:
 
 before_install:
   - travis_retry composer self-update
+  - travis_retry composer require --no-update --no-interaction "illuminate/container:${LARAVEL}" "illuminate/database:${LARAVEL}"
 
 install:
   - travis_retry composer update --prefer-dist --no-interaction --no-suggest
