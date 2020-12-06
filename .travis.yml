@@ -42,4 +42,4 @@ install:
   - travis_retry composer du -o
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --debug
