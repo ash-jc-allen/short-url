@@ -15,7 +15,7 @@ matrix:
     - php: 7.4
       env: LARAVEL='6.*'
     - php: 8.0
-      env: LARAVEL=6.*'
+      env: LARAVEL='6.*'
     #     Laravel 7.*
     - php: 7.2
       env: LARAVEL='7.*'
