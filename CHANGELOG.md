@@ -1,7 +1,10 @@
 # Changelog
 
+**v4.2.0 (released 2021-01-26):**
+- Added support for PHP 8. [#58](https://github.com/ash-jc-allen/short-url/pull/58)
+
 **v4.1.1 (released 2020-09-16):**
-- Updated the Travis CI config to run the tests on the correct Laravel versions.
+- Updated the Travis CI config to run the tests on the correct Laravel versions. [#55](https://github.com/ash-jc-allen/short-url/pull/55)
 
 **4.1.0 (released 2020-09-08):**
 - Added support for Laravel 8. [#54](https://github.com/ash-jc-allen/short-url/pull/54)
