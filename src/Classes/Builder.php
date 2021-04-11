@@ -24,7 +24,7 @@ class Builder
      *
      * @var string|null
      */
-    private $destinationUrl = null;
+    protected $destinationUrl = null;
 
     /**
      * Whether or not if the shortened URL can be
@@ -32,7 +32,7 @@ class Builder
      *
      * @var bool
      */
-    private $singleUse = false;
+    protected $singleUse = false;
 
     /**
      * Whether or not to force the destination URL
@@ -41,7 +41,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $secure = null;
+    protected $secure = null;
 
     /**
      * Whether or not if the short URL should track
@@ -49,7 +49,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackVisits = null;
+    protected $trackVisits = null;
 
     /**
      * This can hold a custom URL key that might be
@@ -57,7 +57,7 @@ class Builder
      *
      * @var string|null
      */
-    private $urlKey = null;
+    protected $urlKey = null;
 
     /**
      * The HTTP status code that will be used when
@@ -65,7 +65,7 @@ class Builder
      *
      * @var int
      */
-    private $redirectStatusCode = 301;
+    protected $redirectStatusCode = 301;
 
     /**
      * Whether or not the visitor's IP address should
@@ -73,7 +73,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackIPAddress = null;
+    protected $trackIPAddress = null;
 
     /**
      * Whether or not the visitor's operating system
@@ -81,7 +81,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackOperatingSystem = null;
+    protected $trackOperatingSystem = null;
 
     /**
      * Whether or not the visitor's operating system
@@ -89,7 +89,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackOperatingSystemVersion = null;
+    protected $trackOperatingSystemVersion = null;
 
     /**
      * Whether or not the visitor's browser should
@@ -97,7 +97,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackBrowser = null;
+    protected $trackBrowser = null;
 
     /**
      * Whether or not the visitor's browser version
@@ -105,7 +105,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackBrowserVersion = null;
+    protected $trackBrowserVersion = null;
 
     /**
      * Whether or not the visitor's referer URL should
@@ -113,7 +113,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackRefererURL = null;
+    protected $trackRefererURL = null;
 
     /**
      * Whether or not the visitor's device type should
@@ -121,7 +121,7 @@ class Builder
      *
      * @var bool|null
      */
-    private $trackDeviceType = null;
+    protected $trackDeviceType = null;
 
     /**
      * The date and time that the short URL should become
@@ -129,7 +129,7 @@ class Builder
      *
      * @var Carbon|null
      */
-    private $activateAt = null;
+    protected $activateAt = null;
 
     /**
      * The date and time that the short URL should be
@@ -137,7 +137,7 @@ class Builder
      *
      * @var Carbon|null
      */
-    private $deactivateAt = null;
+    protected $deactivateAt = null;
 
     /**
      * Builder constructor.
