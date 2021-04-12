@@ -1,5 +1,8 @@
 # Changelog
 
+**v4.3.0 (released 2021-04-12):**
+- Updated the private fields in the ` Builder ` class to be protected. [#62](https://github.com/ash-jc-allen/short-url/pull/62)
+
 **v4.2.0 (released 2021-01-26):**
 - Added support for PHP 8. [#58](https://github.com/ash-jc-allen/short-url/pull/58)
 
