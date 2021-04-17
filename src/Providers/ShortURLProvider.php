@@ -40,7 +40,6 @@ class ShortURLProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../database/migrations' => database_path('migrations'),
         ], 'short-url-migrations');
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         // Routes
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
