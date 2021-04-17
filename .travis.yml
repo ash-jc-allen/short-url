@@ -10,7 +10,7 @@ matrix:
     #     Laravel 6.*
     - php: 7.2
       env: LARAVEL='6.*'
-    - php: 7.3.23
+    - php: 7.3.24
       env: LARAVEL='6.*'
     - php: 7.4
       env: LARAVEL='6.*'
@@ -19,14 +19,14 @@ matrix:
     #     Laravel 7.*
     - php: 7.2
       env: LARAVEL='7.*'
-    - php: 7.3.23
+    - php: 7.3.24
       env: LARAVEL='7.*'
     - php: 7.4
       env: LARAVEL='7.*'
     - php: 8.0
       env: LARAVEL='7.*'
     #     Laravel 8.*
-    - php: 7.3.23
+    - php: 7.3.24
       env: LARAVEL='8.*'
     - php: 7.4
       env: LARAVEL='8.*'
