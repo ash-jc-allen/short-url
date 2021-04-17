@@ -24,7 +24,7 @@ class Builder
      *
      * @var string|null
      */
-    protected $destinationUrl = null;
+    protected $destinationUrl;
 
     /**
      * Whether or not if the shortened URL can be
@@ -41,7 +41,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $secure = null;
+    protected $secure;
 
     /**
      * Whether or not if the short URL should track
@@ -49,7 +49,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackVisits = null;
+    protected $trackVisits;
 
     /**
      * This can hold a custom URL key that might be
@@ -57,7 +57,7 @@ class Builder
      *
      * @var string|null
      */
-    protected $urlKey = null;
+    protected $urlKey;
 
     /**
      * The HTTP status code that will be used when
@@ -73,7 +73,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackIPAddress = null;
+    protected $trackIPAddress;
 
     /**
      * Whether or not the visitor's operating system
@@ -81,7 +81,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackOperatingSystem = null;
+    protected $trackOperatingSystem;
 
     /**
      * Whether or not the visitor's operating system
@@ -89,7 +89,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackOperatingSystemVersion = null;
+    protected $trackOperatingSystemVersion;
 
     /**
      * Whether or not the visitor's browser should
@@ -97,7 +97,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackBrowser = null;
+    protected $trackBrowser;
 
     /**
      * Whether or not the visitor's browser version
@@ -105,7 +105,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackBrowserVersion = null;
+    protected $trackBrowserVersion;
 
     /**
      * Whether or not the visitor's referer URL should
@@ -113,7 +113,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackRefererURL = null;
+    protected $trackRefererURL;
 
     /**
      * Whether or not the visitor's device type should
@@ -538,7 +538,6 @@ class Builder
 
         $this->trackVisits = null;
         $this->trackIPAddress = null;
-        $this->trackOperatingSystem = null;
         $this->trackOperatingSystem = null;
         $this->trackBrowser = null;
         $this->trackBrowserVersion = null;
