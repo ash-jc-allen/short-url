@@ -1,9 +1,23 @@
 # Upgrade Guide
 
 ## Contents
+- [Upgrading from 4.* to 5.0.0](#upgrading-from-4-to-500)
 - [Upgrading from 3.* to 4.0.0](#upgrading-from-3-to-400)
 - [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300)
 - [Upgrading from 1.* to 2.0.0](#upgrading-from-1-to-200)
+
+## Upgrading from 4.* to 5.0.0
+
+### Publish Migrations
+
+Prior to v5.0.0 of Short URL, the database migrations would be automatically loaded via the package's service provider. As of
+v5.0.0, it's now mandatory for the migrations to be published as they won't be automatically loaded anymore.
+
+To publish the migrations to your own ` database/migrations ` folder, run the following command in your project root:
+
+```bash
+php artisan vendor:publish --tag="short-url-migrations"
+```
 
 ## Upgrading from 3.* to 4.0.0
 
