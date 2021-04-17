@@ -83,7 +83,7 @@ composer require ashallendesign/short-url
 ```
 
 ### Publish the Config and Migrations
-You can then publish the package's config file and database migrations (so that you can make changes to them) by using the following command:
+You can then publish the package's config file and database migrations by using the following command:
 ```bash
 php artisan vendor:publish --provider="AshAllenDesign\ShortURL\Providers\ShortURLProvider"
 ```
