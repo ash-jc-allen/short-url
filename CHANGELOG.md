@@ -1,5 +1,8 @@
 # Changelog
 
+**v5.0.0 (released 2021-04-18):**
+- Removed the automatic loading of the migrations and made it mandatory for them to be published. [#61](https://github.com/ash-jc-allen/short-url/pull/61)
+
 **v4.3.0 (released 2021-04-12):**
 - Updated the private fields in the ` Builder ` class to be protected. [#62](https://github.com/ash-jc-allen/short-url/pull/62)
 
