@@ -11,7 +11,6 @@ jobs:
       matrix:
         php: [7.3, 7.4, 8.0]
         laravel: [8.*, 7.*, 6.*]
-        dependency-version: [prefer-stable]
         include:
           - laravel: 8.*
             testbench: 6.*
@@ -20,7 +19,7 @@ jobs:
           - laravel: 6.*
             testbench: 4.*
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+    name: PHP${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
     steps:
       - name: Update apt
@@ -43,6 +42,6 @@ jobs:
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+          composer update--prefer-dist --no-interaction --no-suggest
       - name: Execute tests
         run: vendor/bin/phpunit
