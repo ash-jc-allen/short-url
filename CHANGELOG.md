@@ -1,5 +1,8 @@
 # Changelog
 
+**v5.1.0 (released 2021-06-11):**
+- Migrated the CI tests to be run using GitHub Actions instead of Travis CI. [#67](https://github.com/ash-jc-allen/short-url/pull/67)
+
 **v5.0.0 (released 2021-04-18):**
 - Removed the automatic loading of the migrations and made it mandatory for them to be published. [#61](https://github.com/ash-jc-allen/short-url/pull/61)
 
