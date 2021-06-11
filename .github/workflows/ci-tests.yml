@@ -1,0 +1,47 @@
+name: run-tests
+
+on:
+  pull_request:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [7.3, 7.4, 8.0]
+        laravel: [8.*, 7.*, 6.*]
+        include:
+          - laravel: 8.*
+            testbench: 6.*
+          - laravel: 7.*
+            testbench: 5.*
+          - laravel: 6.*
+            testbench: 4.*
+
+    name: PHP${{ matrix.php }} - Laravel ${{ matrix.laravel }}
+
+    steps:
+      - name: Update apt
+        run: sudo apt-get update --fix-missing
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Setup Problem Matches
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --prefer-dist --no-interaction --no-suggest
+      - name: Execute tests
+        run: vendor/bin/phpunit
