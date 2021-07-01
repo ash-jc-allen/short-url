@@ -23,7 +23,7 @@ class ShortURLController
      */
     public function __invoke(Request $request, Resolver $resolver, string $shortURLKey): RedirectResponse
     {
-        if ($request->route()->getName() === 'short-url.invoke'
+        if ($this->getCurrentRouteName($request) === 'short-url.invoke'
             && config('short-url.disable_default_route')) {
             abort(404);
         }
@@ -33,5 +33,9 @@ class ShortURLController
         $resolver->handleVisit(request(), $shortURL);
 
         return redirect($shortURL->destination_url, $shortURL->redirect_status_code);
+    }
+    private function getCurrentRouteName(Request $request)
+    {
+        return is_array($request->route()) ? $request->route()[1]['as'] : $request->route()->getName();
     }
 }
