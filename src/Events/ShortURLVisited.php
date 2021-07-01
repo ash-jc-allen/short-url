@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 
 class ShortURLVisited
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use InteractsWithSockets, SerializesModels;
 
     /**
      * The short URL that was visited.
