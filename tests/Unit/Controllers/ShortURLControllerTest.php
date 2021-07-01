@@ -9,6 +9,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Carbon;
 
 class ShortURLControllerTest extends TestCase
 {
@@ -30,7 +31,7 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 301,
-            'activated_at'         => now()->subMinute(),
+            'activated_at'         => Carbon::now()->subMinute(),
         ]);
 
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
@@ -48,7 +49,7 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 301,
-            'activated_at'         => now()->subMinute(),
+            'Carbon::activated_at' => Carbon::now()->subMinute(),
         ]);
 
         $this->get('/short/12345')->assertNotFound();
@@ -73,7 +74,7 @@ class ShortURLControllerTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
-            'activated_at'                   => now()->subMinute(),
+            'activated_at'                   => Carbon::now()->subMinute(),
             'deactivated_at'                 => null,
         ]);
 
@@ -105,7 +106,7 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 302,
-            'activated_at'         => now()->subMinute(),
+            'activated_at'         => Carbon::now()->subMinute(),
         ]);
 
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
@@ -121,7 +122,7 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 302,
-            'activated_at'         => now()->addMinute(),
+            'activated_at'         => Carbon::now()->addMinute(),
             'deactivated_at'       => null,
         ]);
 
@@ -138,8 +139,8 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 302,
-            'activated_at'         => now()->subMinutes(2),
-            'deactivated_at'       => now()->subMinute(),
+            'activated_at'         => Carbon::now()->subMinutes(2),
+            'deactivated_at'       => Carbon::now()->subMinute(),
         ]);
 
         $this->get('/short/12345')->assertNotFound();
@@ -155,8 +156,8 @@ class ShortURLControllerTest extends TestCase
             'single_use'           => true,
             'track_visits'         => true,
             'redirect_status_code' => 302,
-            'activated_at'         => now()->subMinute(),
-            'deactivated_at'       => now()->addMinute(),
+            'activated_at'         => Carbon::now()->subMinute(),
+            'deactivated_at'       => Carbon::now()->addMinute(),
         ]);
 
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');

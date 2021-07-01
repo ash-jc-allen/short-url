@@ -475,7 +475,7 @@ class Builder
         }
 
         if (! $this->activateAt) {
-            $this->activateAt = now();
+            $this->activateAt = Carbon::now();
         }
 
         $this->setTrackingOptions();

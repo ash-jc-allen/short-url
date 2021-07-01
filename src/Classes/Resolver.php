@@ -9,6 +9,7 @@ use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Carbon;
 
 class Resolver
 {
@@ -82,11 +83,11 @@ class Resolver
             return false;
         }
 
-        if (now()->isBefore($shortURL->activated_at)) {
+        if (Carbon::now()->isBefore($shortURL->activated_at)) {
             return false;
         }
 
-        if ($shortURL->deactivated_at && now()->isAfter($shortURL->deactivated_at)) {
+        if ($shortURL->deactivated_at && Carbon::now()->isAfter($shortURL->deactivated_at)) {
             return false;
         }
 
@@ -109,7 +110,7 @@ class Resolver
         $visit = new ShortURLVisit();
 
         $visit->short_url_id = $shortURL->id;
-        $visit->visited_at = now();
+        $visit->visited_at = Carbon::now();
 
         if ($shortURL->track_visits) {
             $this->trackVisit($shortURL, $visit, $request);

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Carbon;
 
 class UpdateShortURLTableForVersionThreeZeroZero extends Migration
 {
@@ -14,7 +15,7 @@ class UpdateShortURLTableForVersionThreeZeroZero extends Migration
     public function up()
     {
         Schema::table('short_urls', function (Blueprint $table) {
-            $table->timestamp('activated_at')->after('track_device_type')->nullable()->default(now());
+            $table->timestamp('activated_at')->after('track_device_type')->nullable()->default(Carbon::now());
             $table->timestamp('deactivated_at')->after('activated_at')->nullable();
         });
     }

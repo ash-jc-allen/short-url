@@ -10,6 +10,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Carbon;
 use Jenssegers\Agent\Agent;
 use Mockery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -42,7 +43,7 @@ class ResolverTest extends TestCase
             'track_visits'      => true,
         ]);
 
-        ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
+        ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => Carbon::now()]);
 
         $request = Request::create(config('app.url').'/short/12345');
 
@@ -80,7 +81,7 @@ class ResolverTest extends TestCase
             'track_visits'      => true,
         ]);
 
-        ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
+        ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => Carbon::now()]);
 
         $request = Request::create(config('app.url').'/short/12345');
 

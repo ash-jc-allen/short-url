@@ -9,6 +9,7 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Carbon;
 use ShortURL as ShortURLAlias;
 
 class BuilderTest extends TestCase
@@ -289,7 +290,7 @@ class BuilderTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
-            'activated_at'                   => now(),
+            'activated_at'                   => Carbon::now(),
             'deactivated_at'                 => null,
         ]);
     }
@@ -359,7 +360,7 @@ class BuilderTest extends TestCase
 
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
-            ->activateAt(now()->subHour())
+            ->activateAt(Carbon::now()->subHour())
             ->make();
     }
 
@@ -371,7 +372,7 @@ class BuilderTest extends TestCase
 
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
-            ->deactivateAt(now()->subHour())
+            ->deactivateAt(Carbon::now()->subHour())
             ->make();
     }
 
@@ -383,15 +384,15 @@ class BuilderTest extends TestCase
 
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
-            ->activateAt(now()->addHour())
-            ->deactivateAt(now()->addMinute())
+            ->activateAt(Carbon::now()->addHour())
+            ->deactivateAt(Carbon::now()->addMinute())
             ->make();
     }
 
     /** @test */
     public function short_url_can_be_created_with_an_explicit_activation_date()
     {
-        $activateTime = now()->addHour();
+        $activateTime = Carbon::now()->addHour();
 
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
@@ -409,8 +410,8 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_with_an_explicit_activation_date_and_deactivation_date()
     {
-        $activateTime = now()->addHour();
-        $deactivateTime = now()->addHours(2);
+        $activateTime = Carbon::now()->addHour();
+        $deactivateTime = Carbon::now()->addHours(2);
 
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
@@ -429,7 +430,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_with_an_explicit_deactivation_date()
     {
-        $deactivateTime = now()->addHours(2);
+        $deactivateTime = Carbon::now()->addHours(2);
 
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
@@ -439,7 +440,7 @@ class BuilderTest extends TestCase
         $this->assertDatabaseHas('short_urls', [
             'default_short_url' => config('app.url').'/short/customKey',
             'url_key'           => 'customKey',
-            'activated_at'      => now(),
+            'activated_at'      => Carbon::now(),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
     }
