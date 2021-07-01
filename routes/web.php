@@ -1,3 +1,9 @@
 <?php
 
-Route::get('/short/{shortURLKey}', 'AshAllenDesign\ShortURL\Controllers\ShortURLController')->name('short-url.invoke');
+app('router')->get(
+    '/short/{shortURLKey}',
+    [
+        'as' => 'short-url.invoke',
+        'uses' => 'AshAllenDesign\ShortURL\Controllers\ShortURLController'
+    ]
+);
