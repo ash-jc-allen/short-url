@@ -34,6 +34,7 @@ class ShortURLController
 
         return redirect($shortURL->destination_url, $shortURL->redirect_status_code);
     }
+
     private function getCurrentRouteName(Request $request)
     {
         return is_array($request->route()) ? $request->route()[1]['as'] : $request->route()->getName();
