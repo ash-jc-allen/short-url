@@ -64,6 +64,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Alphabet
+    |--------------------------------------------------------------------------
+    |
+    | Define the alphabet allowed in the short URL keys.
+    | The 'alphabet' must be at least 16 unique characters
+    | and cannot contain spaces.
+    |
+    */
+    'alphabet'              => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+
+    /*
+    |--------------------------------------------------------------------------
     | Tracking
     |--------------------------------------------------------------------------
     |

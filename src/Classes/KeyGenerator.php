@@ -20,7 +20,7 @@ class KeyGenerator
      */
     public function __construct()
     {
-        $this->hashids = new Hashids(config('short-url.key_salt'), config('short-url.key_length'));
+        $this->hashids = new Hashids(config('short-url.key_salt'), config('short-url.key_length'), config('short-url.alphabet'));
     }
 
     /**
