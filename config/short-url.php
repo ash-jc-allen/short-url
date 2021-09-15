@@ -67,7 +67,7 @@ return [
     | Alphabet
     |--------------------------------------------------------------------------
     |
-    | Define the alphabet allowed in the short URL keys.
+    | Define the characters allowed in the output short URL keys.
     | The 'alphabet' must be at least 16 unique characters
     | and cannot contain spaces.
     |
