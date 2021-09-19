@@ -425,7 +425,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/short/'.$this->urlKey,
+            'default_short_url'              => config('app.url').'/' . confid('short-url.custom_route') . $this->urlKey,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'track_visits'                   => $this->trackVisits,
