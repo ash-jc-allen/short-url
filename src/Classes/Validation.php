@@ -11,6 +11,7 @@ class Validation
      * library.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     public function validateConfig(): bool
@@ -27,6 +28,7 @@ class Validation
      * in the config is an integer that is above 0.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     protected function validateKeyLength(): bool
@@ -49,6 +51,7 @@ class Validation
      * valid.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     protected function validateKeySalt(): bool
@@ -71,6 +74,7 @@ class Validation
      * booleans.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     protected function validateTrackingOptions(): bool
@@ -95,6 +99,7 @@ class Validation
      * is a boolean.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     protected function validateDefaultRouteOption(): bool
@@ -110,6 +115,7 @@ class Validation
      * Validate that the enforce_https option is a boolean.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     protected function validateEnforceHttpsOption(): bool
