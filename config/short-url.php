@@ -18,6 +18,13 @@ return [
     'disable_default_route' => false,
 
     /*
+    | Define the string that will be appended to the app URL. For instance, when set to 'short', this
+    | means that the shortened URL can be accessed via <app_url>/short/<hash>.
+    |
+    */
+    'url_suffix' => 'short',
+
+    /*
     |--------------------------------------------------------------------------
     | Enforce HTTPS in the destination URL
     |--------------------------------------------------------------------------
