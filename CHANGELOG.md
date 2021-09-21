@@ -1,5 +1,9 @@
 # Changelog
 
+**v5.2.0 (released 2021-09-21):**
+- Updated the migration for the `short_urls` table so that `url_key` is now unique and `destination_url` is now a TEXT field rather than varchar. [#67](https://github.com/ash-jc-allen/short-url/pull/80)
+- Added the ability to configure the alphabet used for generating keys with `hashids`. [#77](https://github.com/ash-jc-allen/short-url/pull/77)
+
 **v5.1.0 (released 2021-06-11):**
 - Migrated the CI tests to be run using GitHub Actions instead of Travis CI. [#67](https://github.com/ash-jc-allen/short-url/pull/67)
 

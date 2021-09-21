@@ -532,6 +532,7 @@ Note: A contribution guide will be added soon.
 - [Jess Pickup](https://jesspickup.co.uk) (Logo)
 - [Nathan Giesbrecht](https://github.com/NathanGiesbrecht)
 - [Carlos A. Escobar](https://github.com/carlosjs23)
+- [Victor-Emil Rossil Andersen](https://github.com/Victor-emil)
 - [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
 
 ## Changelog
