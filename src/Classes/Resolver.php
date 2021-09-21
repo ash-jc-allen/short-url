@@ -28,6 +28,7 @@ class Resolver
      *
      * @param  Agent|null  $agent
      * @param  Validation|null  $validation
+     *
      * @throws ValidationException
      */
     public function __construct(Agent $agent = null, Validation $validation = null)

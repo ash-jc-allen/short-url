@@ -27,6 +27,7 @@ class ShortURLProvider extends ServiceProvider
      * Bootstrap any application services.
      *
      * @return void
+     *
      * @throws ValidationException
      */
     public function boot(): void

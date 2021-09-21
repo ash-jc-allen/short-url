@@ -147,6 +147,7 @@ class Builder
      *
      * @param  Validation  $validation
      * @param  KeyGenerator|null  $keyGenerator
+     *
      * @throws ValidationException
      */
     public function __construct(Validation $validation = null, KeyGenerator $keyGenerator = null)
@@ -166,6 +167,7 @@ class Builder
      *
      * @param  string  $url
      * @return Builder
+     *
      * @throws ShortURLException
      */
     public function destinationUrl(string $url): self
@@ -338,6 +340,7 @@ class Builder
      *
      * @param  int  $statusCode
      * @return $this
+     *
      * @throws ShortURLException
      */
     public function redirectStatusCode(int $statusCode): self
@@ -357,6 +360,7 @@ class Builder
      *
      * @param  Carbon  $activationTime
      * @return $this
+     *
      * @throws ShortURLException
      */
     public function activateAt(Carbon $activationTime): self
@@ -376,6 +380,7 @@ class Builder
      *
      * @param  Carbon  $deactivationTime
      * @return $this
+     *
      * @throws ShortURLException
      */
     public function deactivateAt(Carbon $deactivationTime): self
@@ -397,6 +402,7 @@ class Builder
      * Attempt to build a shortened URL and return it.
      *
      * @return ShortURL
+     *
      * @throws ShortURLException
      */
     public function make(): ShortURL
