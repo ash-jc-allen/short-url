@@ -10,24 +10,24 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Class ShortURL.
  *
- * @property int id
- * @property string destination_url
- * @property string default_short_url
- * @property string url_key
- * @property bool single_use
- * @property bool track_visits
- * @property int redirect_status_code
- * @property bool track_ip_address
- * @property bool track_operating_system
- * @property bool track_operating_system_version
- * @property bool track_browser
- * @property bool track_browser_version
- * @property bool track_referer_url
- * @property bool track_device_type
- * @property Carbon activated_at
- * @property Carbon deactivated_at
- * @property Carbon created_at
- * @property Carbon updated_at
+ * @property int $id
+ * @property string $destination_url
+ * @property string $default_short_url
+ * @property string $url_key
+ * @property bool $single_use
+ * @property bool $track_visits
+ * @property int $redirect_status_code
+ * @property bool $track_ip_address
+ * @property bool $track_operating_system
+ * @property bool $track_operating_system_version
+ * @property bool $track_browser
+ * @property bool $track_browser_version
+ * @property bool $track_referer_url
+ * @property bool $track_device_type
+ * @property Carbon $activated_at
+ * @property Carbon|null $deactivated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class ShortURL extends Model
 {
