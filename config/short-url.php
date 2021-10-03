@@ -110,4 +110,17 @@ return [
     |
     */
     'validate_config' => false,
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom URL
+    |--------------------------------------------------------------------------
+    |
+    | Define custom short URL path
+    | Default path is the app.url
+    |
+    */
+    'url' => config('app.url').'/short/',
+
 ];
