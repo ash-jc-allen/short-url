@@ -15,7 +15,7 @@ class TrackingFieldsTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.url').'/short/12345',
+            'default_short_url'              => config('short-url.url').'12345',
             'url_key'                        => '12345',
             'single_use'                     => true,
             'track_visits'                   => true,
@@ -43,7 +43,7 @@ class TrackingFieldsTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.url').'/short/12345',
+            'default_short_url'              => config('short-url.url').'12345',
             'url_key'                        => '12345',
             'single_use'                     => true,
             'track_visits'                   => true,

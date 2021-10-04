@@ -17,7 +17,7 @@ class ShortURLControllerTest extends TestCase
     /** @test */
     public function request_is_aborted_with_http_404_if_the_short_url_cannot_be_found()
     {
-        $this->get('/short/INVALID')->assertNotFound();
+        $this->get('INVALID')->assertNotFound();
     }
 
     /** @test */
@@ -25,7 +25,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('short-url.url').'/short/12345',
+            'default_short_url'    => config('short-url.url').'12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -33,7 +33,7 @@ class ShortURLControllerTest extends TestCase
             'activated_at'         => now()->subMinute(),
         ]);
 
-        $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
+        $this->get('12345')->assertStatus(301)->assertRedirect('https://google.com');
     }
 
     /** @test */
@@ -43,7 +43,7 @@ class ShortURLControllerTest extends TestCase
 
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('short-url.url').'/short/12345',
+            'default_short_url'    => config('short-url.url').'12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -51,7 +51,7 @@ class ShortURLControllerTest extends TestCase
             'activated_at'         => now()->subMinute(),
         ]);
 
-        $this->get('/short/12345')->assertNotFound();
+        $this->get('12345')->assertNotFound();
     }
 
     /** @test */
@@ -61,7 +61,7 @@ class ShortURLControllerTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.url').'/short/12345',
+            'default_short_url'              => config('short-url.url').'12345',
             'url_key'                        => '12345',
             'single_use'                     => true,
             'track_visits'                   => true,
@@ -77,7 +77,7 @@ class ShortURLControllerTest extends TestCase
             'deactivated_at'                 => null,
         ]);
 
-        $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
+        $this->get('12345')->assertStatus(301)->assertRedirect('https://google.com');
 
         // Get the visit that was just logged.
         $visit = ShortURLVisit::first();
@@ -100,7 +100,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('short-url.url').'/short/12345',
+            'default_short_url'    => config('short-url.url').'12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -108,7 +108,7 @@ class ShortURLControllerTest extends TestCase
             'activated_at'         => now()->subMinute(),
         ]);
 
-        $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
+        $this->get('12345')->assertStatus(302)->assertRedirect('https://google.com');
     }
 
     /** @test */
@@ -116,7 +116,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('short-url.url').'/short/12345',
+            'default_short_url'    => config('short-url.url').'12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -125,7 +125,7 @@ class ShortURLControllerTest extends TestCase
             'deactivated_at'       => null,
         ]);
 
-        $this->get('/short/12345')->assertNotFound();
+        $this->get('12345')->assertNotFound();
     }
 
     /** @test */
@@ -133,7 +133,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('short-url.url').'/short/12345',
+            'default_short_url'    => config('short-url.url').'12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -142,7 +142,7 @@ class ShortURLControllerTest extends TestCase
             'deactivated_at'       => now()->subMinute(),
         ]);
 
-        $this->get('/short/12345')->assertNotFound();
+        $this->get('12345')->assertNotFound();
     }
 
     /** @test */
@@ -150,7 +150,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('short-url.url').'/short/12345',
+            'default_short_url'    => config('short-url.url').'12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -159,6 +159,6 @@ class ShortURLControllerTest extends TestCase
             'deactivated_at'       => now()->addMinute(),
         ]);
 
-        $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
+        $this->get('12345')->assertStatus(302)->assertRedirect('https://google.com');
     }
 }

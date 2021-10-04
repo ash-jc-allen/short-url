@@ -108,7 +108,7 @@ $shortURL = $shortURLObject->default_short_url;
 
 #### Custom Keys
 By default, the shortened URL that is generated will contain a random key. The key will be of the length that you define
-in the config files (defaults to 5 characters). Example: if a URL is ``` https://webapp.com/short/abc123 ```, the key is
+in the config files (defaults to 5 characters). Example: if a URL is ``` https://webapp.comabc123 ```, the key is
 ``` abc123 ```.
 
 You may wish to define a custom key yourself for that URL that is more meaningful than a randomly generated one. You can
@@ -120,7 +120,7 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('https://destination.com')->urlKey('custom-key')->make();
 $shortURL = $shortURLObject->default_short_url;
 
-// Short URL: https://webapp.com/short/custom-key
+// Short URL: https://webapp.comcustom-key
 ```
 
 Note: All of the URL keys are unique, so you cannot use a key that already exists in the database for another shortened
@@ -326,7 +326,7 @@ class Controller
 ### Using the Shortened URLs
 #### Default Route and Controller
 By default, the shortened URLs that are created use the package's route and controller. The routes use the following structure:
-``` https://webapp.com/short/{urlKey} ```. This route uses the single-use controller that is found at 
+``` https://webapp.com{urlKey} ```. This route uses the single-use controller that is found at 
 ``` \AshAllenDesign\ShortURL\Controllers\ShortURLController ```.
 
 #### Custom Route
@@ -368,7 +368,7 @@ You can do this by setting the setting the following value in the config:
 ```
 'disable_default_route' => true,
 ```
-If the default route is disabled, any visitors who go to the ```/short/{urlKey}``` route will receive a HTTP 404.
+If the default route is disabled, any visitors who go to the ```{urlKey}``` route will receive a HTTP 404.
 
 #### Default URL Key Length 
 When building a shortened URL, you have the option to define your own URL key or to randomly generate one. If one is
