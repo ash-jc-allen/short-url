@@ -118,7 +118,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define custom short URL path
-    | Default path is the app.url
+    | Defualt path is the app.url
     |
     */
     'url' => config('app.url').'/short/',
