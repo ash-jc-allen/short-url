@@ -52,6 +52,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Route Endpoint
+    |--------------------------------------------------------------------------
+    |
+    | The endpoint used when the default_short_url for the shortened
+    | url is generated. 
+    |
+    | e.g. - Using '/short' endpoint will generate url yourdomain.com/short/XXXXX
+    |      - Leaving the endpoint empty '' will generate url yourdomain.com/XXXXX
+    |
+    | Note: Do not add a '/' at the end of the endpoint.
+    |       Leaving the endpoint empty '' will result is incorrect urls
+    |       being generated.
+    |
+    */
+    'route_endpoint'            => '/short',
+
+    /*
+    |--------------------------------------------------------------------------
     | Key Salt
     |--------------------------------------------------------------------------
     |
