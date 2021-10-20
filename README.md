@@ -31,6 +31,7 @@
             - [Tracking Referer URL](#tracking-referer-url)
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
+        - [Forward query parameters](#forwards-query-parameters)
         - [Redirect Status Code](#redirect-status-code)
         - [Activation and Deactivation Times](#activation-and-deactivation-times)
         - [Facade](#facade)
@@ -259,6 +260,26 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->make();
 
 // Destination URL: https://destination.com
+ ```
+
+#### Forwards query parameters
+When building a shortened URL, you might want to forward short url query parameters to the destination. 
+It will allow users to call short urls with query parameters.
+
+Note: It will never override the destination query parameters if they are set.
+
+To enforce HTTPS, you can use the ``` ->forwardQueryParams() ``` method when building the shortened URL.
+
+The example below shows how to create a shortened URL that forwards query parameters:
+ ```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+ 
+$shortURLObject = $builder->destinationUrl('http://destination.com?param1=test')->forwardQueryParams()->make();
+
+// Requesting
+//  - https://webapp.com/short/xxx?param1=abc&param2=def
+// will redirect to
+//  - http://destination.com?param1=test&param2=def
  ```
 
 #### Redirect Status Code

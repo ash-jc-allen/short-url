@@ -64,6 +64,7 @@ class ShortURLControllerTest extends TestCase
             'default_short_url'              => config('app.url').'/short/12345',
             'url_key'                        => '12345',
             'single_use'                     => true,
+            'forward_query_params'           => false,
             'track_visits'                   => true,
             'redirect_status_code'           => 301,
             'track_ip_address'               => true,
@@ -160,5 +161,37 @@ class ShortURLControllerTest extends TestCase
         ]);
 
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
+    }
+
+    /** @test */
+    public function visitor_is_redirected_to_the_destination_without_source_query_parameters_if_option_set_to_false()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com?param1=abc',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'forward_query_params' => false,
+            'redirect_status_code' => 301,
+            'single_use'           => true,
+            'track_visits'         => true,
+        ]);
+
+        $this->get('/short/12345?param1=test&param2=test2')->assertStatus(301)->assertRedirect('https://google.com?param1=abc');
+    }
+
+    /** @test */
+    public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com?param1=abc',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'forward_query_params' => true,
+            'redirect_status_code' => 301,
+            'single_use'           => true,
+            'track_visits'         => true,
+        ]);
+
+        $this->get('/short/12345?param1=test&param2=test2')->assertStatus(301)->assertRedirect('https://google.com?param1=abc&param2=test2');
     }
 }

@@ -19,6 +19,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Forwards query parameters
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify if the newly created short urls will forward
+    | the query parameters to the destination by default.
+    |
+    | eg: https://yoursite.com/short/xxx?a=b => https://destination.com/page?a=b
+    |
+    | This option can be overridden when creating the short URL
+    | with the ->forwardQueryParams() method.
+    |
+    */
+    'forward_query_params' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Enforce HTTPS in the destination URL
     |--------------------------------------------------------------------------
     |

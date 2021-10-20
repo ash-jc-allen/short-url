@@ -104,4 +104,26 @@ class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
+
+    /** @test */
+    public function exception_is_thrown_if_the_forward_query_params_variable_is_not_a_boolean()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The forward_query_params config variable must be a boolean.');
+
+        Config::set('short-url.forward_query_params', 'INVALID');
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
+
+    /** @test */
+    public function exception_is_not_thrown_if_the_forward_query_params_variable_is_empty()
+    {
+        Config::set('short-url.forward_query_params', null);
+
+        $validation = new Validation();
+
+        $this->assertTrue($validation->validateConfig());
+    }
 }
