@@ -171,6 +171,16 @@ class Builder
     }
 
     /**
+     * Get the short URL route prefix.
+     *
+     * @return string
+     */
+    public function prefix(): string
+    {
+        return trim(config('short-url.prefix'), '/');
+    }
+
+    /**
      * Set the destination URL that the shortened URL
      * will redirect to.
      *
@@ -454,7 +464,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/short/'.$this->urlKey,
+            'default_short_url'              => config('app.url').'/'.$this->prefix().'/'.$this->urlKey,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'forward_query_params'           => $this->forwardQueryParams,
