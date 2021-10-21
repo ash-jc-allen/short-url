@@ -375,14 +375,27 @@ Each of these fields can be toggled in the config files so that you only record 
 do this are provided for this in the [Customisation](#customisation) section below.
 
 ### Customisation
+
+#### Customising the Default Route
+
+The package comes with a route that you can use for your short URLs. By default, this route is `/short/{shortURLKey}`.
+
+You might want to keep using this default route but change the `/short/` prefix to something else. To do this, you can change the `prefix` field in the config.
+
+For example, to change the default short URL to `/s`, you could change the config value like so:
+
+```
+'prefix' => 's',
+```
+
 #### Disabling the Default Route
 If you have added your own custom route to your project, you may want to block the default route that the package provides.
-You can do this by setting the setting the following value in the config:
+You can do this by setting the following value in the config:
 
 ```
 'disable_default_route' => true,
 ```
-If the default route is disabled, any visitors who go to the ```/short/{urlKey}``` route will receive a HTTP 404.
+If the default route is disabled, any visitors who go to the ```/short/{shortURLKey}``` route will receive a HTTP 404.
 
 #### Default URL Key Length 
 When building a shortened URL, you have the option to define your own URL key or to randomly generate one. If one is
@@ -548,6 +561,7 @@ Note: A contribution guide will be added soon.
 - [Carlos A. Escobar](https://github.com/carlosjs23)
 - [Victor-Emil Rossil Andersen](https://github.com/Victor-emil)
 - [Julien Arcin](https://github.com/julienarcin)
+- [Ryan Chandler](https://github.com/ryangjchandler)
 - [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
 
 ## Changelog

@@ -1,5 +1,8 @@
 # Changelog
 
+**v6.1.0 (released 2021-10-21):**
+- Added the ability to customise the default short URL prefix. [#100](https://github.com/ash-jc-allen/short-url/pull/100)
+
 **v6.0.0 (released 2021-10-21):**
 - Added the ability to forward query parameters to the destination URL. [#94](https://github.com/ash-jc-allen/short-url/pull/94)
 - Dropped support for Laravel 6, 7. [#96](https://github.com/ash-jc-allen/short-url/pull/96), [#98](https://github.com/ash-jc-allen/short-url/pull/98)
