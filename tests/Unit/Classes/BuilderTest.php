@@ -487,4 +487,18 @@ class BuilderTest extends TestCase
             'default_short_url' => config('app.url').'/s/customKey',
         ]);
     }
+
+    /**
+     * @test
+     * @testWith ["s"]
+     *           ["/s"]
+     *           ["/s/"]
+     *           ["s/"]
+     */
+    public function correct_prefix_is_returned($prefix)
+    {
+        Config::set('short-url.prefix', $prefix);
+
+        self::assertEquals('s', ShortURLAlias::prefix());
+    }
 }
