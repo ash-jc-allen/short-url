@@ -188,8 +188,7 @@ class ShortURLControllerTest extends TestCase
         string $requestUrl,
         string $destinationUrl,
         string $expectedDestinationUrl
-    ): void
-    {
+    ): void {
         ShortURL::query()->create([
             'destination_url'      => $destinationUrl,
             'default_short_url'    => $shortUrl,
