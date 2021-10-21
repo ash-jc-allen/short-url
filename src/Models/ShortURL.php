@@ -180,14 +180,4 @@ class ShortURL extends Model
 
         return $fields;
     }
-
-    public function queryParams(): array
-    {
-        parse_str(
-            parse_url($this->destination_url, PHP_URL_QUERY),
-            $queryParams
-        );
-
-        return $queryParams;
-    }
 }
