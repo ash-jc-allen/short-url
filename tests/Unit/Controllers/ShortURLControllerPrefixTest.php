@@ -2,7 +2,6 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
-use Illuminate\Support\Facades\Config;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
