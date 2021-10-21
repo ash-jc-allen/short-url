@@ -1,7 +1,7 @@
 # Upgrade Guide
 
 ## Contents
-- [Upgrading from 5.* to 6.0.0](#upgrading-from-4-to-500)
+- [Upgrading from 5.* to 6.0.0](#upgrading-from-5-to-600)
 - [Upgrading from 4.* to 5.0.0](#upgrading-from-4-to-500)
 - [Upgrading from 3.* to 4.0.0](#upgrading-from-3-to-400)
 - [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300)
