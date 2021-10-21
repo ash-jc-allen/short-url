@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Class ShortURL.
@@ -178,5 +179,15 @@ class ShortURL extends Model
         }
 
         return $fields;
+    }
+
+    public function queryParams(): array
+    {
+        parse_str(
+            parse_url($this->destination_url, PHP_URL_QUERY),
+            $queryParams
+        );
+
+        return $queryParams;
     }
 }

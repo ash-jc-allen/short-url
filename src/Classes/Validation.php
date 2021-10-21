@@ -129,7 +129,7 @@ class Validation
     }
 
     /**
-     * Validate that the forward query params option is empty or a boolean.
+     * Validate that the forward query params option is a boolean.
      *
      * @return bool
      *
@@ -137,7 +137,7 @@ class Validation
      */
     protected function validateForwardQueryParamsOption(): bool
     {
-        if (! empty(config('short-url.forward_query_params')) && ! is_bool(config('short-url.forward_query_params'))) {
+        if (! is_bool(config('short-url.forward_query_params'))) {
             throw new ValidationException('The forward_query_params config variable must be a boolean.');
         }
 

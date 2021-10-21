@@ -90,16 +90,6 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
-    public function forward_query_params_is_set_to_false_if_missing_from_config_and_not_explicitly_set()
-    {
-        Config::set('short-url.forward_query_params', null);
-
-        $builder = new Builder();
-        $shortUrl = $builder->destinationUrl('http://domain.com')->make();
-        $this->assertFalse($shortUrl->forward_query_params);
-    }
-
-    /** @test */
     public function forward_query_params_is_set_from_the_config_if_it_is_not_explicitly_set()
     {
         Config::set('short-url.forward_query_params', true);

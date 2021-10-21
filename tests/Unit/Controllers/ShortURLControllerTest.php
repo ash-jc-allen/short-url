@@ -179,12 +179,20 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345?param1=test&param2=test2')->assertStatus(301)->assertRedirect('https://google.com?param1=abc');
     }
 
-    /** @test */
-    public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true()
+    /**
+     * @test
+     * @dataProvider hello
+     */
+    public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true(
+        string $shortUrl,
+        string $requestUrl,
+        string $destinationUrl,
+        string $expectedDestinationUrl,
+    ): void
     {
-        ShortURL::create([
-            'destination_url'      => 'https://google.com?param1=abc',
-            'default_short_url'    => config('app.url').'/short/12345',
+        ShortURL::query()->create([
+            'destination_url'      => $destinationUrl,
+            'default_short_url'    => $shortUrl,
             'url_key'              => '12345',
             'forward_query_params' => true,
             'redirect_status_code' => 301,
@@ -192,6 +200,36 @@ class ShortURLControllerTest extends TestCase
             'track_visits'         => true,
         ]);
 
-        $this->get('/short/12345?param1=test&param2=test2')->assertStatus(301)->assertRedirect('https://google.com?param1=abc&param2=test2');
+        $this->get($requestUrl)->assertStatus(301)->assertRedirect($expectedDestinationUrl);
+    }
+
+    public function hello(): array
+    {
+        return [
+            [
+                '/short/12345',
+                '/short/12345?param1=test&param2=test2',
+                'https://google.com?param1=abc',
+                'https://google.com?param1=abc&param1=test&param2=test2',
+            ],
+            [
+                '/short/12345',
+                '/short/12345?param1=abc',
+                'https://google.com',
+                'https://google.com?param1=abc',
+            ],
+            [
+                '/short/12345',
+                '/short/12345?param1=abc',
+                'https://google.com?param1=hello',
+                'https://google.com?param1=hello&param1=abc',
+            ],
+            [
+                '/short/12345',
+                '/short/12345?param3=abc',
+                'https://google.com?param1=hello&param2=123',
+                'https://google.com?param1=hello&param2=123&param3=abc',
+            ],
+        ];
     }
 }

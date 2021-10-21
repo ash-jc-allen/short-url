@@ -116,14 +116,4 @@ class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
-
-    /** @test */
-    public function exception_is_not_thrown_if_the_forward_query_params_variable_is_empty()
-    {
-        Config::set('short-url.forward_query_params', null);
-
-        $validation = new Validation();
-
-        $this->assertTrue($validation->validateConfig());
-    }
 }

@@ -32,8 +32,7 @@ class ShortURLController
 
         $resolver->handleVisit(request(), $shortURL);
 
-        // If the short url should forward query params, rebuild destination url.
-        if($shortURL->forward_query_params) {
+        if ($shortURL->forward_query_params) {
             return redirect($this->forwardQueryParams($request, $shortURL), $shortURL->redirect_status_code);
         }
 
@@ -41,9 +40,8 @@ class ShortURLController
     }
 
     /**
-     * Rebuild the destination url by merging source query params
-     * (ie: query params passed to the short url)
-     * and destination query params.
+     * Add the query parameters from the request to the end of the
+     * destination URL that the user is to be forwarded to.
      *
      * @param Request $request
      * @param ShortURL $shortURL
@@ -51,31 +49,14 @@ class ShortURLController
      */
     private function forwardQueryParams(Request $request, ShortURL $shortURL): string
     {
-        // Get destination url
-        $destinationParsedUrl = parse_url($shortURL->destination_url);
+        $queryString = parse_url($shortURL->destination_url, PHP_URL_QUERY);
 
-        // Rebuild destination without query string
-        $rebuiltDestinationUrl = $destinationParsedUrl['scheme'].'://'.$destinationParsedUrl['host'].($destinationParsedUrl['path'] ?? '');
-
-        // Parse destination query string and put it into an array
-        parse_str($destinationParsedUrl['query'] ?? '', $destinationQuery);
-
-        // Get source query parameters (passed to short url)
-        $sourceQuery = $request->query();
-
-        // Merge the two query parameters arrays
-        // (by default, the destination query parameters will override the source ones
-        // because a parameters passed to the short url should never modify the destination)
-        $rebuiltQuery = array_merge($sourceQuery, $destinationQuery);
-
-        // Rebuild destination query string
-        $rebuiltQueryString = http_build_query($rebuiltQuery);
-
-        // Add query string to url if exists
-        if(!empty($rebuiltQuery)) {
-            $rebuiltDestinationUrl .= '?' . $rebuiltQueryString;
+        if (empty($request->query())) {
+            return $shortURL->destination_url;
         }
 
-        return $rebuiltDestinationUrl;
+        $separator = $queryString ? '&' : '?';
+
+        return $shortURL->destination_url.$separator.http_build_query($request->query());
     }
 }
