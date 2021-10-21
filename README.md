@@ -71,8 +71,8 @@ A Laravel package that can be used for adding shortened URLs to your existing we
 ### Requirements
 The package has been developed and tested to work with the following minimum requirements:
 
-- PHP 7.2
-- Laravel 6.0
+- PHP 8.0
+- Laravel 7.0
 
 Short URL requires either the [BC Math](https://secure.php.net/manual/en/book.bc.php) or [GMP](https://secure.php.net/manual/en/book.gmp.php) PHP extensions in order to work.
 
