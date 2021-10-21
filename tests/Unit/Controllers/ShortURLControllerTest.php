@@ -181,7 +181,7 @@ class ShortURLControllerTest extends TestCase
 
     /**
      * @test
-     * @dataProvider hello
+     * @dataProvider forwardQueryParamsProvider
      */
     public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true(
         string $shortUrl,
@@ -202,7 +202,7 @@ class ShortURLControllerTest extends TestCase
         $this->get($requestUrl)->assertStatus(301)->assertRedirect($expectedDestinationUrl);
     }
 
-    public function hello(): array
+    public function forwardQueryParamsProvider(): array
     {
         return [
             [
