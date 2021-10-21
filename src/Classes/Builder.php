@@ -172,7 +172,7 @@ class Builder
 
     /**
      * Get the short URL route prefix.
-     * 
+     *
      * @return string
      */
     public function prefix(): string
