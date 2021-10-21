@@ -25,6 +25,7 @@ use RuntimeException;
  * @method static self activateAt(Carbon $activationTime)
  * @method static self deactivateAt(Carbon $deactivationTime)
  * @method static \AshAllenDesign\ShortURL\Models\ShortURL make()
+ * @method static string prefix()
  *
  * @see Builder
  */
