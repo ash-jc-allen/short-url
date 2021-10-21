@@ -220,7 +220,7 @@ class Builder
 
     /**
      * Set whether if the short URL should forward
-     * query params to the destination url.
+     * query params to the destination URL.
      *
      * @param  bool  $shouldForwardQueryParams
      * @return Builder

@@ -43,8 +43,8 @@ class ShortURLController
      * Add the query parameters from the request to the end of the
      * destination URL that the user is to be forwarded to.
      *
-     * @param Request $request
-     * @param ShortURL $shortURL
+     * @param  Request  $request
+     * @param  ShortURL  $shortURL
      * @return string
      */
     private function forwardQueryParams(Request $request, ShortURL $shortURL): string

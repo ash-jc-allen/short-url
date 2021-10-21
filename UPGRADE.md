@@ -1,10 +1,50 @@
 # Upgrade Guide
 
 ## Contents
+- [Upgrading from 5.* to 6.0.0](#upgrading-from-5-to-600)
 - [Upgrading from 4.* to 5.0.0](#upgrading-from-4-to-500)
 - [Upgrading from 3.* to 4.0.0](#upgrading-from-3-to-400)
 - [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300)
 - [Upgrading from 1.* to 2.0.0](#upgrading-from-1-to-200)
+
+## Upgrading from 5.* to 6.0.0
+
+### Laravel - Minimum Required Version
+
+As of Short URL v6.0.0, Laravel 6.0 and 7.0 are no longer supported. Therefore, you must be using a minimum of Laravel 8.0 to use this library.
+
+### PHP - Minimum Required Version
+
+As of Short URL v6.0.0, PHP 7.3 and 7.4 are no longer supported. Therefore, you must be using a minimum of PHP 8.0 to use this library.
+
+### New Config Variable and Migration
+
+As of Short URL v6.0.0, you can now forward query parameters from your request onto the destination URL. This feature requires that you run a new migration to add the `forward_query_params` field to your `short_urls` table.
+
+To publish the migration to your own `database/migrations` folder, run the following command in your project root:
+
+```bash
+php artisan vendor:publish --tag="short-url-migrations"
+```
+
+There is also a new `forward_query_params` config option (that defaults to `false`) for controlling the default behaviour of this feature. If you wish to override this option, you can add the following to your own config:
+
+```php
+   /*
+    |--------------------------------------------------------------------------
+    | Forwards query parameters
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify if the newly created short URLs will forward
+    | the query parameters to the destination by default. This option
+    | can be overridden when creating the short URL with the
+    | ->forwardQueryParams() method.
+    |
+    | eg: https://yoursite.com/short/xxx?a=b => https://destination.com/page?a=b
+    |
+    */
+    'forward_query_params' => false,
+```
 
 ## Upgrading from 4.* to 5.0.0
 

@@ -1,5 +1,10 @@
 # Changelog
 
+**v6.0.0 (released 2021-10-21):**
+- Added the ability to forward query parameters to the destination URL. [#94](https://github.com/ash-jc-allen/short-url/pull/94)
+- Dropped support for Laravel 6. [#96](https://github.com/ash-jc-allen/short-url/pull/96)
+- Dropped support for PHP 7.3, 7.4. [#85](https://github.com/ash-jc-allen/short-url/pull/85)
+
 **v5.2.0 (released 2021-09-21):**
 - Updated the migration for the `short_urls` table so that `url_key` is now unique and `destination_url` is now a TEXT field rather than varchar. [#80](https://github.com/ash-jc-allen/short-url/pull/80)
 - Added the ability to configure the alphabet used for generating keys with `hashids`. [#77](https://github.com/ash-jc-allen/short-url/pull/77)
