@@ -26,6 +26,14 @@ class Builder
      */
     protected $destinationUrl;
 
+	/**
+	 * The default short URL which will redirect
+	 * to destination url
+	 *
+	 * @var string
+	 */
+    protected $defaultShortUrl;
+
     /**
      * Whether or not if the shortened URL can be
      * accessed more than once.
@@ -431,7 +439,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/short/'.$this->urlKey,
+            'default_short_url'              => $this->defaultShortUrl . $this->urlKey,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'track_visits'                   => $this->trackVisits,
@@ -484,7 +492,20 @@ class Builder
             $this->activateAt = now();
         }
 
+        $this->setShortUrlOptions();
         $this->setTrackingOptions();
+    }
+
+	/**
+	 * Set the default short url if not defined
+	 *
+	 * @throws ShortURLException
+	 */
+    private function setShortUrlOptions(): void
+    {
+    	if ($this->defaultShortUrl === null) {
+    		$this->setDefaultShortUrl();
+	    }
     }
 
     /**
@@ -552,4 +573,27 @@ class Builder
 
         return $this;
     }
+
+	/**
+	 * Allows to set a custom default short url domain and path
+	 *
+	 * @param string|null $url
+	 * @param string $path
+	 * @return $this
+	 * @throws ShortURLException
+	 */
+	public function setDefaultShortUrl(string $url = null, string $path = 'short'): self
+	{
+		if (empty($url)) {
+			$url = config('app.url');
+		}
+
+		if (! Str::startsWith($url, ['http://', 'https://'])) {
+			throw new ShortURLException('The short URL must begin with http:// or https://');
+		}
+
+		$this->defaultShortUrl = sprintf('%s/%s/', $url, $path);
+
+		return $this;
+	}
 }
