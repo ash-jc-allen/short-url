@@ -473,4 +473,18 @@ class BuilderTest extends TestCase
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
     }
+
+    /** @test */
+    public function short_url_prefix_can_be_changed_via_configuration()
+    {
+        Config::set('short-url.prefix', '/s');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => config('app.url').'/s/customKey',
+        ]);
+    }
 }
