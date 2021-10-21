@@ -31,7 +31,7 @@
             - [Tracking Referer URL](#tracking-referer-url)
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
-        - [Forward query parameters](#forwards-query-parameters)
+        - [Forwarding Query Parameters](#forwarding-query-parameters)
         - [Redirect Status Code](#redirect-status-code)
         - [Activation and Deactivation Times](#activation-and-deactivation-times)
         - [Facade](#facade)
@@ -262,25 +262,18 @@ $shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->
 // Destination URL: https://destination.com
  ```
 
-#### Forwards query parameters
-When building a shortened URL, you might want to forward short url query parameters to the destination. 
-It will allow users to call short urls with query parameters.
+#### Forwarding Query Parameters
+When building a short URL, you might want to forward the query parameters sent in the request to destination URL. By default, this functionality is disabled, but can be enabled by setting the `forward_query_params` config option to `true`.
 
-Note: It will never override the destination query parameters if they are set.
+Alternatively, you can also use the `->forwardQueryParams()` method when building your shortened URL, as shown in the example below:
 
-To enforce HTTPS, you can use the ``` ->forwardQueryParams() ``` method when building the shortened URL.
-
-The example below shows how to create a shortened URL that forwards query parameters:
  ```php
 $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
  
 $shortURLObject = $builder->destinationUrl('http://destination.com?param1=test')->forwardQueryParams()->make();
-
-// Requesting
-//  - https://webapp.com/short/xxx?param1=abc&param2=def
-// will redirect to
-//  - http://destination.com?param1=test&param2=def
  ```
+
+Based on the example above, assuming that the original short URL's `destination_url` was `https://destination.com`, making a request to `https://webapp.com/short/xxx?param1=abc&param2=def` would redirect to `https://destination.com?param1=test&param2=def`
 
 #### Redirect Status Code
 
@@ -554,6 +547,7 @@ Note: A contribution guide will be added soon.
 - [Nathan Giesbrecht](https://github.com/NathanGiesbrecht)
 - [Carlos A. Escobar](https://github.com/carlosjs23)
 - [Victor-Emil Rossil Andersen](https://github.com/Victor-emil)
+- [Julien Arcin](https://github.com/julienarcin)
 - [All Contributors](https://github.com/ash-jc-allen/short-url/graphs/contributors)
 
 ## Changelog
