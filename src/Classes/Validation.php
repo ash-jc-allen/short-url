@@ -20,7 +20,8 @@ class Validation
                && $this->validateTrackingOptions()
                && $this->validateDefaultRouteOption()
                && $this->validateKeySalt()
-               && $this->validateEnforceHttpsOption();
+               && $this->validateEnforceHttpsOption()
+               && $this->validateForwardQueryParamsOption();
     }
 
     /**
@@ -122,6 +123,22 @@ class Validation
     {
         if (! is_bool(config('short-url.enforce_https'))) {
             throw new ValidationException('The enforce_https config variable must be a boolean.');
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate that the forward query params option is a boolean.
+     *
+     * @return bool
+     *
+     * @throws ValidationException
+     */
+    protected function validateForwardQueryParamsOption(): bool
+    {
+        if (! is_bool(config('short-url.forward_query_params'))) {
+            throw new ValidationException('The forward_query_params config variable must be a boolean.');
         }
 
         return true;

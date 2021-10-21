@@ -90,6 +90,36 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function forward_query_params_is_set_from_the_config_if_it_is_not_explicitly_set()
+    {
+        Config::set('short-url.forward_query_params', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->make();
+        $this->assertTrue($shortUrl->forward_query_params);
+
+        Config::set('short-url.forward_query_params', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->make();
+        $this->assertFalse($shortUrl->forward_query_params);
+    }
+
+    /** @test */
+    public function forward_query_params_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.forward_query_params', true);
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl('http://domain.com')->forwardQueryParams(false)->make();
+        $this->assertFalse($shortUrl->forward_query_params);
+
+        Config::set('short-url.forward_query_params', false);
+
+        $shortUrl = $builder->destinationUrl('http://domain.com')->forwardQueryParams()->make();
+        $this->assertTrue($shortUrl->forward_query_params);
+    }
+
+    /** @test */
     public function track_visits_flag_is_set_from_the_config_if_it_is_not_explicitly_set()
     {
         Config::set('short-url.tracking.default_enabled', true);

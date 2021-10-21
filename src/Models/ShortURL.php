@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Class ShortURL.
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $default_short_url
  * @property string $url_key
  * @property bool $single_use
+ * @property bool $forward_query_params
  * @property bool $track_visits
  * @property int $redirect_status_code
  * @property bool $track_ip_address
@@ -48,6 +50,7 @@ class ShortURL extends Model
         'default_short_url',
         'url_key',
         'single_use',
+        'forward_query_params',
         'track_visits',
         'redirect_status_code',
         'track_ip_address',
@@ -80,6 +83,7 @@ class ShortURL extends Model
      */
     protected $casts = [
         'single_use'                     => 'boolean',
+        'forward_query_parameters'       => 'boolean',
         'track_visits'                   => 'boolean',
         'track_ip_address'               => 'boolean',
         'track_operating_system'         => 'boolean',

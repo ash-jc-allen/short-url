@@ -44,6 +44,15 @@ class Builder
     protected $secure;
 
     /**
+     * Whether or not the short url whould
+     * forward query params to the
+     * destination url.
+     *
+     * @var bool|null
+     */
+    protected $forwardQueryParams;
+
+    /**
      * Whether or not if the short URL should track
      * statistics about the visitors.
      *
@@ -205,6 +214,20 @@ class Builder
     public function secure(bool $isSecure = true): self
     {
         $this->secure = $isSecure;
+
+        return $this;
+    }
+
+    /**
+     * Set whether if the short URL should forward
+     * query params to the destination URL.
+     *
+     * @param  bool  $shouldForwardQueryParams
+     * @return Builder
+     */
+    public function forwardQueryParams(bool $shouldForwardQueryParams = true): self
+    {
+        $this->forwardQueryParams = $shouldForwardQueryParams;
 
         return $this;
     }
@@ -434,6 +457,7 @@ class Builder
             'default_short_url'              => config('app.url').'/short/'.$this->urlKey,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
+            'forward_query_params'           => $this->forwardQueryParams,
             'track_visits'                   => $this->trackVisits,
             'redirect_status_code'           => $this->redirectStatusCode,
             'track_ip_address'               => $this->trackIPAddress,
@@ -474,6 +498,10 @@ class Builder
 
         if ($this->secure) {
             $this->destinationUrl = str_replace('http://', 'https://', $this->destinationUrl);
+        }
+
+        if ($this->forwardQueryParams === null) {
+            $this->forwardQueryParams = config('short-url.forward_query_params') ?? false;
         }
 
         if (! $this->urlKey) {
@@ -540,6 +568,7 @@ class Builder
         $this->urlKey = null;
         $this->singleUse = false;
         $this->secure = null;
+        $this->forwardQueryParams = null;
         $this->redirectStatusCode = 301;
 
         $this->trackVisits = null;

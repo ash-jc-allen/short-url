@@ -64,6 +64,7 @@ class ShortURLControllerTest extends TestCase
             'default_short_url'              => config('app.url').'/short/12345',
             'url_key'                        => '12345',
             'single_use'                     => true,
+            'forward_query_params'           => false,
             'track_visits'                   => true,
             'redirect_status_code'           => 301,
             'track_ip_address'               => true,
@@ -160,5 +161,74 @@ class ShortURLControllerTest extends TestCase
         ]);
 
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
+    }
+
+    /** @test */
+    public function visitor_is_redirected_to_the_destination_without_source_query_parameters_if_option_set_to_false()
+    {
+        ShortURL::create([
+            'destination_url'      => 'https://google.com?param1=abc',
+            'default_short_url'    => config('app.url').'/short/12345',
+            'url_key'              => '12345',
+            'forward_query_params' => false,
+            'redirect_status_code' => 301,
+            'single_use'           => true,
+            'track_visits'         => true,
+        ]);
+
+        $this->get('/short/12345?param1=test&param2=test2')->assertStatus(301)->assertRedirect('https://google.com?param1=abc');
+    }
+
+    /**
+     * @test
+     * @dataProvider forwardQueryParamsProvider
+     */
+    public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true(
+        string $shortUrl,
+        string $requestUrl,
+        string $destinationUrl,
+        string $expectedDestinationUrl
+    ): void {
+        ShortURL::query()->create([
+            'destination_url'      => $destinationUrl,
+            'default_short_url'    => $shortUrl,
+            'url_key'              => '12345',
+            'forward_query_params' => true,
+            'redirect_status_code' => 301,
+            'single_use'           => true,
+            'track_visits'         => true,
+        ]);
+
+        $this->get($requestUrl)->assertStatus(301)->assertRedirect($expectedDestinationUrl);
+    }
+
+    public function forwardQueryParamsProvider(): array
+    {
+        return [
+            [
+                '/short/12345',
+                '/short/12345?param1=test&param2=test2',
+                'https://google.com?param1=abc',
+                'https://google.com?param1=abc&param1=test&param2=test2',
+            ],
+            [
+                '/short/12345',
+                '/short/12345?param1=abc',
+                'https://google.com',
+                'https://google.com?param1=abc',
+            ],
+            [
+                '/short/12345',
+                '/short/12345?param1=abc',
+                'https://google.com?param1=hello',
+                'https://google.com?param1=hello&param1=abc',
+            ],
+            [
+                '/short/12345',
+                '/short/12345?param3=abc',
+                'https://google.com?param1=hello&param2=123',
+                'https://google.com?param1=hello&param2=123&param3=abc',
+            ],
+        ];
     }
 }
