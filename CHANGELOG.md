@@ -2,7 +2,7 @@
 
 **v6.0.0 (released 2021-10-21):**
 - Added the ability to forward query parameters to the destination URL. [#94](https://github.com/ash-jc-allen/short-url/pull/94)
-- Dropped support for Laravel 6. [#96](https://github.com/ash-jc-allen/short-url/pull/96)
+- Dropped support for Laravel 6, 7. [#96](https://github.com/ash-jc-allen/short-url/pull/96), [#98](https://github.com/ash-jc-allen/short-url/pull/98)
 - Dropped support for PHP 7.3, 7.4. [#85](https://github.com/ash-jc-allen/short-url/pull/85)
 
 **v5.2.0 (released 2021-09-21):**
