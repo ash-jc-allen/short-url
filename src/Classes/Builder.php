@@ -446,7 +446,7 @@ class Builder
 
         $this->setOptions();
 
-        $this->checkKeyDoesNotExist();
+        $this->checkUniqueKeyOrGenerateNew();
 
         $shortURL = $this->insertShortURLIntoDatabase();
 
@@ -482,18 +482,36 @@ class Builder
         ]);
     }
 
-    /**
-     * Check whether if a short URL already exists in
-     * the database with this explicitly defined
-     * URL key.
-     *
-     * @throws ShortURLException
-     */
-    protected function checkKeyDoesNotExist(): void
+	/**
+	 * Check if key exist. If true, attempt to create some new
+	 * and throw exception if number of attempts is exceeded
+	 * @throws ShortURLException
+	 */
+	protected function checkUniqueKeyOrGenerateNew(): void
+	{
+		$attemps = 0;
+
+		do {
+			if (!$this->checkKeyDoesNotExist()) {
+				return;
+			}
+
+			$this->urlKey = $this->keyGenerator->generateRandom();
+		} while ($attemps < config('short-url.key_generate_attemps', 3));
+
+		throw new ShortURLException('A short URL with this key already exists.');
+	}
+
+	/**
+	 * Check whether if a short URL already exists in
+	 * the database with this explicitly defined
+	 * URL key.
+	 *
+	 * @return bool
+	 */
+    protected function checkKeyDoesNotExist(): bool
     {
-        if (ShortURL::where('url_key', $this->urlKey)->exists()) {
-            throw new ShortURLException('A short URL with this key already exists.');
-        }
+        return ShortURL::where('url_key', $this->urlKey)->exists();
     }
 
     /**

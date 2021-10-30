@@ -76,6 +76,17 @@ return [
     */
     'key_length'            => 5,
 
+	/*
+    |--------------------------------------------------------------------------
+    | Key generation attemps
+    |--------------------------------------------------------------------------
+    |
+    | In case of existing key, set the number of attemps to generate a
+	| new one before throw exception
+    |
+    */
+	'key_generate_attemps' => 3,
+
     /*
     |--------------------------------------------------------------------------
     | Key Salt

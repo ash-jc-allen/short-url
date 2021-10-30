@@ -4,6 +4,7 @@ namespace AshAllenDesign\ShortURL\Providers;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\Validation;
+use AshAllenDesign\ShortURL\Commands\Purge;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use Illuminate\Support\ServiceProvider;
 
@@ -48,5 +49,11 @@ class ShortURLProvider extends ServiceProvider
         if (config('short-url') && config('short-url.validate_config')) {
             (new Validation())->validateConfig();
         }
+
+	    if ($this->app->runningInConsole()) {
+		    $this->commands([
+			    Purge::class
+		    ]);
+	    }
     }
 }

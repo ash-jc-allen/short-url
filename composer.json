@@ -22,6 +22,7 @@
     "nesbot/carbon": "~2.0",
     "illuminate/container": "^8.0",
     "illuminate/database": "^8.0",
+  	"illuminate/console": "^8.0",
     "jenssegers/agent": "^2.6",
     "hashids/hashids": "^4.0"
   },
