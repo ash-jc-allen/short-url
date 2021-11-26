@@ -1,5 +1,11 @@
 # Changelog
 
+**v6.2.0 (released 2021-11-26):**
+- Updated incorrectly set file permissions. [#104](https://github.com/ash-jc-allen/short-url/pull/104)
+- Updated GitHub Actions to run workflow with PHP 8.1. [#106](https://github.com/ash-jc-allen/short-url/pull/106)
+- Added support for PHPUnit ^9.0. [#101](https://github.com/ash-jc-allen/short-url/pull/100)
+- Added support for Larastan ^1.0. [#107](https://github.com/ash-jc-allen/short-url/pull/100)
+
 **v6.1.0 (released 2021-10-21):**
 - Added the ability to customise the default short URL prefix. [#100](https://github.com/ash-jc-allen/short-url/pull/100)
 
