@@ -6,6 +6,7 @@ use AshAllenDesign\ShortURL\Classes\Resolver;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
 class ShortURLController
 {
@@ -23,7 +24,10 @@ class ShortURLController
      */
     public function __invoke(Request $request, Resolver $resolver, string $shortURLKey): RedirectResponse
     {
-        if ($request->route()->getName() === 'short-url.invoke'
+        /** @var Route $requestRoute */
+        $requestRoute = $request->route();
+
+        if ($requestRoute->getName() === 'short-url.invoke'
             && config('short-url.disable_default_route')) {
             abort(404);
         }
