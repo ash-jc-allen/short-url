@@ -31,6 +31,10 @@
     "phpunit/phpunit": "^8.2",
     "nunomaduro/larastan": "^0.7.12"
   },
+  "suggest": {
+    "ext-bcmath": "It requires either the BC Math or GMP PHP extensions in order to work.",
+    "ext-gmp": "It requires either the BC Math or GMP PHP extensions in order to work."
+  },
   "autoload": {
     "psr-4": {
       "AshAllenDesign\\ShortURL\\": "src/"
