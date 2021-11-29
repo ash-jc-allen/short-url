@@ -29,7 +29,7 @@ class TrackingFieldsTest extends TestCase
             'track_device_type'              => true,
         ]);
 
-        $this->assertEquals([
+        $this->assertSame([
             'ip_address',
             'operating_system',
             'browser',
@@ -57,6 +57,6 @@ class TrackingFieldsTest extends TestCase
             'track_device_type'              => false,
         ]);
 
-        $this->assertEquals([], $shortURL->trackingFields());
+        $this->assertSame([], $shortURL->trackingFields());
     }
 }

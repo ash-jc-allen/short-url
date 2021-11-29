@@ -51,7 +51,7 @@ class BuilderTest extends TestCase
     {
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure()->make();
-        $this->assertEquals('https://domain.com', $shortUrl->destination_url);
+        $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
 
     /** @test */
@@ -59,7 +59,7 @@ class BuilderTest extends TestCase
     {
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure(false)->make();
-        $this->assertEquals('http://domain.com', $shortUrl->destination_url);
+        $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }
 
     /** @test */
@@ -68,7 +68,7 @@ class BuilderTest extends TestCase
         Config::set('short-url.enforce_https', true);
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
-        $this->assertEquals('https://domain.com', $shortUrl->destination_url);
+        $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
 
     /** @test */
@@ -77,7 +77,7 @@ class BuilderTest extends TestCase
         Config::set('short-url.enforce_https', false);
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
-        $this->assertEquals('http://domain.com', $shortUrl->destination_url);
+        $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }
 
     /** @test */
@@ -86,7 +86,7 @@ class BuilderTest extends TestCase
         Config::set('short-url.enforce_https', false);
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure()->make();
-        $this->assertEquals('https://domain.com', $shortUrl->destination_url);
+        $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
 
     /** @test */
@@ -288,7 +288,7 @@ class BuilderTest extends TestCase
         $shortURL = $builder->destinationUrl('https://domain.com')->make();
 
         $this->assertNotNull($shortURL->url_key);
-        $this->assertEquals(5, strlen($shortURL->url_key));
+        $this->assertSame(5, strlen($shortURL->url_key));
     }
 
     /** @test */
@@ -499,6 +499,6 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.prefix', $prefix);
 
-        self::assertEquals('s', ShortURLAlias::prefix());
+        self::assertSame('s', ShortURLAlias::prefix());
     }
 }
