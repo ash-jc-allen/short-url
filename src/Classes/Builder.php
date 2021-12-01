@@ -464,7 +464,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/'.$this->prefix().'/'.$this->urlKey,
+            'default_short_url'              => config('short-url.url').'/'.$this->prefix().'/'.$this->urlKey,
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'forward_query_params'           => $this->forwardQueryParams,
