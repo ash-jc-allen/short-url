@@ -292,6 +292,44 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function default_short_url_uses_custom_base_url(): void
+    {
+        Config::set('short-url.base_url', 'https://short.is');
+
+        $builder = new Builder();
+        $shortURL = $builder->destinationUrl('https://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->trackDeviceType(true)
+            ->trackRefererURL(false)
+            ->trackBrowser(true)
+            ->trackOperatingSystemVersion(false)
+            ->make();
+
+        $this->assertTrue(str_starts_with($shortURL->default_short_url, 'https://short.is'));
+    }
+
+    /** @test */
+    public function default_short_url_uses_default_base_url(): void
+    {
+        $default_base_url = Config::get('app.url');
+
+        $builder = new Builder();
+        $shortURL = $builder->destinationUrl('https://domain.com')
+            ->urlKey('customKey')
+            ->secure()
+            ->trackVisits(false)
+            ->trackDeviceType(true)
+            ->trackRefererURL(false)
+            ->trackBrowser(true)
+            ->trackOperatingSystemVersion(false)
+            ->make();
+
+        $this->assertTrue(str_starts_with($shortURL->default_short_url, $default_base_url));
+    }
+
+    /** @test */
     public function short_url_can_be_created_and_stored_in_the_database()
     {
         $builder = new Builder();

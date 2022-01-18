@@ -9,9 +9,33 @@ return [
     |
     | This configuration value is used to determine the prefix that
     | is registered for the short URL route.
+    | If you want to get rid of the prefix you can use either an empty string or `null`.
     |
     */
     'prefix' => '/short',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Base URL
+    |--------------------------------------------------------------------------
+    |
+    | This configuration value is used to determine the base url that you want
+    | to use for the generated short URL base path.
+    |
+    | Example:
+    | Let's say your app has its base URL config('app.url') set to https://full-path-to-my-app.com.
+    | Then let's say you have a different domain that you want to use for your short-urls,
+    | something like https://short.is.
+    | That way, when you generate a short URL that points to `https://destination.com`,
+    | instead of having a short version like `https://full-path-to-my-app.com/<prefix>/k4x9e`,
+    | you would get `https://short.is/<prefix>/k4x9e`.
+    | If you set your prefix setting to either an empty string or `null` you could go even further
+    | and have your shortened URL like `https://short.is/k4x9e`.
+    |
+    | Keep in mind that this will require extra steps to handle the additional domain.
+    |
+    */
+    'base_url' => config('app.url'),
 
     /*
     |--------------------------------------------------------------------------
