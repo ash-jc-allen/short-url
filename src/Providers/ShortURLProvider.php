@@ -5,6 +5,7 @@ namespace AshAllenDesign\ShortURL\Providers;
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
+use AshAllenDesign\ShortURL\ShortUrl;
 use Illuminate\Support\ServiceProvider;
 
 class ShortURLProvider extends ServiceProvider
@@ -43,10 +44,17 @@ class ShortURLProvider extends ServiceProvider
         ], 'short-url-migrations');
 
         // Routes
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->registerRoutes();
 
         if (config('short-url') && config('short-url.validate_config')) {
             (new Validation())->validateConfig();
+        }
+    }
+
+    protected function registerRoutes(): void
+    {
+        if (ShortUrl::$registers_routes) {
+            $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         }
     }
 }
