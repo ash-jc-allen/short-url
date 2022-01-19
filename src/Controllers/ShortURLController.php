@@ -27,11 +27,6 @@ class ShortURLController
         /** @var Route $requestRoute */
         $requestRoute = $request->route();
 
-        if ($requestRoute->getName() === 'short-url.invoke'
-            && config('short-url.disable_default_route')) {
-            abort(404);
-        }
-
         $shortURL = ShortURL::where('url_key', $shortURLKey)->firstOrFail();
 
         $resolver->handleVisit(request(), $shortURL);
