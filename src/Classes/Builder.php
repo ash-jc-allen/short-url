@@ -12,7 +12,7 @@ class Builder
 {
     /**
      * The class that is used for generating the
-     * random URL keys.
+     * random URL keys. DUMMY
      *
      * @var KeyGenerator
      */
