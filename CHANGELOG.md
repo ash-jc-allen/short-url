@@ -1,5 +1,8 @@
 # Changelog
 
+**v6.3.0 (released 2022-01-24):**
+- Added support for Laravel 9. [#116](https://github.com/ash-jc-allen/short-url/pull/116)
+
 **v6.2.0 (released 2021-11-26):**
 - Updated incorrectly set file permissions. [#104](https://github.com/ash-jc-allen/short-url/pull/104)
 - Updated GitHub Actions to run workflow with PHP 8.1. [#106](https://github.com/ash-jc-allen/short-url/pull/106)
