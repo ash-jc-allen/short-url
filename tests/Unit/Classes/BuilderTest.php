@@ -502,9 +502,7 @@ class BuilderTest extends TestCase
         self::assertSame('s', ShortURLAlias::prefix());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function empty_prefix_is_allowed()
     {
         Config::set('short-url.prefix', '');
