@@ -183,7 +183,7 @@ class Builder
     /**
      * Get the short URL route prefix with key.
      *
-     * @param null $key
+     * @param  null  $key
      * @return string
      */
     public function prefixUrl($key = null): string
@@ -198,11 +198,11 @@ class Builder
      */
     public function routeUrl(): string
     {
-        return empty($this->prefix()) ? "{shortURLKey}" : $this->prefix().'/{shortURLKey}';
+        return empty($this->prefix()) ? '{shortURLKey}' : $this->prefix().'/{shortURLKey}';
     }
 
     /**
-     * Get the middleware for short URL route
+     * Get the middleware for short URL route.
      *
      * @return array
      */
@@ -212,7 +212,7 @@ class Builder
     }
 
     /**
-     * Get the domain to assign the short URL route
+     * Get the domain to assign the short URL route.
      *
      * @return string|null
      */

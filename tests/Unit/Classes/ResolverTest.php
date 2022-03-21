@@ -12,8 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Jenssegers\Agent\Agent;
 use Mockery;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use ShortURL as ShortURLAlias;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ResolverTest extends TestCase
 {

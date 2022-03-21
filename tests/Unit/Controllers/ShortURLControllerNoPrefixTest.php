@@ -6,7 +6,6 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use ShortURL as ShortURLAlias;
 
-
 class ShortURLControllerNoPrefixTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
