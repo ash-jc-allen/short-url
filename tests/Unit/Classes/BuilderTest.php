@@ -536,6 +536,51 @@ class BuilderTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function short_url_url_can_be_changed_via_configuration()
+    {
+        Config::set('short-url.url', 'http://test3.localhost');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => ShortURLAlias::url().'/short/customKey',
+        ]);
+    }
+
+    /** @test */
+    public function short_url_domain_can_be_changed_via_configuration()
+    {
+        Config::set('short-url.url', 'http://test3.localhost');
+        Config::set('short-url.domain', 'test3.localhost');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => ShortURLAlias::url().'/short/customKey',
+        ]);
+    }
+
+    /** @test */
+    public function short_url_domain_prefix_url_can_be_changed_via_configuration()
+    {
+        Config::set('short-url.url', 'http://test3.localhost');
+        Config::set('short-url.domain', 'test3.localhost');
+        Config::set('short-url.prefix', 'tester');
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => ShortURLAlias::url().'/tester/customKey',
+        ]);
+    }
+
     /**
      * @test
      * @testWith ["s"]

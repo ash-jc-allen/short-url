@@ -17,7 +17,7 @@ class ShortURLControllerURLSameDomainTest extends TestCase
     }
 
     /** @test */
-    public function visitor_is_not_redirected_to_the_destination_url_with_domain()
+    public function visitor_is_redirected_to_the_destination_url_with_domain()
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
