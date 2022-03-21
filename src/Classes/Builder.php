@@ -218,7 +218,17 @@ class Builder
      */
     public function domain(): string|null
     {
-        return config('short-url.domain', config('app.url'));
+        return config('short-url.domain');
+    }
+
+    /**
+     * Get the url to assign the short URL route.
+     *
+     * @return string|null
+     */
+    public function url(): string|null
+    {
+        return config('short-url.url', config('app.url'));
     }
 
     /**
@@ -505,7 +515,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => $this->domain().'/'.$this->prefixUrl(),
+            'default_short_url'              => $this->url().'/'.$this->prefixUrl(),
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'forward_query_params'           => $this->forwardQueryParams,

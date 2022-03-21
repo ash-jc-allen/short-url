@@ -306,7 +306,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
+            'default_short_url'              => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'                        => 'customKey',
             'destination_url'                => 'https://domain.com',
             'track_visits'                   => false,
@@ -342,7 +342,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
+            'default_short_url'    => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'              => 'customKey',
             'destination_url'      => 'https://domain.com',
             'track_visits'         => false,
@@ -370,7 +370,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
+            'default_short_url'    => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'              => 'customKey',
             'destination_url'      => 'https://domain.com',
             'track_visits'         => false,
@@ -453,7 +453,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'           => 'customKey',
             'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at'    => null,
@@ -473,7 +473,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'           => 'customKey',
             'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
@@ -491,7 +491,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'           => 'customKey',
             'activated_at'      => now(),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
@@ -532,7 +532,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => ShortURLAlias::domain().'/s/customKey',
+            'default_short_url' => ShortURLAlias::url().'/s/customKey',
         ]);
     }
 

@@ -20,7 +20,7 @@ class ShortURLControllerNoPrefixTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url'    => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,

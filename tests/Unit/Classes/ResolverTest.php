@@ -37,7 +37,7 @@ class ResolverTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url'   => 'https://google.com',
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'           => '12345',
             'single_use'        => true,
             'track_visits'      => true,
@@ -45,7 +45,7 @@ class ResolverTest extends TestCase
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'));
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'));
 
         $resolver = new Resolver();
         $resolver->handleVisit($request, $shortURL);
@@ -56,14 +56,14 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'   => 'https://google.com',
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'           => '12345',
             'single_use'        => true,
             'track_visits'      => true,
             'activated_at'      => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'));
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'));
 
         $resolver = new Resolver();
         $result = $resolver->handleVisit($request, $shortURL);
@@ -76,7 +76,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'   => 'https://google.com',
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'           => '12345',
             'single_use'        => false,
             'track_visits'      => true,
@@ -85,7 +85,7 @@ class ResolverTest extends TestCase
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'));
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'));
 
         $resolver = new Resolver();
         $result = $resolver->handleVisit($request, $shortURL);
@@ -97,14 +97,14 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'   => 'https://google.com',
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'           => '12345',
             'single_use'        => false,
             'track_visits'      => false,
             'activated_at'      => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'));
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'));
 
         $resolver = new Resolver();
         $result = $resolver->handleVisit($request, $shortURL);
@@ -126,7 +126,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url'              => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'                        => '12345',
             'single_use'                     => false,
             'track_visits'                   => true,
@@ -140,7 +140,7 @@ class ResolverTest extends TestCase
             'activated_at'                   => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'));
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'));
 
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
@@ -177,7 +177,7 @@ class ResolverTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url'              => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'                        => '12345',
             'single_use'                     => false,
             'track_visits'                   => true,
@@ -191,7 +191,7 @@ class ResolverTest extends TestCase
             'activated_at'                   => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
         ]);
 
@@ -227,14 +227,14 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'   => 'https://google.com',
-            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url' => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'           => '12345',
             'single_use'        => true,
             'track_visits'      => false,
             'activated_at'      => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'));
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'));
 
         $resolver = new Resolver();
 
@@ -252,7 +252,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url'              => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'                        => '12345',
             'single_use'                     => false,
             'track_visits'                   => true,
@@ -266,7 +266,7 @@ class ResolverTest extends TestCase
             'activated_at'                   => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
         ]);
 
@@ -298,7 +298,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url'              => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'                        => '12345',
             'single_use'                     => false,
             'track_visits'                   => true,
@@ -312,7 +312,7 @@ class ResolverTest extends TestCase
             'activated_at'                   => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
         ]);
 
@@ -347,7 +347,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
+            'default_short_url'              => ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'                        => '12345',
             'single_use'                     => false,
             'track_visits'                   => false,
@@ -361,7 +361,7 @@ class ResolverTest extends TestCase
             'activated_at'                   => now()->subSecond(),
         ]);
 
-        $request = Request::create(ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
+        $request = Request::create(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'), 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
         ]);
 

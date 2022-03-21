@@ -6,17 +6,18 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use ShortURL as ShortURLAlias;
 
-class ShortURLControllerPrefixTest extends TestCase
+class ShortURLControllerURLDomainNotSameTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('short-url.prefix', '/s');
+        $app['config']->set('short-url.url', 'http://test.localhost');
+        $app['config']->set('short-url.domain', 'test2.localhost');
 
         parent::getEnvironmentSetUp($app);
     }
 
     /** @test */
-    public function visitor_is_redirected_to_the_destination_url_with_custom_prefix()
+    public function visitor_is_not_redirected_to_the_destination_url_with_domain()
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
@@ -28,6 +29,7 @@ class ShortURLControllerPrefixTest extends TestCase
             'activated_at'         => now()->subMinute(),
         ]);
 
-        $this->get('/s/12345')->assertStatus(301)->assertRedirect('https://google.com');
+        $this->get(ShortURLAlias::url().'/'.ShortURLAlias::prefixUrl('12345'))
+            ->assertStatus(404);
     }
 }
