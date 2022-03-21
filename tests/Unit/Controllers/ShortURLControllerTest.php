@@ -9,6 +9,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
+use ShortURL as ShortURLAlias;
 
 class ShortURLControllerTest extends TestCase
 {
@@ -25,7 +26,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -43,7 +44,7 @@ class ShortURLControllerTest extends TestCase
 
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -61,7 +62,7 @@ class ShortURLControllerTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('app.url').'/short/12345',
+            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'                        => '12345',
             'single_use'                     => true,
             'forward_query_params'           => false,
@@ -101,7 +102,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -117,7 +118,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -134,7 +135,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -151,7 +152,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
@@ -168,7 +169,7 @@ class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com?param1=abc',
-            'default_short_url'    => config('app.url').'/short/12345',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('12345'),
             'url_key'              => '12345',
             'forward_query_params' => false,
             'redirect_status_code' => 301,

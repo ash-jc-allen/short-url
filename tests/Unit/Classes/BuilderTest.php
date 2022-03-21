@@ -306,7 +306,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'              => config('app.url').'/short/customKey',
+            'default_short_url'              => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'                        => 'customKey',
             'destination_url'                => 'https://domain.com',
             'track_visits'                   => false,
@@ -325,6 +325,14 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function short_url_can_be_created_and_stored_in_the_database_with_no_prefix()
+    {
+        Config::set('short-url.prefix', '');
+
+        $this->short_url_can_be_created_and_stored_in_the_database();
+    }
+
+    /** @test */
     public function short_url_can_be_created_and_stored_in_the_database_using_the_facade()
     {
         ShortURLAlias::destinationUrl('http://domain.com')
@@ -334,13 +342,21 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => config('app.url').'/short/customKey',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'              => 'customKey',
             'destination_url'      => 'https://domain.com',
             'track_visits'         => false,
             'single_use'           => false,
             'redirect_status_code' => 301,
         ]);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_and_stored_in_the_database_using_the_facade_with_no_prefix()
+    {
+        Config::set('short-url.prefix', '');
+
+        $this->short_url_can_be_created_and_stored_in_the_database_using_the_facade();
     }
 
     /** @test */
@@ -354,13 +370,21 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => config('app.url').'/short/customKey',
+            'default_short_url'    => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'              => 'customKey',
             'destination_url'      => 'https://domain.com',
             'track_visits'         => false,
             'single_use'           => false,
             'redirect_status_code' => 302,
         ]);
+    }
+
+    /** @test */
+    public function correct_redirect_status_code_is_stored_if_explicitly_set_with_no_prefix()
+    {
+        Config::set('short-url.prefix', '');
+
+        $this->correct_redirect_status_code_is_stored_if_explicitly_set();
     }
 
     /** @test */
@@ -429,7 +453,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
+            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'           => 'customKey',
             'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at'    => null,
@@ -449,7 +473,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
+            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'           => 'customKey',
             'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
@@ -467,11 +491,35 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
+            'default_short_url' => ShortURLAlias::domain().'/'.ShortURLAlias::prefixUrl('customKey'),
             'url_key'           => 'customKey',
             'activated_at'      => now(),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_an_explicit_activation_date_with_no_prefix()
+    {
+        Config::set('short-url.prefix', '');
+
+        $this->short_url_can_be_created_with_an_explicit_activation_date();
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_an_explicit_activation_date_and_deactivation_date_with_no_prefix()
+    {
+        Config::set('short-url.prefix', '');
+
+        $this->short_url_can_be_created_with_an_explicit_activation_date_and_deactivation_date();
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_an_explicit_deactivation_date_with_no_prefix()
+    {
+        Config::set('short-url.prefix', '');
+
+        $this->short_url_can_be_created_with_an_explicit_deactivation_date();
     }
 
     /** @test */
@@ -484,7 +532,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/s/customKey',
+            'default_short_url' => ShortURLAlias::domain().'/s/customKey',
         ]);
     }
 

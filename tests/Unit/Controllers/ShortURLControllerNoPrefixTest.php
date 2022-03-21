@@ -6,11 +6,12 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use ShortURL as ShortURLAlias;
 
-class ShortURLControllerPrefixTest extends TestCase
+
+class ShortURLControllerNoPrefixTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('short-url.prefix', '/s');
+        $app['config']->set('short-url.prefix', '');
 
         parent::getEnvironmentSetUp($app);
     }
@@ -28,6 +29,8 @@ class ShortURLControllerPrefixTest extends TestCase
             'activated_at'         => now()->subMinute(),
         ]);
 
-        $this->get('/s/12345')->assertStatus(301)->assertRedirect('https://google.com');
+        $this->get(ShortURLAlias::prefixUrl('12345'))
+            ->assertStatus(301)
+            ->assertRedirect('https://google.com');
     }
 }

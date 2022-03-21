@@ -181,6 +181,47 @@ class Builder
     }
 
     /**
+     * Get the short URL route prefix with key.
+     *
+     * @param null $key
+     * @return string
+     */
+    public function prefixUrl($key = null): string
+    {
+        return empty($this->prefix()) ? ($key ?? $this->urlKey) : $this->prefix().'/'.($key ?? $this->urlKey);
+    }
+
+    /**
+     * Get the short URL placeholder for short URL route.
+     *
+     * @return string
+     */
+    public function routeUrl(): string
+    {
+        return empty($this->prefix()) ? "{shortURLKey}" : $this->prefix().'/{shortURLKey}';
+    }
+
+    /**
+     * Get the middleware for short URL route
+     *
+     * @return array
+     */
+    public function middleware(): array
+    {
+        return config('short-url.middleware', []);
+    }
+
+    /**
+     * Get the domain to assign the short URL route
+     *
+     * @return string|null
+     */
+    public function domain(): string|null
+    {
+        return config('short-url.domain', config('app.url'));
+    }
+
+    /**
      * Set the destination URL that the shortened URL
      * will redirect to.
      *
@@ -464,7 +505,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/'.$this->prefix().'/'.$this->urlKey,
+            'default_short_url'              => $this->domain().'/'.$this->prefixUrl(),
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'forward_query_params'           => $this->forwardQueryParams,

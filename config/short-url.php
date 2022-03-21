@@ -14,6 +14,30 @@ return [
     'prefix' => '/short',
 
     /*
+   |--------------------------------------------------------------------------
+   | Domain
+   |--------------------------------------------------------------------------
+   |
+   | This configuration value is used to determine the short url available in
+   | specific domain. APP_URL will be used if empty
+   |
+   */
+    'domain' => null,
+
+    /*
+   |--------------------------------------------------------------------------
+   | Middleware
+   |--------------------------------------------------------------------------
+   |
+   | This configuration value is used to add middleware to the route. Empty
+   | middleware will be used if none is set
+   |
+   */
+    'middleware' => [
+
+    ],
+
+    /*
     |--------------------------------------------------------------------------
     | Custom Routing
     |--------------------------------------------------------------------------
