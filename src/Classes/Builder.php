@@ -378,6 +378,19 @@ class Builder
     }
 
     /**
+     * Explicitly set the key generator.
+     *
+     * @param  KeyGenerator  $keyGenerator
+     * @return $this
+     */
+    public function keyGenerator(KeyGenerator $keyGenerator): self
+    {
+        $this->keyGenerator = $keyGenerator;
+
+        return $this;
+    }
+
+    /**
      * Override the HTTP status code that will be used
      * for redirecting the visitor.
      *
