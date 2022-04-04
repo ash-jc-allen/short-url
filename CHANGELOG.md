@@ -1,5 +1,10 @@
 # Changelog
 
+**v7.0.0 (released 2022-04-04):**
+- Added ability to remove the prefix from default short URLs. [#123](https://github.com/ash-jc-allen/short-url/pull/123)
+- Added ability to define middleware for the default short URL route. [#121](https://github.com/ash-jc-allen/short-url/pull/121)
+- Added ability to set the key generator on-the-fly. [#122](https://github.com/ash-jc-allen/short-url/pull/122)
+
 **v6.3.0 (released 2022-01-24):**
 - Added support for Laravel 9. [#116](https://github.com/ash-jc-allen/short-url/pull/116)
 
