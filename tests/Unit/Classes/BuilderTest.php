@@ -490,15 +490,34 @@ class BuilderTest extends TestCase
 
     /**
      * @test
-     * @testWith ["s"]
-     *           ["/s"]
-     *           ["/s/"]
-     *           ["s/"]
+     * @testWith ["s", "s"]
+     *           ["/s", "s"]
+     *           ["/s/", "s"]
+     *           ["s/", "s"]
+     *           [null, null]
      */
-    public function correct_prefix_is_returned($prefix)
+    public function correct_prefix_is_returned(?string $prefix, ?string $expected)
     {
         Config::set('short-url.prefix', $prefix);
 
-        self::assertSame('s', ShortURLAlias::prefix());
+        self::assertSame($expected, ShortURLAlias::prefix());
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_a_null_prefix(): void
+    {
+        $deactivateTime = now()->addHours(2);
+
+        Config::set('short-url.prefix', null);
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->deactivateAt($deactivateTime)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => config('app.url').'/customKey',
+            'url_key' => 'customKey',
+        ]);
     }
 }

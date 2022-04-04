@@ -173,11 +173,17 @@ class Builder
     /**
      * Get the short URL route prefix.
      *
-     * @return string
+     * @return string|null
      */
-    public function prefix(): string
+    public function prefix(): ?string
     {
-        return trim(config('short-url.prefix'), '/');
+        $prefix = config('short-url.prefix');
+
+        if ($prefix === null) {
+            return null;
+        }
+
+        return trim($prefix, '/');
     }
 
     /**
@@ -487,7 +493,7 @@ class Builder
     {
         return ShortURL::create([
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/'.$this->prefix().'/'.$this->urlKey,
+            'default_short_url'              => $this->buildDefaultShortUrl(),
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'forward_query_params'           => $this->forwardQueryParams,
@@ -613,5 +619,22 @@ class Builder
         $this->trackDeviceType = null;
 
         return $this;
+    }
+
+    /**
+     * Build and return the default short URL that will be stored in the
+     * database.
+     *
+     * @return string
+     */
+    private function buildDefaultShortUrl(): string
+    {
+        $baseUrl = config('app.url').'/';
+
+        if ($this->prefix() !== null) {
+            $baseUrl .= $this->prefix().'/';
+        }
+
+        return $baseUrl.$this->urlKey;
     }
 }
