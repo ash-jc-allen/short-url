@@ -368,9 +368,9 @@ class Builder
     }
 
     /**
-     * Explicitly set the key generator
+     * Explicitly set the key generator.
      *
-     * @param  KeyGenerator $keyGenerator
+     * @param  KeyGenerator  $keyGenerator
      * @return $this
      */
     public function keyGenerator(KeyGenerator $keyGenerator): self
