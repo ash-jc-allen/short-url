@@ -181,6 +181,16 @@ class Builder
     }
 
     /**
+     * Get the middleware for short URL route.
+     *
+     * @return array
+     */
+    public function middleware(): array
+    {
+        return config('short-url.middleware', []);
+    }
+
+    /**
      * Set the destination URL that the shortened URL
      * will redirect to.
      *
