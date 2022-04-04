@@ -1,11 +1,32 @@
 # Upgrade Guide
 
 ## Contents
+- [Upgrading from 6.* to 7.0.0](#upgrading-from-6-to-700)
 - [Upgrading from 5.* to 6.0.0](#upgrading-from-5-to-600)
 - [Upgrading from 4.* to 5.0.0](#upgrading-from-4-to-500)
 - [Upgrading from 3.* to 4.0.0](#upgrading-from-3-to-400)
 - [Upgrading from 2.* to 3.0.0](#upgrading-from-2-to-300)
 - [Upgrading from 1.* to 2.0.0](#upgrading-from-1-to-200)
+
+## Upgrading from 6.* to 7.0.0
+
+### Method Signature Update
+
+As of Short URL v7.0.0, one of the method's signatures have been updated in order to allow the default short URL prefix to be nullable.
+
+The signature of the `prefix()` method in the `AshAllenDesign\ShortURL\Classes\Builder` class has changed from:
+
+```
+public function prefix(): string
+```
+
+to:
+
+```
+public function prefix(): ?string
+```
+
+Although it's unlikely that you are overriding this method, if you are, you'll need to update the method signature to the new format.
 
 ## Upgrading from 5.* to 6.0.0
 

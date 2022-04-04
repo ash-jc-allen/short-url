@@ -287,7 +287,7 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
  ```
 
-### Activation and Deactivation Times
+#### Activation and Deactivation Times
 
 By default, all short URLs that you create are active until you delete them. However, you may set activation and deactivation
 times for your URLs when you're creating them.
@@ -378,6 +378,8 @@ do this are provided for this in the [Customisation](#customisation) section bel
 
 #### Customising the Default Route
 
+##### Customising the Prefix
+
 The package comes with a route that you can use for your short URLs. By default, this route is `/short/{shortURLKey}`.
 
 You might want to keep using this default route but change the `/short/` prefix to something else. To do this, you can change the `prefix` field in the config.
@@ -387,6 +389,36 @@ For example, to change the default short URL to `/s`, you could change the confi
 ```
 'prefix' => 's',
 ```
+
+##### Removing the Prefix
+
+You may also remove the prefix from the default route completely. For example, if you want your short URL to be accessible via `/{shortUrlKey}`, then you can update the `prefix` config value to `null` like so:
+
+```
+'prefix' => null,
+```
+
+##### Defining Middleware
+
+You may wish to run the default short URL through some middleware in your application. To do this, you can define the middleware that the route should use via the `middleware` config value.
+
+For example, if you have a `MyAwesomeMiddleware` class, you could update your `short-url` config like so:
+
+```
+'middleware' => [
+    MyAwesomeMiddleware::class,
+],
+```
+
+You can also use this same approach to define middleware groups rather than individual middleware classes. For example, if you want your default short URL route to use the `web` middleware group, you could update your config like so:
+
+```
+'middleware' => [
+    'web',
+],
+```
+
+It's important to note that this middleware will only be automatically applied to the default short URL route that ships with the package. If you are defining your own route, you'll need to apply this middleware to your route yourself.
 
 #### Disabling the Default Route
 If you have added your own custom route to your project, you may want to block the default route that the package provides.
