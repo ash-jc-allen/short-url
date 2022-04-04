@@ -418,6 +418,8 @@ You can also use this same approach to define middleware groups rather than indi
 ],
 ```
 
+It's important to note that this middleware will only be automatically applied to the default short URL route that ships with the package. If you are defining your own route, you'll need to apply this middleware to your route yourself.
+
 #### Disabling the Default Route
 If you have added your own custom route to your project, you may want to block the default route that the package provides.
 You can do this by setting the following value in the config:

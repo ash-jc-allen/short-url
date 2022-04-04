@@ -18,12 +18,11 @@ return [
     | Middleware
     |--------------------------------------------------------------------------
     |
-    | This configuration value is used to add middleware to the route. Empty
-    | middleware will be used if none is set
+    | Define any middleware that the default short URL route will use.
     |
     */
     'middleware' => [
-
+        //
     ],
 
     /*
