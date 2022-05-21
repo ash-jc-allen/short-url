@@ -38,6 +38,8 @@ class ShortURLVisit extends Model
      * @var string
      */
     protected $table = 'short_url_visits';
+    
+    protected $connected;
 
     /**
      * The attributes that are mass assignable.
@@ -75,7 +77,12 @@ class ShortURLVisit extends Model
     protected $casts = [
         'short_url_id' => 'integer',
     ];
-
+    
+    public function __construct()
+    {
+        parent::__construct(...func_get_args());
+        $this->connection = config('short-url.connection');
+    }
     /**
      * A URL visit belongs to one specific shortened URL.
      *
