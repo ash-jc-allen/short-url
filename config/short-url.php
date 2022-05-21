@@ -54,6 +54,19 @@ return [
     |
     */
     'forward_query_params' => false,
+    
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Connection
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the connection information for each server that
+    | is used by your application.
+    
+    |
+     */
+    'connection' => env('SHORT_URL_CONNECTION', null),
 
     /*
     |--------------------------------------------------------------------------
