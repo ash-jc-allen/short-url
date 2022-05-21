@@ -39,6 +39,8 @@ class ShortURL extends Model
      * @var string
      */
     protected $table = 'short_urls';
+    
+    protected $connected;
 
     /**
      * The attributes that are mass assignable.
@@ -93,7 +95,17 @@ class ShortURL extends Model
         'track_referer_url'              => 'boolean',
         'track_device_type'              => 'boolean',
     ];
+   
+     /**
+     * it is for define database conection 
+     */
+   public function __construct()
+    {
+        parent::__construct(...func_get_args());
+        $this->connection = config('short-url.connection');
+    }
 
+    
     /**
      * A short URL can be visited many times.
      *
