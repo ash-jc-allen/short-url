@@ -39,7 +39,7 @@ class ShortURLVisit extends Model
      */
     protected $table = 'short_url_visits';
     
-    protected $connected;
+    protected $connection;
 
     /**
      * The attributes that are mass assignable.
