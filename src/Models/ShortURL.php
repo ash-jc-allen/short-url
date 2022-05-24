@@ -40,7 +40,7 @@ class ShortURL extends Model
      */
     protected $table = 'short_urls';
     
-    protected $connected;
+    protected $connection;
 
     /**
      * The attributes that are mass assignable.
