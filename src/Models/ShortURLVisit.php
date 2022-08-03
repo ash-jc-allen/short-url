@@ -83,6 +83,6 @@ class ShortURLVisit extends Model
      */
     public function shortURL(): BelongsTo
     {
-        return $this->belongsTo(ShortURL::class);
+        return $this->belongsTo(ShortURL::class, 'short_url_id');
     }
 }
