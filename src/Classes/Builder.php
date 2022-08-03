@@ -407,7 +407,7 @@ class Builder
      */
     public function redirectStatusCode(int $statusCode): self
     {
-        if ($statusCode < 300 || $statusCode > 399) {
+        if (! in_array($statusCode, [301, 302, 303, 307, 308], strict: true)) {
             throw new ShortURLException('The redirect status code must be a valid redirect HTTP status code.');
         }
 
