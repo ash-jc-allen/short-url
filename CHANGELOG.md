@@ -1,5 +1,9 @@
 # Changelog
 
+**v7.1.0 (released 2022-08-03):**
+- Added `toArray` method to the `Builder` class. [#133](https://github.com/ash-jc-allen/short-url/pull/133)
+- Fixed `shortURL` relationship on the `ShortURLVisit` model. [#132](https://github.com/ash-jc-allen/short-url/pull/132)
+
 **v7.0.0 (released 2022-04-04):**
 - Added ability to remove the prefix from default short URLs. [#123](https://github.com/ash-jc-allen/short-url/pull/123)
 - Added ability to define middleware for the default short URL route. [#121](https://github.com/ash-jc-allen/short-url/pull/121)
