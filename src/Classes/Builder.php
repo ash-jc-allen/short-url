@@ -473,11 +473,11 @@ class Builder
             throw new ShortURLException('No destination URL has been set.');
         }
 
-        $this->setOptions();
+        $data = $this->toArray();
 
         $this->checkKeyDoesNotExist();
 
-        $shortURL = $this->insertShortURLIntoDatabase();
+        $shortURL = ShortURL::create($data);
 
         $this->resetOptions();
 
@@ -485,13 +485,15 @@ class Builder
     }
 
     /**
-     * Store the short URL in the database.
+     * Returns an array of all properties used during record creation.
      *
-     * @return ShortURL
+     * @return array<string,mixed>
      */
-    protected function insertShortURLIntoDatabase(): ShortURL
+    public function toArray(): array
     {
-        return ShortURL::create([
+        $this->setOptions();
+
+        return [
             'destination_url'                => $this->destinationUrl,
             'default_short_url'              => $this->buildDefaultShortUrl(),
             'url_key'                        => $this->urlKey,
@@ -508,7 +510,7 @@ class Builder
             'track_device_type'              => $this->trackDeviceType,
             'activated_at'                   => $this->activateAt,
             'deactivated_at'                 => $this->deactivateAt,
-        ]);
+        ];
     }
 
     /**
