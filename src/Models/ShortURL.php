@@ -95,6 +95,26 @@ class ShortURL extends Model
     ];
 
     /**
+     * Get the current connection name for the model.
+     *
+     * @return string|null
+     */
+    public function getConnectionName()
+    {
+        return config('short-url.database.connection') ?? parent::getConnectionName();
+    }
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return config('short-url.database.urls_table') ?? parent::getTable();
+    }
+
+    /**
      * A short URL can be visited many times.
      *
      * @return HasMany

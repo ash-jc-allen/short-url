@@ -13,7 +13,7 @@ class CreateShortUrlsTable extends Migration
      */
     public function up()
     {
-        Schema::create('short_urls', function (Blueprint $table) {
+        Schema::create(config('short-url.database.urls_table', 'short_urls'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('destination_url');
             $table->string('url_key')->unique();
@@ -31,6 +31,6 @@ class CreateShortUrlsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('short_urls');
+        Schema::dropIfExists(config('short-url.database.urls_table', 'short_urls'));
     }
 }

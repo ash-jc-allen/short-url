@@ -148,4 +148,20 @@ return [
     |
     */
     'validate_config' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Database connection and tables
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the database connection and tables that get used
+    | while using this short url library. This connection is used when another
+    | is not explicitly specified when executing a given shortening function.
+    |
+    */
+    'database' => [
+        'urls_table' => 'short_urls',
+        'visits_table' => 'short_url_visits',
+        'connection' => 'default',
+    ],
 ];

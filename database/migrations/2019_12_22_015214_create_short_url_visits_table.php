@@ -13,7 +13,7 @@ class CreateShortUrlVisitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('short_url_visits', function (Blueprint $table) {
+        Schema::create(config('short-url.database.visits_table', 'short_url_visits'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('short_url_id');
             $table->string('ip_address')->nullable();
@@ -24,7 +24,7 @@ class CreateShortUrlVisitsTable extends Migration
             $table->timestamp('visited_at');
             $table->timestamps();
 
-            $table->foreign('short_url_id')->references('id')->on('short_urls')->onDelete('cascade');
+            $table->foreign('short_url_id')->references('id')->on(config('short-url.database.urls_table', 'short_urls'))->onDelete('cascade');
         });
     }
 
@@ -35,6 +35,6 @@ class CreateShortUrlVisitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('short_url_visits');
+        Schema::dropIfExists(config('short-url.database.visits_table', 'short_url_visits'));
     }
 }

@@ -85,4 +85,24 @@ class ShortURLVisit extends Model
     {
         return $this->belongsTo(ShortURL::class, 'short_url_id');
     }
+
+    /**
+     * Get the current connection name for the model.
+     *
+     * @return string|null
+     */
+    public function getConnectionName()
+    {
+        return config('short-url.database.connection') ?? parent::getConnectionName();
+    }
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return config('short-url.database.visits_table') ?? parent::getTable();
+    }
 }
