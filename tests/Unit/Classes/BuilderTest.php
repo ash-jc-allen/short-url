@@ -520,4 +520,22 @@ class BuilderTest extends TestCase
             'url_key' => 'customKey',
         ]);
     }
+
+    /**
+     * @test
+     * @testWith [true, "https://domain.com"]
+     *           [false, "https://fallback.com"]
+     */
+    public function data_can_be_set_on_the_builder_using_when(bool $flag, string $destination): void
+    {
+        $shortUrl = (new Builder())
+            ->when(
+                $flag,
+                fn (Builder $builder): Builder => $builder->destinationUrl('https://domain.com'),
+                fn (Builder $builder): Builder => $builder->destinationUrl('https://fallback.com')
+            )
+            ->make();
+
+        $this->assertSame($destination, $shortUrl->destination_url);
+    }
 }

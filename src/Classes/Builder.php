@@ -7,9 +7,12 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Conditionable;
 
 class Builder
 {
+    use Conditionable;
+
     /**
      * The class that is used for generating the
      * random URL keys.
