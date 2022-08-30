@@ -35,6 +35,7 @@
         - [Redirect Status Code](#redirect-status-code)
         - [Activation and Deactivation Times](#activation-and-deactivation-times)
         - [Facade](#facade)
+        - [Conditionals](#conditionals)
     - [Using the Shortened URLs](#using-the-shortened-urls)
         - [Default Route and Controller](#default-route-and-controller)
         - [Custom Route](#custom-route)
@@ -336,6 +337,42 @@ class Controller
     }
 }
 ```
+
+#### Conditionals
+
+The `Builder` class uses the `Illuminate\Support\Traits\Conditionable` trait, so you can use the `when` and `unless` methods when building your short URLs.
+
+For example, let's take this block of code that uses `if` when building the short URL:
+
+```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+ 
+$shortURLObject = (new Builder())
+    ->destinationUrl('https://destination.com');
+
+if ($request->date('activation')) {
+    $builder = $builder->activateAt($request->date('activation'));
+};
+
+$shortURLObject = $builder->make();)
+```
+
+This could be rewritten using `when` like so:
+
+ ```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+use Carbon\Carbon;
+ 
+$shortURLObject = (new Builder())
+    ->destinationUrl('https://destination.com')
+    ->when(
+        $request->date('activation'),
+        function (Builder $builder, Carbon $activateDate): Builder  {
+            return $builder->activateAt($activateDate);
+        },
+    )
+    ->make();
+ ```
 
 ### Using the Shortened URLs
 #### Default Route and Controller
