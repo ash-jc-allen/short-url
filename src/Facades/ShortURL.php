@@ -29,6 +29,8 @@ use RuntimeException;
  * @method static \AshAllenDesign\ShortURL\Models\ShortURL make()
  * @method static string|null prefix()
  * @method static array middleware()
+ * @method static array toArray()
+ * @method static void routes()
  *
  * @see Builder
  */
