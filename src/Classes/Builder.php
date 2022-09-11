@@ -208,6 +208,10 @@ class Builder
      */
     public function routes(): void
     {
+        if (config('short-url.disable_default_route')) {
+            return;
+        }
+
         Route::middleware($this->middleware())->group(function (): void {
             Route::get(
                 '/'.$this->prefix().'/{shortURLKey}',

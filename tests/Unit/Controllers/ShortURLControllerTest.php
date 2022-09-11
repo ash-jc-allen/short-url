@@ -37,24 +37,6 @@ class ShortURLControllerTest extends TestCase
     }
 
     /** @test */
-    public function request_is_aborted_if_custom_routing_is_enabled_but_the_default_route_has_been_used()
-    {
-        Config::set('short-url.disable_default_route', true);
-
-        ShortURL::create([
-            'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/short/12345',
-            'url_key'              => '12345',
-            'single_use'           => true,
-            'track_visits'         => true,
-            'redirect_status_code' => 301,
-            'activated_at'         => now()->subMinute(),
-        ]);
-
-        $this->get('/short/12345')->assertNotFound();
-    }
-
-    /** @test */
     public function event_is_dispatched_when_the_short_url_is_visited()
     {
         Event::fake();
