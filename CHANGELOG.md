@@ -1,5 +1,11 @@
 # Changelog
 
+**v7.2.0 (released 2022-09-12):**
+- Added support for PHP 8.2. [#139](https://github.com/ash-jc-allen/short-url/pull/139)
+- Added support for using `when` when building short URLs. [#140](https://github.com/ash-jc-allen/short-url/pull/140)
+- Removed unused `URL` facade import. [#147](https://github.com/ash-jc-allen/short-url/pull/147)
+- Fixed bug that always resulted in a 404 if the `prefix` was set to `null`. [#149](https://github.com/ash-jc-allen/short-url/pull/149), [#158](https://github.com/ash-jc-allen/short-url/pull/158)
+
 **v7.1.0 (released 2022-08-03):**
 - Added `toArray` method to the `Builder` class. [#133](https://github.com/ash-jc-allen/short-url/pull/133)
 - Fixed `shortURL` relationship on the `ShortURLVisit` model. [#132](https://github.com/ash-jc-allen/short-url/pull/132)
