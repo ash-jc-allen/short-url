@@ -2,10 +2,12 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Controllers\ShortURLController;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
 
@@ -197,6 +199,25 @@ class Builder
     public function middleware(): array
     {
         return config('short-url.middleware', []);
+    }
+
+    /**
+     * Register the routes to handle the Short URL visits.
+     *
+     * @return void
+     */
+    public function routes(): void
+    {
+        if (config('short-url.disable_default_route')) {
+            return;
+        }
+
+        Route::middleware($this->middleware())->group(function (): void {
+            Route::get(
+                '/'.$this->prefix().'/{shortURLKey}',
+                ShortURLController::class
+            )->name('short-url.invoke');
+        });
     }
 
     /**
