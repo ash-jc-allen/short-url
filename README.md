@@ -466,6 +466,12 @@ You can do this by setting the following value in the config:
 ```
 If the default route is disabled, any visitors who go to the ```/short/{shortURLKey}``` route will receive a HTTP 404.
 
+You may want to manually prevent the route from being automatically registered and manually register it yourself in your own routes file. To do this you can add the following code to your routes file (e.g. `web.php`):
+
+```php
+\AshAllenDesign\ShortURL\Facades\ShortURL::routes();
+```
+
 #### Default URL Key Length 
 When building a shortened URL, you have the option to define your own URL key or to randomly generate one. If one is
 randomly generated, the minimum length of it is determined from the config.
