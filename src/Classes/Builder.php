@@ -49,7 +49,7 @@ class Builder
     protected $secure;
 
     /**
-     * Whether or not the short url whould
+     * Whether or not the short url should
      * forward query params to the
      * destination url.
      *

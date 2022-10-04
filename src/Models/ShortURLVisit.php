@@ -3,6 +3,8 @@
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -24,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ShortURLVisit extends Model
 {
+    use HasFactory;
+
     const DEVICE_TYPE_MOBILE = 'mobile';
 
     const DEVICE_TYPE_DESKTOP = 'desktop';
@@ -75,6 +79,16 @@ class ShortURLVisit extends Model
     protected $casts = [
         'short_url_id' => 'integer',
     ];
+
+    /**
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        $modelFactory = app(config('short-url.factories.AshAllenDesign\ShortURL\Models\ShortURLVisit'));
+
+        return $modelFactory::new();
+    }
 
     /**
      * A URL visit belongs to one specific shortened URL.

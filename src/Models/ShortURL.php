@@ -4,6 +4,8 @@ namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -32,6 +34,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class ShortURL extends Model
 {
+    use HasFactory;
+
     /**
      * The table associated with the model.
      *
@@ -74,6 +78,16 @@ class ShortURL extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        $modelFactory = app(config('short-url.factories.AshAllenDesign\ShortURL\Models\ShortURL'));
+
+        return $modelFactory::new();
+    }
 
     /**
      * The attributes that should be cast to native types.

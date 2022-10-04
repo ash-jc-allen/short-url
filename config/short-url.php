@@ -27,6 +27,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Eloquent Factories
+    |--------------------------------------------------------------------------
+    |
+    | Define eloquent factories that you will use for your testing purposes.
+    |
+    */
+    'factories' => [
+        \AshAllenDesign\ShortURL\Models\ShortURL::class => \Database\Factories\ShortURLFactory::class,
+        \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \Database\Factories\ShortURLVisitFactory::class
+    ],
+    /*
+    |--------------------------------------------------------------------------
     | Custom Routing
     |--------------------------------------------------------------------------
     |
