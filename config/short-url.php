@@ -34,8 +34,8 @@ return [
     |
     */
     'factories' => [
-        \AshAllenDesign\ShortURL\Models\ShortURL::class => \Database\Factories\ShortURLFactory::class,
-        \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \Database\Factories\ShortURLVisitFactory::class
+        \AshAllenDesign\ShortURL\Models\ShortURL::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory::class,
+        \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class
     ],
     /*
     |--------------------------------------------------------------------------
