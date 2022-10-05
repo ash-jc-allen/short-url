@@ -55,6 +55,7 @@
         - [Tracked Fields](#tracked-fields)
     - [Events](#events)
         - [Short URL Visited](#short-url-visited)
+    - [Model Factories](#model-factories)
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
@@ -592,6 +593,46 @@ The following example shows how to get an array of all tracking-enabled fields f
 $shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
 $shortURL->trackingFields();
 ``` 
+
+### Model Factories
+
+The package comes with model factories included for testing purposes which come handy when generating polymorphic relationships. The ShortURL model factory also comes with extra states that you may use when necessary.
+
+```php
+use AshAllenDesign\ShortURL\Models\ShortURL;
+
+$shortUrl = ShortURL::factory()->create();
+
+// url is deactivated
+$deactivatedShortUrl = ShortURL::factory()->deactivated()->create();
+
+// url is neither activated nor deactivated ( activated_at == null )
+$inactiveShortURL = ShortURL::factory()->inactive()->create();
+```
+
+
+If you are using your own custom model factory, you can just change the package's factory for yours in the config.
+
+```php
+'factories' => [
+        \AshAllenDesign\ShortURL\Models\ShortURL::class => \Database\Factories\YourCustomFactory::class,
+        \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class
+    ],
+``` 
+
+Since the package did not have the model factories feature previously, you may face issues if you had extended the models provided by the package and using the `HasFactory` trait. You could just remove the `HasFactory` trait since the parent model already has it, or you could override the `newFactory()` method.
+
+```php
+use \Illuminate\Database\Eloquent\Factories\Factory
+
+
+protected static function newFactory(): Factory
+{
+    return parent::newFactory();
+}
+``` 
+
+
 
 ### Events
 
