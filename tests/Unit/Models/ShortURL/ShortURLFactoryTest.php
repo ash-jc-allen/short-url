@@ -27,5 +27,4 @@ class ShortURLFactoryTest extends TestCase
         $this->assertTrue($deactivatedShortURL->activated_at !== null && $deactivatedShortURL->deactivated_at !== null);
         $this->assertTrue($inactiveShortURL->activated_at == null && $inactiveShortURL->deactivated_at == null);
     }
-
 }

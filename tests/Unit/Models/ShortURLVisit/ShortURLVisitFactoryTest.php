@@ -11,7 +11,8 @@ class ShortURLVisitFactoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_that_short_url_visit_model_factory_works_fine()
+    /** @test */
+    public function test_that_short_url_visit_model_factory_works_fine(): void
     {
         $shortURL = ShortURL::factory()->create();
 
@@ -24,5 +25,4 @@ class ShortURLVisitFactoryTest extends TestCase
 
         $this->assertTrue($shortURLVisit->shortURL->is($shortURL));
     }
-
 }
