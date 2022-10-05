@@ -42,7 +42,7 @@ class ShortURLVisitFactory extends Factory
      * a list of detection rules. We grab the keys because they are the data
      * being stored in this table.
      *
-     * @param array $agentProperties
+     * @param  array  $agentProperties
      * @return array
      */
     protected function agentArrayKeys(array $agentProperties): array
