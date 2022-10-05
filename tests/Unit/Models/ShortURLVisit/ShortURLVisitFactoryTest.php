@@ -24,4 +24,5 @@ class ShortURLVisitFactoryTest extends TestCase
 
         $this->assertTrue($shortURLVisit->shortURL->is($shortURL));
     }
+
 }
