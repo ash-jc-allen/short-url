@@ -1,5 +1,8 @@
 # Changelog
 
+**v7.3.0 (released 2022-10-17):**
+- Added model factories for the `ShortURL` and `ShortURLVisits` models. [#162](https://github.com/ash-jc-allen/short-url/pull/162)
+
 **v7.2.0 (released 2022-09-12):**
 - Added support for PHP 8.2. [#139](https://github.com/ash-jc-allen/short-url/pull/139)
 - Added support for using `when` when building short URLs. [#140](https://github.com/ash-jc-allen/short-url/pull/140)
