@@ -32,8 +32,6 @@ class ShortURLVisitFactory extends Factory
             'referer_url' => $this->faker->url(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
-            'short_url_id' => ShortURL::factory(),
         ];
     }
 
