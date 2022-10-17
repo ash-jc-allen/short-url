@@ -16,7 +16,7 @@ class ShortURLVisitFactory extends Factory
         return [
             'ip_address' => $this->faker->ipv4(),
             'operating_system' => $this->faker->randomElement(
-                $this->agentArrayKeys(Agent::getPlatforms())
+                array_keys(Agent::getPlatforms()),
             ),
             'operating_system_version' => $this->faker->randomFloat(8, 20),
             'browser' => $this->faker->randomElement(Agent::getBrowsers()),
