@@ -83,9 +83,11 @@ class ShortURLVisit extends Model
     /**
      * @return Factory
      */
-    protected static function newFactory(): Factory
+    protected static function newFactory()
     {
-        $modelFactory = app(config('short-url.factories.AshAllenDesign\ShortURL\Models\ShortURLVisit'));
+        $factoryConfig = config('short-url.factories');
+
+        $modelFactory = app($factoryConfig[__CLASS__]);
 
         return $modelFactory::new();
     }
