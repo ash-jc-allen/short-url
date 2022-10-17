@@ -596,58 +596,44 @@ $shortURL->trackingFields();
 
 ### Model Factories
 
-The package comes with model factories included for testing purposes which come handy when generating polymorphic relationships. The ShortURL model factory also comes with extra states that you may use when necessary.
+The package comes with model factories included for testing purposes which come in handy when generating polymorphic relationships. The `ShortURL` model factory also comes with extra states that you may use when necessary, such as `deactivated` and `inactive`:
 
 ```php
 use AshAllenDesign\ShortURL\Models\ShortURL;
 
 $shortUrl = ShortURL::factory()->create();
 
-// url is deactivated
+// URL is deactivated
 $deactivatedShortUrl = ShortURL::factory()->deactivated()->create();
 
-// url is neither activated nor deactivated ( activated_at == null )
+// URL is neither activated nor deactivated
 $inactiveShortURL = ShortURL::factory()->inactive()->create();
 ```
 
-
-If you are using your own custom model factory, you can just change the package's factory for yours in the config.
+If you are using your own custom model factory, you can define the factories that the `ShortURL` and `ShortURLVisit` models should use by updating the `factories` config field:
 
 ```php
 'factories' => [
-        \AshAllenDesign\ShortURL\Models\ShortURL::class => \Database\Factories\YourCustomFactory::class,
-        \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class
-    ],
-``` 
-
-Since the package did not have the model factories feature previously, you may face issues if you had extended the models provided by the package and using the `HasFactory` trait. You could just remove the `HasFactory` trait since the parent model already has it, or you could override the `newFactory()` method.
-
-```php
-use \Illuminate\Database\Eloquent\Factories\Factory
-
-
-protected static function newFactory(): Factory
-{
-    return parent::newFactory();
-}
-``` 
-
-
+    \AshAllenDesign\ShortURL\Models\ShortURL::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory::class,
+    \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class
+],
+```
 
 ### Events
 
 #### Short URL Visited
  
 Each time a short URL is visited, the following event is fired that can be listened on:
+
 ```
 AshAllenDesign\ShortURL\Events\ShortURLVisited
 ```
 
-If you are redirecting users with a ``` 301 ``` HTTP status code, it's possible that this event will NOT be fired
+If you are redirecting users with a `301` HTTP status code, it's possible that this event will NOT be fired
 if a visitor has already visited this short URL before. This is due to the fact that most browsers will cache the
 intended destination URL as a 'permanent redirect' and won't actually visit the short URL first.
 
-For better results, use the ``` 302 ``` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
+For better results, use the `302` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
 This means that the short URL will be visited in the browser and the event will be dispatched as expected before redirecting
 to the destination URL.
 
