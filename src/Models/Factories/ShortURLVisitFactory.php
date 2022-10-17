@@ -24,27 +24,14 @@ class ShortURLVisitFactory extends Factory
             'browser_version' => $this->faker->userAgent(),
             'device_type' => $this->faker->randomElement(
                 array_merge(
-                    $this->agentArrayKeys(Agent::getPhoneDevices()),
-                    $this->agentArrayKeys(Agent::getTabletDevices()),
-                    $this->agentArrayKeys(Agent::getDesktopDevices()),
+                    array_keys(Agent::getPhoneDevices()),
+                    array_keys(Agent::getTabletDevices()),
+                    array_keys(Agent::getDesktopDevices()),
                 )),
             'visited_at' => Carbon::now(),
             'referer_url' => $this->faker->url(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
-    }
-
-    /**
-     * This method grabs the keys of the properties used by Agent class as
-     * a list of detection rules. We grab the keys because they are the data
-     * being stored in this table.
-     *
-     * @param  array  $agentProperties
-     * @return array
-     */
-    protected function agentArrayKeys(array $agentProperties): array
-    {
-        return collect($agentProperties)->keys()->toArray();
     }
 }
