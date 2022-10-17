@@ -2,7 +2,6 @@
 
 namespace AshAllenDesign\ShortURL\Models\Factories;
 
-use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
