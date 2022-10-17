@@ -55,6 +55,7 @@
         - [Tracked Fields](#tracked-fields)
     - [Events](#events)
         - [Short URL Visited](#short-url-visited)
+    - [Model Factories](#model-factories)
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
@@ -593,20 +594,46 @@ $shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
 $shortURL->trackingFields();
 ``` 
 
+### Model Factories
+
+The package comes with model factories included for testing purposes which come in handy when generating polymorphic relationships. The `ShortURL` model factory also comes with extra states that you may use when necessary, such as `deactivated` and `inactive`:
+
+```php
+use AshAllenDesign\ShortURL\Models\ShortURL;
+
+$shortUrl = ShortURL::factory()->create();
+
+// URL is deactivated
+$deactivatedShortUrl = ShortURL::factory()->deactivated()->create();
+
+// URL is neither activated nor deactivated
+$inactiveShortURL = ShortURL::factory()->inactive()->create();
+```
+
+If you are using your own custom model factory, you can define the factories that the `ShortURL` and `ShortURLVisit` models should use by updating the `factories` config field:
+
+```php
+'factories' => [
+    \AshAllenDesign\ShortURL\Models\ShortURL::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory::class,
+    \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class
+],
+```
+
 ### Events
 
 #### Short URL Visited
  
 Each time a short URL is visited, the following event is fired that can be listened on:
+
 ```
 AshAllenDesign\ShortURL\Events\ShortURLVisited
 ```
 
-If you are redirecting users with a ``` 301 ``` HTTP status code, it's possible that this event will NOT be fired
+If you are redirecting users with a `301` HTTP status code, it's possible that this event will NOT be fired
 if a visitor has already visited this short URL before. This is due to the fact that most browsers will cache the
 intended destination URL as a 'permanent redirect' and won't actually visit the short URL first.
 
-For better results, use the ``` 302 ``` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
+For better results, use the `302` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
 This means that the short URL will be visited in the browser and the event will be dispatched as expected before redirecting
 to the destination URL.
 
