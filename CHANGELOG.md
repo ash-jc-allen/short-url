@@ -1,5 +1,9 @@
 # Changelog
 
+**v7.4.0 (released 2023-01-11):**
+- Added support for Laravel 10. [3488417](https://github.com/ash-jc-allen/short-url/commit/348841713d87e8259fcddcc610c7d68e3c3caa42)
+- Added support for Larastan 2.0. [#169](https://github.com/ash-jc-allen/short-url/pull/169)
+
 **v7.3.0 (released 2022-10-17):**
 - Added model factories for the `ShortURL` and `ShortURLVisits` models. [#162](https://github.com/ash-jc-allen/short-url/pull/162)
 
