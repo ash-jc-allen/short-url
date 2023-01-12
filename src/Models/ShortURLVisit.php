@@ -74,14 +74,14 @@ class ShortURLVisit extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'short_url_id' => 'integer',
     ];
 
     /**
-     * @return Factory
+     * @return Factory<ShortURLVisit>
      */
     protected static function newFactory()
     {
@@ -95,7 +95,7 @@ class ShortURLVisit extends Model
     /**
      * A URL visit belongs to one specific shortened URL.
      *
-     * @return BelongsTo
+     * @return BelongsTo<ShortURL, ShortURLVisit>
      */
     public function shortURL(): BelongsTo
     {
