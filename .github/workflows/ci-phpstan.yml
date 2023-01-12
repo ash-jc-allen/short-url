@@ -10,16 +10,13 @@ jobs:
       fail-fast: false
       matrix:
         php: [8.0, 8.1, 8.2]
-        laravel: [8.*, 9.*, 10.*]
+        laravel: [9.*, 10.*]
         include:
           - laravel: 10.*
             testbench: 8.*
           - laravel: 9.*
             testbench: 7.*
-          - laravel: 8.*
-            testbench: 6.*
         exclude:
-          - laravel: 8.*
           - laravel: 10.*
             php: 8.0
           - laravel: 10.*
