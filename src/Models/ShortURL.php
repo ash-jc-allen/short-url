@@ -80,7 +80,7 @@ class ShortURL extends Model
     ];
 
     /**
-     * @return Factory
+     * @return Factory<ShortURL>
      */
     protected static function newFactory()
     {
@@ -94,7 +94,7 @@ class ShortURL extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'single_use'                     => 'boolean',
@@ -112,7 +112,7 @@ class ShortURL extends Model
     /**
      * A short URL can be visited many times.
      *
-     * @return HasMany
+     * @return HasMany<ShortURLVisit>
      */
     public function visits(): HasMany
     {
@@ -137,7 +137,7 @@ class ShortURL extends Model
      * destination URL.
      *
      * @param  string  $destinationURL
-     * @return Collection
+     * @return Collection<int, ShortURL>
      */
     public static function findByDestinationURL(string $destinationURL): Collection
     {

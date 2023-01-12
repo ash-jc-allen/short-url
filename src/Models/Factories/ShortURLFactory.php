@@ -6,6 +6,9 @@ use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<ShortURL>
+ */
 class ShortURLFactory extends Factory
 {
     protected $model = ShortURL::class;
