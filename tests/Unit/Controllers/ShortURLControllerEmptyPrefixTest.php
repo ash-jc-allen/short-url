@@ -19,7 +19,7 @@ class ShortURLControllerEmptyPrefixTest extends TestCase
     {
         ShortURL::create([
             'destination_url'      => 'https://google.com',
-            'default_short_url'    => config('app.url').'/12345',
+            'default_short_url'    => config('short-url.default_url').'/12345',
             'url_key'              => '12345',
             'single_use'           => true,
             'track_visits'         => true,
