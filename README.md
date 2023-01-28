@@ -4,7 +4,6 @@
 
 <p align="center">
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/v/ashallendesign/short-url.svg?style=flat-square" alt="Latest Version on Packagist"></a>
-<a href="https://github.com/ash-jc-allen/short-url"><img src="https://img.shields.io/github/workflow/status/ash-jc-allen/short-url/run-tests?style=flat-square" alt="Build Status"></a>
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/dt/ashallendesign/short-url.svg?style=flat-square" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/php-v/ashallendesign/short-url?style=flat-square" alt="PHP from Packagist"></a>
 <a href="https://github.com/ash-jc-allen/short-url/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ash-jc-allen/short-url?style=flat-square" alt="GitHub license"></a>
@@ -415,6 +414,20 @@ do this are provided for this in the [Customisation](#customisation) section bel
 ### Customisation
 
 #### Customising the Default Route
+
+#### Customising the Default URL
+
+The package comes with a route that you can use for your short URLs. By default, this route uses your Laravel app's `app.url` config field to build the URL.
+
+However, you might want to override this and use a different URL for your short URLs. For instance, you might want to use a different domain name for your short URLs.
+
+To override the base URL, you can set the `default_url` config field. For example, to set the base URL to `https://example.com`, you can set the `default_url` in your `config/short-url.php` file like so:
+
+```php
+'default_url' => 'https://example.com',
+```
+
+To use the your application's `app.url` config field, you can set the `short_url.default_url` field to `null`.
 
 ##### Customising the Prefix
 
