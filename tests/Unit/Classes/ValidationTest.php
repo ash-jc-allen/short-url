@@ -116,4 +116,16 @@ class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
+
+    /** @test */
+    public function exception_is_thrown_if_the_default_url_is_not_a_string(): void
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The default_url config variable must be a string or null.');
+
+        Config::set('short-url.default_url', true);
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
 }
