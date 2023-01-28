@@ -149,6 +149,7 @@ class Validation
      * Validate that the default URL is a valid string or null.
      *
      * @return bool
+     *
      * @throws ValidationException
      */
     protected function validateDefaultUrl(): bool
