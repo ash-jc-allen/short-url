@@ -15,6 +15,14 @@ class BuilderTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Config::set('short-url.default_url', 'https://short-url.com');
+        Config::set('app.url', 'https://app-url.com');
+    }
+
     /** @test */
     public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid()
     {
@@ -306,7 +314,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'              => config('app.url').'/short/customKey',
+            'default_short_url'              => 'https://short-url.com/short/customKey',
             'url_key'                        => 'customKey',
             'destination_url'                => 'https://domain.com',
             'track_visits'                   => false,
@@ -334,7 +342,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => config('app.url').'/short/customKey',
+            'default_short_url'    => 'https://short-url.com/short/customKey',
             'url_key'              => 'customKey',
             'destination_url'      => 'https://domain.com',
             'track_visits'         => false,
@@ -354,7 +362,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => config('app.url').'/short/customKey',
+            'default_short_url'    => 'https://short-url.com/short/customKey',
             'url_key'              => 'customKey',
             'destination_url'      => 'https://domain.com',
             'track_visits'         => false,
@@ -429,7 +437,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
+            'default_short_url' => 'https://short-url.com/short/customKey',
             'url_key'           => 'customKey',
             'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at'    => null,
@@ -449,7 +457,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
+            'default_short_url' => 'https://short-url.com/short/customKey',
             'url_key'           => 'customKey',
             'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
@@ -467,7 +475,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/short/customKey',
+            'default_short_url' => 'https://short-url.com/short/customKey',
             'url_key'           => 'customKey',
             'activated_at'      => now(),
             'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
@@ -484,7 +492,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/s/customKey',
+            'default_short_url' => 'https://short-url.com/s/customKey',
         ]);
     }
 
@@ -516,7 +524,7 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url' => config('app.url').'/customKey',
+            'default_short_url' => 'https://short-url.com/customKey',
             'url_key' => 'customKey',
         ]);
     }
@@ -537,5 +545,18 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertSame($destination, $shortUrl->destination_url);
+    }
+
+    /** @test */
+    public function app_url_is_set_if_the_default_url_config_value_is_not_set(): void
+    {
+        Config::set('short-url.default_url', null);
+
+        $shortUrl = (new Builder())
+            ->destinationUrl('https://domain.com')
+            ->urlKey('abc123')
+            ->make();
+
+        $this->assertSame('https://app-url.com/short/abc123', $shortUrl->default_short_url);
     }
 }

@@ -651,7 +651,8 @@ class Builder
      */
     private function buildDefaultShortUrl(): string
     {
-        $baseUrl = config('app.url').'/';
+        $baseUrl = config('short-url.default_url') ?? config('app.url');
+        $baseUrl .= '/';
 
         if ($this->prefix() !== null) {
             $baseUrl .= $this->prefix().'/';

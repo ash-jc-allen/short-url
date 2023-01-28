@@ -55,6 +55,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default URL
+    |--------------------------------------------------------------------------
+    |
+    | Here you can override the default application base URL used to generate
+    | the default short URL (default_short_url). To use your application's
+    | "app.url" config value, set this field to null.
+    |
+    */
+    'default_url' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Forwards query parameters
     |--------------------------------------------------------------------------
     |
