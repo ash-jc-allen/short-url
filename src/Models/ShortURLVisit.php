@@ -80,10 +80,7 @@ class ShortURLVisit extends Model
         'short_url_id' => 'integer',
     ];
 
-    /**
-     * @return Factory<ShortURLVisit>
-     */
-    protected static function newFactory()
+    protected static function newFactory(): Factory
     {
         $factoryConfig = config('short-url.factories');
 
@@ -94,8 +91,6 @@ class ShortURLVisit extends Model
 
     /**
      * A URL visit belongs to one specific shortened URL.
-     *
-     * @return BelongsTo<ShortURL, ShortURLVisit>
      */
     public function shortURL(): BelongsTo
     {

@@ -10,10 +10,8 @@ class KeyGenerator
     /**
      * The library class that is used for generating
      * the unique hash.
-     *
-     * @var Hashids
      */
-    private $hashids;
+    private Hashids $hashids;
 
     /**
      * KeyGenerator constructor.
@@ -34,8 +32,6 @@ class KeyGenerator
      * we increment the ID and then
      * attempt to create a new
      * unique key again.
-     *
-     * @return string
      */
     public function generateRandom(): string
     {
@@ -56,8 +52,6 @@ class KeyGenerator
      * called. From doing this, we can create a
      * unique hash without a reduced chance of
      * a collision.
-     *
-     * @return int
      */
     protected function getLastInsertedID(): int
     {

@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateShortURLTableForVersionTwoZeroZero extends Migration
-{
+return new class() extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,13 +25,13 @@ class UpdateShortURLTableForVersionTwoZeroZero extends Migration
         });
 
         DB::table('short_urls')->update([
-            'track_ip_address'               => config('short-url.tracking.fields.ip_address'),
-            'track_operating_system'         => config('short-url.tracking.fields.operating_system'),
+            'track_ip_address' => config('short-url.tracking.fields.ip_address'),
+            'track_operating_system' => config('short-url.tracking.fields.operating_system'),
             'track_operating_system_version' => config('short-url.tracking.fields.operating_system_version'),
-            'track_browser'                  => config('short-url.tracking.fields.browser'),
-            'track_browser_version'          => config('short-url.tracking.fields.browser_version'),
-            'track_referer_url'              => config('short-url.tracking.fields.referer_url'),
-            'track_device_type'              => config('short-url.tracking.fields.device_type'),
+            'track_browser' => config('short-url.tracking.fields.browser'),
+            'track_browser_version' => config('short-url.tracking.fields.browser_version'),
+            'track_referer_url' => config('short-url.tracking.fields.referer_url'),
+            'track_device_type' => config('short-url.tracking.fields.device_type'),
         ]);
     }
 
@@ -56,4 +55,4 @@ class UpdateShortURLTableForVersionTwoZeroZero extends Migration
             ]);
         });
     }
-}
+};

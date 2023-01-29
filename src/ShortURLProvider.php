@@ -1,6 +1,6 @@
 <?php
 
-namespace AshAllenDesign\ShortURL\Providers;
+namespace AshAllenDesign\ShortURL;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\Validation;
@@ -11,22 +11,19 @@ class ShortURLProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/short-url.php', 'short-url');
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/short-url.php',
+            'short-url'
+        );
 
-        $this->app->bind('short-url.builder', function () {
-            return new Builder();
-        });
+        $this->app->bind('short-url.builder', fn () => new Builder());
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      *
      * @throws ValidationException
      */
@@ -34,16 +31,18 @@ class ShortURLProvider extends ServiceProvider
     {
         // Config
         $this->publishes([
-            __DIR__.'/../../config/short-url.php' => config_path('short-url.php'),
+            __DIR__.'/../config/short-url.php' => config_path('short-url.php'),
         ], 'short-url-config');
 
         // Migrations
         $this->publishes([
-            __DIR__.'/../../database/migrations' => database_path('migrations'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'short-url-migrations');
 
         // Routes
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if (config('short-url') && config('short-url.validate_config')) {
             (new Validation())->validateConfig();

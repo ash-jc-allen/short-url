@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShortUrlVisitsTable extends Migration
-{
+return new class() extends Migration {
     /**
      * Run the migrations.
      *
@@ -37,4 +36,4 @@ class CreateShortUrlVisitsTable extends Migration
     {
         Schema::dropIfExists('short_url_visits');
     }
-}
+};

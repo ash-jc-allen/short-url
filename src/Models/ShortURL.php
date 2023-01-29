@@ -80,18 +80,6 @@ class ShortURL extends Model
     ];
 
     /**
-     * @return Factory<ShortURL>
-     */
-    protected static function newFactory()
-    {
-        $factoryConfig = config('short-url.factories');
-
-        $modelFactory = app($factoryConfig[__CLASS__]);
-
-        return $modelFactory::new();
-    }
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
@@ -109,10 +97,17 @@ class ShortURL extends Model
         'track_device_type'              => 'boolean',
     ];
 
+    protected static function newFactory(): Factory
+    {
+        $factoryConfig = config('short-url.factories');
+
+        $modelFactory = app($factoryConfig[__CLASS__]);
+
+        return $modelFactory::new();
+    }
+
     /**
      * A short URL can be visited many times.
-     *
-     * @return HasMany<ShortURLVisit>
      */
     public function visits(): HasMany
     {
@@ -122,11 +117,8 @@ class ShortURL extends Model
     /**
      * A helper method that can be used for finding
      * a ShortURL model with the given URL key.
-     *
-     * @param  string  $URLKey
-     * @return ShortURL|null
      */
-    public static function findByKey(string $URLKey): ?self
+    public static function findByKey(string $URLKey): self|null
     {
         return self::where('url_key', $URLKey)->first();
     }
@@ -135,9 +127,6 @@ class ShortURL extends Model
      * A helper method that can be used for finding
      * all of the ShortURL models with the given
      * destination URL.
-     *
-     * @param  string  $destinationURL
-     * @return Collection<int, ShortURL>
      */
     public static function findByDestinationURL(string $destinationURL): Collection
     {
@@ -147,8 +136,6 @@ class ShortURL extends Model
     /**
      * A helper method to determine whether if tracking
      * is currently enabled for the short URL.
-     *
-     * @return bool
      */
     public function trackingEnabled(): bool
     {
@@ -158,8 +145,6 @@ class ShortURL extends Model
     /**
      * Return an array containing the fields that are
      * set to be tracked for the short URL.
-     *
-     * @return array
      */
     public function trackingFields(): array
     {

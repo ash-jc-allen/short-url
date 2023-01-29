@@ -7,7 +7,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
 class ShortURLControllerPrefixTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('short-url.prefix', '/s');
 

@@ -6,7 +6,6 @@ use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Facade;
-use RuntimeException;
 
 /**
  * @method static self destinationUrl(string $url)
@@ -38,13 +37,9 @@ class ShortURL extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
-     *
-     * @throws RuntimeException
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'short-url.builder';
+        return Builder::class;
     }
 }

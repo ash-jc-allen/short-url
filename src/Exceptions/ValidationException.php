@@ -7,8 +7,7 @@ use Exception;
 /**
  * Class ValidationException.
  *
- * An exception that can be thrown if any validation
- * fails.
+ * An exception that can be thrown if any validation fails.
  */
 class ValidationException extends Exception
 {

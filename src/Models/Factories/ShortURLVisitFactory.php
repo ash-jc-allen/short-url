@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 use Jenssegers\Agent\Agent;
 
-/**
- * @extends Factory<ShortURLVisit>
- */
 class ShortURLVisitFactory extends Factory
 {
     protected $model = ShortURLVisit::class;

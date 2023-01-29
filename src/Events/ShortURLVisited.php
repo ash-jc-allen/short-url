@@ -13,28 +13,9 @@ class ShortURLVisited
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The short URL that was visited.
-     *
-     * @var ShortURL
-     */
-    public $shortURL;
-
-    /**
-     * Details of the visitor that visited the short URL.
-     *
-     * @var ShortURLVisit
-     */
-    public $shortURLVisit;
-
-    /**
      * Create a new event instance.
-     *
-     * @param  ShortURL  $shortURL
-     * @param  ShortURLVisit  $shortURLVisit
      */
-    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit)
+    public function __construct(public ShortURL $shortURL, public ShortURLVisit $shortURLVisit)
     {
-        $this->shortURL = $shortURL;
-        $this->shortURLVisit = $shortURLVisit;
     }
 }

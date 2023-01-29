@@ -10,7 +10,7 @@ class ShortURLDisableRouteTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('short-url.disable_default_route', true);
 

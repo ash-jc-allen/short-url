@@ -6,9 +6,6 @@ use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<ShortURL>
- */
 class ShortURLFactory extends Factory
 {
     protected $model = ShortURL::class;
@@ -39,28 +36,18 @@ class ShortURLFactory extends Factory
         ];
     }
 
-    /**
-     * @return ShortURLFactory
-     */
     public function deactivated(): ShortURLFactory
     {
-        return $this->state(function () {
-            return [
-                'deactivated_at' => now()->subDay(),
-            ];
-        });
+        return $this->state(fn () => [
+            'deactivated_at' => now()->subDay()
+        ]);
     }
 
-    /**
-     * @return ShortURLFactory
-     */
     public function inactive(): ShortURLFactory
     {
-        return $this->state(function () {
-            return [
-                'activated_at' => null,
-                'deactivated_at' => null,
-            ];
-        });
+        return $this->state(fn () => [
+            'activated_at' => null,
+            'deactivated_at' => null,
+        ]);
     }
 }
