@@ -7,7 +7,6 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Event;
 use Jenssegers\Agent\Agent;
 
 class Resolver
@@ -15,10 +14,8 @@ class Resolver
     /**
      * A class that can be used to try and detect the
      * browser and operating system of the visitor.
-     *
-     * @var Agent
      */
-    private $agent;
+    private Agent $agent;
 
     /**
      * Resolver constructor.
@@ -26,12 +23,9 @@ class Resolver
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Agent|null  $agent
-     * @param  Validation|null  $validation
-     *
      * @throws ValidationException
      */
-    public function __construct(Agent $agent = null, Validation $validation = null)
+    public function __construct(Agent|null $agent = null, Validation|null $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
@@ -48,10 +42,6 @@ class Resolver
      * enabled, track the visit in the database.
      * If this method is executed successfully,
      * return true.
-     *
-     * @param  Request  $request
-     * @param  ShortURL  $shortURL
-     * @return bool
      */
     public function handleVisit(Request $request, ShortURL $shortURL): bool
     {
@@ -61,7 +51,7 @@ class Resolver
 
         $visit = $this->recordVisit($request, $shortURL);
 
-        Event::dispatch(new ShortURLVisited($shortURL, $visit));
+        ShortURLVisited::dispatch($shortURL, $visit);
 
         return true;
     }
@@ -73,9 +63,6 @@ class Resolver
      * the URL is not activated yet, return false.
      * If the URL has been deactivated, return
      * false.
-     *
-     * @param  ShortURL  $shortURL
-     * @return bool
      */
     protected function shouldAllowAccess(ShortURL $shortURL): bool
     {
@@ -100,10 +87,6 @@ class Resolver
      * tracking is not enabled. We do this so that
      * we can check if single-use URLs have been
      * visited before.
-     *
-     * @param  Request  $request
-     * @param  ShortURL  $shortURL
-     * @return ShortURLVisit
      */
     protected function recordVisit(Request $request, ShortURL $shortURL): ShortURLVisit
     {
@@ -123,12 +106,7 @@ class Resolver
 
     /**
      * Check which fields should be tracked and then
-     * store them if needed. Otherwise, add them
-     * as null.
-     *
-     * @param  ShortURL  $shortURL
-     * @param  ShortURLVisit  $visit
-     * @param  Request  $request
+     * store them if needed. Otherwise, add them as null.
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
@@ -164,8 +142,6 @@ class Resolver
     /**
      * Guess and return the device type that was used to
      * visit the short URL.
-     *
-     * @return string
      */
     protected function guessDeviceType(): string
     {
