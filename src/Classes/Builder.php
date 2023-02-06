@@ -202,18 +202,32 @@ class Builder
     }
 
     /**
+     * Get the applications domain.
+     *
+     * @return string
+     */
+    public function getAppDomain(): string
+    {
+        $appUrl = config('short-url.default_url') ?? config('app.url');
+        $domain = preg_replace("(^https?://)", "", $appUrl );
+        return $domain;
+    }
+
+    /**
      * Register the routes to handle the Short URL visits.
      *
      * @return void
      */
     public function routes(): void
     {
-        Route::middleware($this->middleware())->group(function (): void {
-            Route::get(
-                '/'.$this->prefix().'/{shortURLKey}',
-                ShortURLController::class
-            )->name('short-url.invoke');
-        });
+        Route::domain($this->getAppDomain())
+            ->middleware($this->middleware())
+            ->group(function (): void {
+                Route::get(
+                    '/'.$this->prefix().'/{shortURLKey}',
+                    ShortURLController::class
+                )->name('short-url.invoke');
+            });
     }
 
     /**
