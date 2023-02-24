@@ -61,23 +61,13 @@ class ShortURLVisit extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'visited_at',
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'short_url_id' => 'integer',
+        'visited_at',  => 'datetime',
     ];
 
     /**

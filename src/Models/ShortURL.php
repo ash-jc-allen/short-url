@@ -68,18 +68,6 @@ class ShortURL extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'activated_at',
-        'deactivated_at',
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
      * @return Factory<ShortURL>
      */
     protected static function newFactory()
@@ -107,6 +95,8 @@ class ShortURL extends Model
         'track_browser_version'          => 'boolean',
         'track_referer_url'              => 'boolean',
         'track_device_type'              => 'boolean',
+        'activated_at'                   => 'datetime',
+        'deactivated_at'                 => 'datetime',
     ];
 
     /**
