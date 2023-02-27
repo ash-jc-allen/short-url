@@ -25,6 +25,8 @@ final class CastsTest extends TestCase
                 'updated_at' => now(),
             ]);
 
+        $shortUrlVisit->refresh();
+
         $this->assertInstanceOf(Carbon::class, $shortUrlVisit->visited_at);
         $this->assertInstanceOf(Carbon::class, $shortUrlVisit->created_at);
         $this->assertInstanceOf(Carbon::class, $shortUrlVisit->updated_at);
