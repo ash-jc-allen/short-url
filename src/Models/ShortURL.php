@@ -68,6 +68,20 @@ class ShortURL extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @deprecated This field is no longer used in Laravel 10 and above.
+     *             It will be removed in a future release.
+     * @var array
+     */
+    protected $dates = [
+        'activated_at',
+        'deactivated_at',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * @return Factory<ShortURL>
      */
     protected static function newFactory()
