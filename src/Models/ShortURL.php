@@ -72,6 +72,7 @@ class ShortURL extends Model
      *
      * @deprecated This field is no longer used in Laravel 10 and above.
      *             It will be removed in a future release.
+     *
      * @var array
      */
     protected $dates = [
