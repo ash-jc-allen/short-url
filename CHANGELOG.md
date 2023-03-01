@@ -1,4 +1,6 @@
 # Changelog
+**v7.5.1 (released 2023-02-01):**
+- Added missing date fields to the `casts` array on the models to support Laravel 10. [#181](https://github.com/ash-jc-allen/short-url/pull/181)
 
 **v7.5.0 (released 2023-01-28):**
 - Added the ability to override the domain of the default URL. [#173](https://github.com/ash-jc-allen/short-url/pull/173)
