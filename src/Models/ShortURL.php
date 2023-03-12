@@ -70,6 +70,9 @@ class ShortURL extends Model
     /**
      * The attributes that should be mutated to dates.
      *
+     * @deprecated This field is no longer used in Laravel 10 and above.
+     *             It will be removed in a future release.
+     *
      * @var array
      */
     protected $dates = [
@@ -107,6 +110,8 @@ class ShortURL extends Model
         'track_browser_version'          => 'boolean',
         'track_referer_url'              => 'boolean',
         'track_device_type'              => 'boolean',
+        'activated_at'                   => 'datetime',
+        'deactivated_at'                 => 'datetime',
     ];
 
     /**
