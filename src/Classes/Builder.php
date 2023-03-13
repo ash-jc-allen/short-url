@@ -170,9 +170,9 @@ class Builder
             $validation = new Validation();
         }
 
-        $this->keyGenerator = $keyGenerator ?? new KeyGenerator();
-
         $validation->validateConfig();
+
+        $this->keyGenerator = $keyGenerator ?? new KeyGenerator();
     }
 
     /**
