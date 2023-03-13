@@ -498,6 +498,7 @@ class BuilderTest extends TestCase
 
     /**
      * @test
+     *
      * @testWith ["s", "s"]
      *           ["/s", "s"]
      *           ["/s/", "s"]
@@ -531,6 +532,7 @@ class BuilderTest extends TestCase
 
     /**
      * @test
+     *
      * @testWith [true, "https://domain.com"]
      *           [false, "https://fallback.com"]
      */
