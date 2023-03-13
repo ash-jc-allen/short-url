@@ -54,7 +54,7 @@ class KeyGenerator
      * seed value to the key generator. If no seed is passed, a random
      * key will be generated.
      *
-     * @param string|int|null $seed
+     * @param  string|int|null  $seed
      * @return string
      */
     public function generateKeyUsing($seed = null): string
@@ -70,7 +70,7 @@ class KeyGenerator
      * Generate the random key using a string seed. We take characters from
      * the beginning of the string to avoid creating a large key.
      *
-     * @param string $seed
+     * @param  string  $seed
      * @return string
      */
     protected function generateKeyUsingString(string $seed): string
