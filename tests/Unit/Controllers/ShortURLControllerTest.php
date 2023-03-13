@@ -162,6 +162,7 @@ class ShortURLControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider forwardQueryParamsProvider
      */
     public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true(
