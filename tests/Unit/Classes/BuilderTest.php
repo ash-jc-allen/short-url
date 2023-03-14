@@ -561,4 +561,49 @@ class BuilderTest extends TestCase
 
         $this->assertSame('https://app-url.com/short/abc123', $shortUrl->default_short_url);
     }
+
+    /**
+     * @test
+     *
+     * @testWith [3, "https://short-url.com/short/olbd"]
+     *           [4, "https://short-url.com/short/zb8P"]
+     *           [5, "https://short-url.com/short/pylj2"]
+     *           [6, "https://short-url.com/short/wrdb1Q"]
+     */
+    public function short_url_can_be_created_with_a_custom_string_seed(int $keyLength, string $expectedUrl): void
+    {
+        config()->set('short-url.key_length', $keyLength);
+
+        $uuid = '1381572e-51c4-43b8-9513-1cfd76f3cb3c';
+
+        $shortUrlOne = (new Builder())
+            ->destinationUrl('https://domain.com')
+            ->generateKeyUsing($uuid)
+            ->make();
+
+        $this->assertSame($expectedUrl, $shortUrlOne->default_short_url);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_with_a_custom_integer_seed(): void
+    {
+        $shortUrlOne = (new Builder())
+            ->destinationUrl('https://domain.com')
+            ->generateKeyUsing(123)
+            ->make();
+
+        $this->assertSame('https://short-url.com/short/4ZRw4', $shortUrlOne->default_short_url);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_using_the_url_key_if_the_key_and_seeder_are_both_set(): void
+    {
+        $shortUrl = (new Builder())
+            ->destinationUrl('https://domain.com')
+            ->generateKeyUsing('this will be ignored')
+            ->urlKey('abc123')
+            ->make();
+
+        $this->assertSame('https://short-url.com/short/abc123', $shortUrl->default_short_url);
+    }
 }

@@ -154,12 +154,20 @@ class Builder
     protected $deactivateAt = null;
 
     /**
+     * Define an optional seed that can be used when generating
+     * a short URL key.
+     *
+     * @var string|int|null
+     */
+    protected $generateKeyUsing = null;
+
+    /**
      * Builder constructor.
      *
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Validation  $validation
+     * @param  Validation|null  $validation
      * @param  KeyGenerator|null  $keyGenerator
      *
      * @throws ValidationException
@@ -480,6 +488,13 @@ class Builder
         return $this;
     }
 
+    public function generateKeyUsing($generateUsing): self
+    {
+        $this->generateKeyUsing = $generateUsing;
+
+        return $this;
+    }
+
     /**
      * Attempt to build a shortened URL and return it.
      *
@@ -566,7 +581,7 @@ class Builder
         }
 
         if (! $this->urlKey) {
-            $this->urlKey = $this->keyGenerator->generateRandom();
+            $this->urlKey = $this->keyGenerator->generateKeyUsing($this->generateKeyUsing);
         }
 
         if (! $this->activateAt) {
