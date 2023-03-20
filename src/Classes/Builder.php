@@ -157,7 +157,7 @@ class Builder
      * Define an optional seed that can be used when generating
      * a short URL key.
      *
-     * @var string|int|null
+     * @var int|null
      */
     protected $generateKeyUsing = null;
 
@@ -488,7 +488,7 @@ class Builder
         return $this;
     }
 
-    public function generateKeyUsing($generateUsing): self
+    public function generateKeyUsing(int $generateUsing): self
     {
         $this->generateKeyUsing = $generateUsing;
 

@@ -54,30 +54,14 @@ class KeyGenerator
      * seed value to the key generator. If no seed is passed, a random
      * key will be generated.
      *
-     * @param  string|int|null  $seed
+     * @param  int|null  $seed
      * @return string
      */
-    public function generateKeyUsing($seed = null): string
+    public function generateKeyUsing(int $seed = null): string
     {
-        return match (true) {
-            is_string($seed) => $this->generateKeyUsingString($seed),
-            is_numeric($seed) => $this->hashids->encode($seed),
-            default => $this->generateRandom(),
-        };
-    }
-
-    /**
-     * Generate the random key using a string seed. We take characters from
-     * the beginning of the string to avoid creating a large key.
-     *
-     * @param  string  $seed
-     * @return string
-     */
-    protected function generateKeyUsingString(string $seed): string
-    {
-        return $this->hashids->encodeHex(
-            substr(bin2hex($seed), 0, config('short-url.key_length'))
-        );
+        return $seed
+            ? $this->hashids->encode($seed)
+            : $this->generateRandom();
     }
 
     /**

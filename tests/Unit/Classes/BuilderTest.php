@@ -562,28 +562,6 @@ class BuilderTest extends TestCase
         $this->assertSame('https://app-url.com/short/abc123', $shortUrl->default_short_url);
     }
 
-    /**
-     * @test
-     *
-     * @testWith [3, "https://short-url.com/short/olbd"]
-     *           [4, "https://short-url.com/short/zb8P"]
-     *           [5, "https://short-url.com/short/pylj2"]
-     *           [6, "https://short-url.com/short/wrdb1Q"]
-     */
-    public function short_url_can_be_created_with_a_custom_string_seed(int $keyLength, string $expectedUrl): void
-    {
-        config()->set('short-url.key_length', $keyLength);
-
-        $uuid = '1381572e-51c4-43b8-9513-1cfd76f3cb3c';
-
-        $shortUrlOne = (new Builder())
-            ->destinationUrl('https://domain.com')
-            ->generateKeyUsing($uuid)
-            ->make();
-
-        $this->assertSame($expectedUrl, $shortUrlOne->default_short_url);
-    }
-
     /** @test */
     public function short_url_can_be_created_with_a_custom_integer_seed(): void
     {
@@ -600,39 +578,10 @@ class BuilderTest extends TestCase
     {
         $shortUrl = (new Builder())
             ->destinationUrl('https://domain.com')
-            ->generateKeyUsing('this will be ignored')
+            ->generateKeyUsing(111111)
             ->urlKey('abc123')
             ->make();
 
         $this->assertSame('https://short-url.com/short/abc123', $shortUrl->default_short_url);
-    }
-
-    /**
-     * @test
-     *
-     * @testWith [3]
-     *           [4]
-     *           [5]
-     *           [6]
-     */
-    public function similar_ulids_create_different_keys_with_a_custom_string_seed($keyLength): void
-    {
-        config()->set('short-url.key_length', $keyLength);
-
-        $ulidOne = '985252d8-10ae-4add-9dda-846afe6c734e';
-
-        $shortUrlOne = (new Builder())
-            ->destinationUrl('https://domain.com')
-            ->generateKeyUsing($ulidOne)
-            ->make();
-
-        $ulidTwo = '985252d8-10c7-4263-9c73-e520ea651317';
-
-        $shortUrlTwo = (new Builder())
-            ->destinationUrl('https://domain.com')
-            ->generateKeyUsing($ulidTwo)
-            ->make();
-
-        $this->assertNotSame($shortUrlOne->default_short_url, $shortUrlTwo->default_short_url);
     }
 }
