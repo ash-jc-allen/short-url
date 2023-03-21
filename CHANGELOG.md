@@ -1,4 +1,9 @@
 # Changelog
+
+**v7.6.0 (released 2023-03-21):**
+- Added support for `hashids/hashids` v5.0. [#183](https://github.com/ash-jc-allen/short-url/pull/183)
+- Added the ability to pass a seed that can be used when generating the short URL key. [#185](https://github.com/ash-jc-allen/short-url/pull/185)
+
 **v7.5.1 (released 2023-02-01):**
 - Added missing date fields to the `casts` array on the models to support Laravel 10. [#181](https://github.com/ash-jc-allen/short-url/pull/181)
 
