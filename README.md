@@ -318,13 +318,13 @@ $shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())
 
 #### Using a Custom Seed
 
-By default, the package will use the ID of the last inserted short URL as the seed for generating a short URL's key. In some cases, you may want to use a custom seed instead. To do this, you can pass an integer to the `generateUsing` method like so:
+By default, the package will use the ID of the last inserted short URL as the seed for generating a short URL's key. In some cases, you may want to use a custom seed instead. To do this, you can pass an integer to the `generateKeyUsing` method like so:
 
  ```php
 $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
  
 $shortURLObject = $builder->destinationUrl('https://destination.com')
-    ->generateUsing(12345)
+    ->generateKeyUsing(12345)
     ->make();
  ```
 
