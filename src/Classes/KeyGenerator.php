@@ -50,6 +50,21 @@ class KeyGenerator
     }
 
     /**
+     * Generate a key for the short URL. This method allows you to pass a
+     * seed value to the key generator. If no seed is passed, a random
+     * key will be generated.
+     *
+     * @param  int|null  $seed
+     * @return string
+     */
+    public function generateKeyUsing(int $seed = null): string
+    {
+        return $seed
+            ? $this->hashids->encode($seed)
+            : $this->generateRandom();
+    }
+
+    /**
      * Get the ID of the last inserted ShortURL. This
      * is done so that we can predict what the ID of
      * the ShortURL that will be inserted will be

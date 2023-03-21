@@ -561,4 +561,27 @@ class BuilderTest extends TestCase
 
         $this->assertSame('https://app-url.com/short/abc123', $shortUrl->default_short_url);
     }
+
+    /** @test */
+    public function short_url_can_be_created_with_a_custom_integer_seed(): void
+    {
+        $shortUrlOne = (new Builder())
+            ->destinationUrl('https://domain.com')
+            ->generateKeyUsing(123)
+            ->make();
+
+        $this->assertSame('https://short-url.com/short/4ZRw4', $shortUrlOne->default_short_url);
+    }
+
+    /** @test */
+    public function short_url_can_be_created_using_the_url_key_if_the_key_and_seeder_are_both_set(): void
+    {
+        $shortUrl = (new Builder())
+            ->destinationUrl('https://domain.com')
+            ->generateKeyUsing(111111)
+            ->urlKey('abc123')
+            ->make();
+
+        $this->assertSame('https://short-url.com/short/abc123', $shortUrl->default_short_url);
+    }
 }
