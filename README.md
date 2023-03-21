@@ -33,6 +33,7 @@
         - [Forwarding Query Parameters](#forwarding-query-parameters)
         - [Redirect Status Code](#redirect-status-code)
         - [Activation and Deactivation Times](#activation-and-deactivation-times)
+        - [Using a Custom Seed](#using-a-custom-seed)
         - [Facade](#facade)
         - [Conditionals](#conditionals)
     - [Using the Shortened URLs](#using-the-shortened-urls)
@@ -313,6 +314,18 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())
                            ->deactivateAt(\Carbon\Carbon::now()->addDays(2))
                            ->make();
+ ```
+
+#### Using a Custom Seed
+
+By default, the package will use the ID of the last inserted short URL as the seed for generating a short URL's key. In some cases, you may want to use a custom seed instead. To do this, you can pass an integer to the `generateUsing` method like so:
+
+ ```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+ 
+$shortURLObject = $builder->destinationUrl('https://destination.com')
+    ->generateUsing(12345)
+    ->make();
  ```
 
 #### Facade
