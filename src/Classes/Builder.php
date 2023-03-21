@@ -159,7 +159,7 @@ class Builder
      *
      * @var int|null
      */
-    protected $generateKeyUsing = null;
+    protected ?int $generateKeyUsing = null;
 
     /**
      * Builder constructor.
