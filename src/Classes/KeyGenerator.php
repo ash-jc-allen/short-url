@@ -5,7 +5,7 @@ namespace AshAllenDesign\ShortURL\Classes;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Hashids\Hashids;
 
-class KeyGenerator
+class KeyGenerator extends AbstractKeyGenerator
 {
     /**
      * The library class that is used for generating
