@@ -172,7 +172,7 @@ class Builder
      *
      * @throws ValidationException
      */
-    public function __construct(Validation $validation = null, KeyGenerator $keyGenerator = null)
+    public function __construct(Validation $validation = null, AbstractKeyGenerator $keyGenerator = null)
     {
         if (! $validation) {
             $validation = new Validation();
