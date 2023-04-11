@@ -2,7 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
-use Hashids\HashidsInterface;
+use Hashids\Hashids;
 
 abstract class AbstractKeyGenerator
 {
@@ -17,7 +17,7 @@ abstract class AbstractKeyGenerator
     /**
      * KeyGenerator constructor.
      */
-    abstract public function __construct(HashidsInterface $hashids = null);
+    abstract public function __construct(Hashids $hashids = null);
 
     /**
      * Generate a unique and random URL key
