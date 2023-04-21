@@ -15,6 +15,31 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Middleware
+    |--------------------------------------------------------------------------
+    |
+    | Define any middleware that the default short URL route will use.
+    |
+    */
+    'middleware' => [
+        //
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Eloquent Factories
+    |--------------------------------------------------------------------------
+    |
+    | Define eloquent factories that you will use for your testing purposes.
+    |
+    */
+    'factories' => [
+        \AshAllenDesign\ShortURL\Models\ShortURL::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory::class,
+        \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Custom Routing
     |--------------------------------------------------------------------------
     |
@@ -27,6 +52,18 @@ return [
     |
     */
     'disable_default_route' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default URL
+    |--------------------------------------------------------------------------
+    |
+    | Here you can override the default application base URL used to generate
+    | the default short URL (default_short_url). To use your application's
+    | "app.url" config value, set this field to null.
+    |
+    */
+    'default_url' => null,
 
     /*
     |--------------------------------------------------------------------------

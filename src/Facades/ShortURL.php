@@ -3,6 +3,7 @@
 namespace AshAllenDesign\ShortURL\Facades;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
+use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Facade;
 use RuntimeException;
@@ -20,12 +21,16 @@ use RuntimeException;
  * @method static self trackRefererURL(bool $track)
  * @method static self trackDeviceType(bool $track)
  * @method static self urlKey(string $key)
+ * @method static self keyGenerator(KeyGenerator $keyGenerator)
  * @method static self redirectStatusCode(int $statusCode)
  * @method static self resetOptions()
  * @method static self activateAt(Carbon $activationTime)
  * @method static self deactivateAt(Carbon $deactivationTime)
  * @method static \AshAllenDesign\ShortURL\Models\ShortURL make()
- * @method static string prefix()
+ * @method static string|null prefix()
+ * @method static array middleware()
+ * @method static array toArray()
+ * @method static void routes()
  *
  * @see Builder
  */

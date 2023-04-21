@@ -2,14 +2,19 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Controllers\ShortURLController;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Conditionable;
 
 class Builder
 {
+    use Conditionable;
+
     /**
      * The class that is used for generating the
      * random URL keys.
@@ -44,7 +49,7 @@ class Builder
     protected $secure;
 
     /**
-     * Whether or not the short url whould
+     * Whether or not the short url should
      * forward query params to the
      * destination url.
      *
@@ -149,12 +154,20 @@ class Builder
     protected $deactivateAt = null;
 
     /**
+     * Define an optional seed that can be used when generating
+     * a short URL key.
+     *
+     * @var int|null
+     */
+    protected ?int $generateKeyUsing = null;
+
+    /**
      * Builder constructor.
      *
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Validation  $validation
+     * @param  Validation|null  $validation
      * @param  KeyGenerator|null  $keyGenerator
      *
      * @throws ValidationException
@@ -165,19 +178,50 @@ class Builder
             $validation = new Validation();
         }
 
-        $this->keyGenerator = $keyGenerator ?? new KeyGenerator();
-
         $validation->validateConfig();
+
+        $this->keyGenerator = $keyGenerator ?? new KeyGenerator();
     }
 
     /**
      * Get the short URL route prefix.
      *
-     * @return string
+     * @return string|null
      */
-    public function prefix(): string
+    public function prefix(): ?string
     {
-        return trim(config('short-url.prefix'), '/');
+        $prefix = config('short-url.prefix');
+
+        if ($prefix === null) {
+            return null;
+        }
+
+        return trim($prefix, '/');
+    }
+
+    /**
+     * Get the middleware for short URL route.
+     *
+     * @return array
+     */
+    public function middleware(): array
+    {
+        return config('short-url.middleware', []);
+    }
+
+    /**
+     * Register the routes to handle the Short URL visits.
+     *
+     * @return void
+     */
+    public function routes(): void
+    {
+        Route::middleware($this->middleware())->group(function (): void {
+            Route::get(
+                '/'.$this->prefix().'/{shortURLKey}',
+                ShortURLController::class
+            )->name('short-url.invoke');
+        });
     }
 
     /**
@@ -368,6 +412,19 @@ class Builder
     }
 
     /**
+     * Explicitly set the key generator.
+     *
+     * @param  KeyGenerator  $keyGenerator
+     * @return $this
+     */
+    public function keyGenerator(KeyGenerator $keyGenerator): self
+    {
+        $this->keyGenerator = $keyGenerator;
+
+        return $this;
+    }
+
+    /**
      * Override the HTTP status code that will be used
      * for redirecting the visitor.
      *
@@ -431,6 +488,13 @@ class Builder
         return $this;
     }
 
+    public function generateKeyUsing(int $generateUsing): self
+    {
+        $this->generateKeyUsing = $generateUsing;
+
+        return $this;
+    }
+
     /**
      * Attempt to build a shortened URL and return it.
      *
@@ -444,11 +508,11 @@ class Builder
             throw new ShortURLException('No destination URL has been set.');
         }
 
-        $this->setOptions();
+        $data = $this->toArray();
 
         $this->checkKeyDoesNotExist();
 
-        $shortURL = $this->insertShortURLIntoDatabase();
+        $shortURL = ShortURL::create($data);
 
         $this->resetOptions();
 
@@ -456,15 +520,17 @@ class Builder
     }
 
     /**
-     * Store the short URL in the database.
+     * Returns an array of all properties used during record creation.
      *
-     * @return ShortURL
+     * @return array<string,mixed>
      */
-    protected function insertShortURLIntoDatabase(): ShortURL
+    public function toArray(): array
     {
-        return ShortURL::create([
+        $this->setOptions();
+
+        return [
             'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => config('app.url').'/'.$this->prefix().'/'.$this->urlKey,
+            'default_short_url'              => $this->buildDefaultShortUrl(),
             'url_key'                        => $this->urlKey,
             'single_use'                     => $this->singleUse,
             'forward_query_params'           => $this->forwardQueryParams,
@@ -479,7 +545,7 @@ class Builder
             'track_device_type'              => $this->trackDeviceType,
             'activated_at'                   => $this->activateAt,
             'deactivated_at'                 => $this->deactivateAt,
-        ]);
+        ];
     }
 
     /**
@@ -515,7 +581,7 @@ class Builder
         }
 
         if (! $this->urlKey) {
-            $this->urlKey = $this->keyGenerator->generateRandom();
+            $this->urlKey = $this->keyGenerator->generateKeyUsing($this->generateKeyUsing);
         }
 
         if (! $this->activateAt) {
@@ -590,5 +656,23 @@ class Builder
         $this->trackDeviceType = null;
 
         return $this;
+    }
+
+    /**
+     * Build and return the default short URL that will be stored in the
+     * database.
+     *
+     * @return string
+     */
+    private function buildDefaultShortUrl(): string
+    {
+        $baseUrl = config('short-url.default_url') ?? config('app.url');
+        $baseUrl .= '/';
+
+        if ($this->prefix() !== null) {
+            $baseUrl .= $this->prefix().'/';
+        }
+
+        return $baseUrl.$this->urlKey;
     }
 }

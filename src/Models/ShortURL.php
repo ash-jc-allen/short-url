@@ -4,9 +4,10 @@ namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\URL;
 
 /**
  * Class ShortURL.
@@ -33,6 +34,8 @@ use Illuminate\Support\Facades\URL;
  */
 class ShortURL extends Model
 {
+    use HasFactory;
+
     /**
      * The table associated with the model.
      *
@@ -67,6 +70,9 @@ class ShortURL extends Model
     /**
      * The attributes that should be mutated to dates.
      *
+     * @deprecated This field is no longer used in Laravel 10 and above.
+     *             It will be removed in a future release.
+     *
      * @var array
      */
     protected $dates = [
@@ -77,9 +83,21 @@ class ShortURL extends Model
     ];
 
     /**
+     * @return Factory<ShortURL>
+     */
+    protected static function newFactory()
+    {
+        $factoryConfig = config('short-url.factories');
+
+        $modelFactory = app($factoryConfig[__CLASS__]);
+
+        return $modelFactory::new();
+    }
+
+    /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'single_use'                     => 'boolean',
@@ -92,12 +110,14 @@ class ShortURL extends Model
         'track_browser_version'          => 'boolean',
         'track_referer_url'              => 'boolean',
         'track_device_type'              => 'boolean',
+        'activated_at'                   => 'datetime',
+        'deactivated_at'                 => 'datetime',
     ];
 
     /**
      * A short URL can be visited many times.
      *
-     * @return HasMany
+     * @return HasMany<ShortURLVisit>
      */
     public function visits(): HasMany
     {
@@ -122,7 +142,7 @@ class ShortURL extends Model
      * destination URL.
      *
      * @param  string  $destinationURL
-     * @return Collection
+     * @return Collection<int, ShortURL>
      */
     public static function findByDestinationURL(string $destinationURL): Collection
     {

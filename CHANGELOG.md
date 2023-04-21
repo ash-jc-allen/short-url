@@ -1,5 +1,40 @@
 # Changelog
 
+**v7.6.0 (released 2023-03-21):**
+- Added support for `hashids/hashids` v5.0. [#183](https://github.com/ash-jc-allen/short-url/pull/183)
+- Added the ability to pass a seed that can be used when generating the short URL key. [#185](https://github.com/ash-jc-allen/short-url/pull/185)
+
+**v7.5.1 (released 2023-02-01):**
+- Added missing date fields to the `casts` array on the models to support Laravel 10. [#181](https://github.com/ash-jc-allen/short-url/pull/181)
+
+**v7.5.0 (released 2023-01-28):**
+- Added the ability to override the domain of the default URL. [#173](https://github.com/ash-jc-allen/short-url/pull/173)
+
+**v7.4.0 (released 2023-01-11):**
+- Added support for Laravel 10. [3488417](https://github.com/ash-jc-allen/short-url/commit/348841713d87e8259fcddcc610c7d68e3c3caa42)
+- Added support for Larastan 2.0. [#169](https://github.com/ash-jc-allen/short-url/pull/169)
+
+**v7.3.0 (released 2022-10-17):**
+- Added model factories for the `ShortURL` and `ShortURLVisits` models. [#162](https://github.com/ash-jc-allen/short-url/pull/162)
+
+**v7.2.0 (released 2022-09-12):**
+- Added support for PHP 8.2. [#139](https://github.com/ash-jc-allen/short-url/pull/139)
+- Added support for using `when` when building short URLs. [#140](https://github.com/ash-jc-allen/short-url/pull/140)
+- Removed unused `URL` facade import. [#147](https://github.com/ash-jc-allen/short-url/pull/147)
+- Fixed bug that always resulted in a 404 if the `prefix` was set to `null`. [#149](https://github.com/ash-jc-allen/short-url/pull/149), [#158](https://github.com/ash-jc-allen/short-url/pull/158)
+
+**v7.1.0 (released 2022-08-03):**
+- Added `toArray` method to the `Builder` class. [#133](https://github.com/ash-jc-allen/short-url/pull/133)
+- Fixed `shortURL` relationship on the `ShortURLVisit` model. [#132](https://github.com/ash-jc-allen/short-url/pull/132)
+
+**v7.0.0 (released 2022-04-04):**
+- Added ability to remove the prefix from default short URLs. [#123](https://github.com/ash-jc-allen/short-url/pull/123)
+- Added ability to define middleware for the default short URL route. [#121](https://github.com/ash-jc-allen/short-url/pull/121)
+- Added ability to set the key generator on-the-fly. [#122](https://github.com/ash-jc-allen/short-url/pull/122)
+
+**v6.3.0 (released 2022-01-24):**
+- Added support for Laravel 9. [#116](https://github.com/ash-jc-allen/short-url/pull/116)
+
 **v6.2.0 (released 2021-11-26):**
 - Updated incorrectly set file permissions. [#104](https://github.com/ash-jc-allen/short-url/pull/104)
 - Updated GitHub Actions to run workflow with PHP 8.1. [#106](https://github.com/ash-jc-allen/short-url/pull/106)

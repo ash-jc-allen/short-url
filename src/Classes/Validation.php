@@ -21,7 +21,8 @@ class Validation
                && $this->validateDefaultRouteOption()
                && $this->validateKeySalt()
                && $this->validateEnforceHttpsOption()
-               && $this->validateForwardQueryParamsOption();
+               && $this->validateForwardQueryParamsOption()
+               && $this->validateDefaultUrl();
     }
 
     /**
@@ -139,6 +140,25 @@ class Validation
     {
         if (! is_bool(config('short-url.forward_query_params'))) {
             throw new ValidationException('The forward_query_params config variable must be a boolean.');
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate that the default URL is a valid string or null.
+     *
+     * @return bool
+     *
+     * @throws ValidationException
+     */
+    protected function validateDefaultUrl(): bool
+    {
+        $defaultUrl = config('short-url.default_url');
+        $isValid = is_string($defaultUrl) || is_null($defaultUrl);
+
+        if (! $isValid) {
+            throw new ValidationException('The default_url config variable must be a string or null.');
         }
 
         return true;

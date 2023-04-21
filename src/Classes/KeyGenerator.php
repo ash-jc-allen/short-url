@@ -18,9 +18,9 @@ class KeyGenerator
     /**
      * KeyGenerator constructor.
      */
-    public function __construct()
+    public function __construct(Hashids $hashids = null)
     {
-        $this->hashids = new Hashids(config('short-url.key_salt'), config('short-url.key_length'), config('short-url.alphabet'));
+        $this->hashids = $hashids ?: new Hashids(config('short-url.key_salt'), config('short-url.key_length'), config('short-url.alphabet'));
     }
 
     /**
@@ -47,6 +47,21 @@ class KeyGenerator
         } while (ShortURL::where('url_key', $key)->exists());
 
         return $key;
+    }
+
+    /**
+     * Generate a key for the short URL. This method allows you to pass a
+     * seed value to the key generator. If no seed is passed, a random
+     * key will be generated.
+     *
+     * @param  int|null  $seed
+     * @return string
+     */
+    public function generateKeyUsing(int $seed = null): string
+    {
+        return $seed
+            ? $this->hashids->encode($seed)
+            : $this->generateRandom();
     }
 
     /**

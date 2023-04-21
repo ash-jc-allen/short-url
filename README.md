@@ -4,7 +4,6 @@
 
 <p align="center">
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/v/ashallendesign/short-url.svg?style=flat-square" alt="Latest Version on Packagist"></a>
-<a href="https://github.com/ash-jc-allen/short-url"><img src="https://img.shields.io/github/workflow/status/ash-jc-allen/short-url/run-tests?style=flat-square" alt="Build Status"></a>
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/dt/ashallendesign/short-url.svg?style=flat-square" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/php-v/ashallendesign/short-url?style=flat-square" alt="PHP from Packagist"></a>
 <a href="https://github.com/ash-jc-allen/short-url/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ash-jc-allen/short-url?style=flat-square" alt="GitHub license"></a>
@@ -34,7 +33,9 @@
         - [Forwarding Query Parameters](#forwarding-query-parameters)
         - [Redirect Status Code](#redirect-status-code)
         - [Activation and Deactivation Times](#activation-and-deactivation-times)
+        - [Using a Custom Seed](#using-a-custom-seed)
         - [Facade](#facade)
+        - [Conditionals](#conditionals)
     - [Using the Shortened URLs](#using-the-shortened-urls)
         - [Default Route and Controller](#default-route-and-controller)
         - [Custom Route](#custom-route)
@@ -54,6 +55,7 @@
         - [Tracked Fields](#tracked-fields)
     - [Events](#events)
         - [Short URL Visited](#short-url-visited)
+    - [Model Factories](#model-factories)
 - [Testing](#testing)
 - [Security](#security)
 - [Contribution](#contribution)
@@ -287,7 +289,7 @@ $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 $shortURLObject = $builder->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
  ```
 
-### Activation and Deactivation Times
+#### Activation and Deactivation Times
 
 By default, all short URLs that you create are active until you delete them. However, you may set activation and deactivation
 times for your URLs when you're creating them.
@@ -314,6 +316,18 @@ $shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())
                            ->make();
  ```
 
+#### Using a Custom Seed
+
+By default, the package will use the ID of the last inserted short URL as the seed for generating a short URL's key. In some cases, you may want to use a custom seed instead. To do this, you can pass an integer to the `generateKeyUsing` method like so:
+
+ ```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+ 
+$shortURLObject = $builder->destinationUrl('https://destination.com')
+    ->generateKeyUsing(12345)
+    ->make();
+ ```
+
 #### Facade
 If you prefer to use facades in Laravel, you can choose to use the provided ``` ShortURL ``` facade instead of instantiating
 the ``` Builder ``` class manually.
@@ -336,6 +350,42 @@ class Controller
     }
 }
 ```
+
+#### Conditionals
+
+The `Builder` class uses the `Illuminate\Support\Traits\Conditionable` trait, so you can use the `when` and `unless` methods when building your short URLs.
+
+For example, let's take this block of code that uses `if` when building the short URL:
+
+```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+ 
+$shortURLObject = (new Builder())
+    ->destinationUrl('https://destination.com');
+
+if ($request->date('activation')) {
+    $builder = $builder->activateAt($request->date('activation'));
+};
+
+$shortURLObject = $builder->make();)
+```
+
+This could be rewritten using `when` like so:
+
+ ```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+use Carbon\Carbon;
+ 
+$shortURLObject = (new Builder())
+    ->destinationUrl('https://destination.com')
+    ->when(
+        $request->date('activation'),
+        function (Builder $builder, Carbon $activateDate): Builder  {
+            return $builder->activateAt($activateDate);
+        },
+    )
+    ->make();
+ ```
 
 ### Using the Shortened URLs
 #### Default Route and Controller
@@ -378,6 +428,22 @@ do this are provided for this in the [Customisation](#customisation) section bel
 
 #### Customising the Default Route
 
+#### Customising the Default URL
+
+The package comes with a route that you can use for your short URLs. By default, this route uses your Laravel app's `app.url` config field to build the URL.
+
+However, you might want to override this and use a different URL for your short URLs. For instance, you might want to use a different domain name for your short URLs.
+
+To override the base URL, you can set the `default_url` config field. For example, to set the base URL to `https://example.com`, you can set the `default_url` in your `config/short-url.php` file like so:
+
+```php
+'default_url' => 'https://example.com',
+```
+
+To use the your application's `app.url` config field, you can set the `short_url.default_url` field to `null`.
+
+##### Customising the Prefix
+
 The package comes with a route that you can use for your short URLs. By default, this route is `/short/{shortURLKey}`.
 
 You might want to keep using this default route but change the `/short/` prefix to something else. To do this, you can change the `prefix` field in the config.
@@ -388,6 +454,36 @@ For example, to change the default short URL to `/s`, you could change the confi
 'prefix' => 's',
 ```
 
+##### Removing the Prefix
+
+You may also remove the prefix from the default route completely. For example, if you want your short URL to be accessible via `/{shortUrlKey}`, then you can update the `prefix` config value to `null` like so:
+
+```
+'prefix' => null,
+```
+
+##### Defining Middleware
+
+You may wish to run the default short URL through some middleware in your application. To do this, you can define the middleware that the route should use via the `middleware` config value.
+
+For example, if you have a `MyAwesomeMiddleware` class, you could update your `short-url` config like so:
+
+```
+'middleware' => [
+    MyAwesomeMiddleware::class,
+],
+```
+
+You can also use this same approach to define middleware groups rather than individual middleware classes. For example, if you want your default short URL route to use the `web` middleware group, you could update your config like so:
+
+```
+'middleware' => [
+    'web',
+],
+```
+
+It's important to note that this middleware will only be automatically applied to the default short URL route that ships with the package. If you are defining your own route, you'll need to apply this middleware to your route yourself.
+
 #### Disabling the Default Route
 If you have added your own custom route to your project, you may want to block the default route that the package provides.
 You can do this by setting the following value in the config:
@@ -396,6 +492,12 @@ You can do this by setting the following value in the config:
 'disable_default_route' => true,
 ```
 If the default route is disabled, any visitors who go to the ```/short/{shortURLKey}``` route will receive a HTTP 404.
+
+You may want to manually prevent the route from being automatically registered and manually register it yourself in your own routes file. To do this you can add the following code to your routes file (e.g. `web.php`):
+
+```php
+\AshAllenDesign\ShortURL\Facades\ShortURL::routes();
+```
 
 #### Default URL Key Length 
 When building a shortened URL, you have the option to define your own URL key or to randomly generate one. If one is
@@ -518,20 +620,46 @@ $shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
 $shortURL->trackingFields();
 ``` 
 
+### Model Factories
+
+The package comes with model factories included for testing purposes which come in handy when generating polymorphic relationships. The `ShortURL` model factory also comes with extra states that you may use when necessary, such as `deactivated` and `inactive`:
+
+```php
+use AshAllenDesign\ShortURL\Models\ShortURL;
+
+$shortUrl = ShortURL::factory()->create();
+
+// URL is deactivated
+$deactivatedShortUrl = ShortURL::factory()->deactivated()->create();
+
+// URL is neither activated nor deactivated
+$inactiveShortURL = ShortURL::factory()->inactive()->create();
+```
+
+If you are using your own custom model factory, you can define the factories that the `ShortURL` and `ShortURLVisit` models should use by updating the `factories` config field:
+
+```php
+'factories' => [
+    \AshAllenDesign\ShortURL\Models\ShortURL::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory::class,
+    \AshAllenDesign\ShortURL\Models\ShortURLVisit::class => \AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory::class
+],
+```
+
 ### Events
 
 #### Short URL Visited
  
 Each time a short URL is visited, the following event is fired that can be listened on:
+
 ```
 AshAllenDesign\ShortURL\Events\ShortURLVisited
 ```
 
-If you are redirecting users with a ``` 301 ``` HTTP status code, it's possible that this event will NOT be fired
+If you are redirecting users with a `301` HTTP status code, it's possible that this event will NOT be fired
 if a visitor has already visited this short URL before. This is due to the fact that most browsers will cache the
 intended destination URL as a 'permanent redirect' and won't actually visit the short URL first.
 
-For better results, use the ``` 302 ``` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
+For better results, use the `302` HTTP status code as most browsers will treat the short URL as a 'temporary redirect'.
 This means that the short URL will be visited in the browser and the event will be dispatched as expected before redirecting
 to the destination URL.
 
@@ -575,3 +703,15 @@ Check the [UPGRADE](UPGRADE.md) guide to get more information on how to update t
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## Support Me
+
+If you've found this package useful, please consider buying a copy of [Battle Ready Laravel](https://battle-ready-laravel.com) to support me and my work.
+
+Every sale makes a huge difference to me and allows me to spend more time working on open-source projects and tutorials.
+
+To say a huge thanks, you can use the code **BATTLE20** to get a 20% discount on the book.
+
+[👉 Get Your Copy!](https://battle-ready-laravel.com)
+
+[![Battle Ready Laravel](https://ashallendesign.co.uk/images/custom/sponsors/battle-ready-laravel-horizontal-banner.png)](https://battle-ready-laravel.com)

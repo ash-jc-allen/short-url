@@ -3,6 +3,8 @@
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -24,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ShortURLVisit extends Model
 {
+    use HasFactory;
+
     const DEVICE_TYPE_MOBILE = 'mobile';
 
     const DEVICE_TYPE_DESKTOP = 'desktop';
@@ -59,6 +63,9 @@ class ShortURLVisit extends Model
     /**
      * The attributes that should be mutated to dates.
      *
+     * @deprecated This field is no longer used in Laravel 10 and above.
+     *             It will be removed in a future release.
+     *
      * @var array
      */
     protected $dates = [
@@ -70,19 +77,32 @@ class ShortURLVisit extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'short_url_id' => 'integer',
+        'visited_at'   => 'datetime',
     ];
+
+    /**
+     * @return Factory<ShortURLVisit>
+     */
+    protected static function newFactory()
+    {
+        $factoryConfig = config('short-url.factories');
+
+        $modelFactory = app($factoryConfig[__CLASS__]);
+
+        return $modelFactory::new();
+    }
 
     /**
      * A URL visit belongs to one specific shortened URL.
      *
-     * @return BelongsTo
+     * @return BelongsTo<ShortURL, ShortURLVisit>
      */
     public function shortURL(): BelongsTo
     {
-        return $this->belongsTo(ShortURL::class);
+        return $this->belongsTo(ShortURL::class, 'short_url_id');
     }
 }
