@@ -4,6 +4,7 @@ namespace AshAllenDesign\ShortURL\Classes;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Hashids\Hashids;
+use Illuminate\Support\Carbon;
 
 class KeyGenerator
 {
@@ -39,6 +40,20 @@ class KeyGenerator
      */
     public function generateRandom(): string
     {
+        $useTimestamp = config('short.use_timestamp');
+
+        /**
+         * if this config is set to true it will skip all the queries below
+         * making it faster and less prone to n+1 performance issues
+         */
+
+        if ($useTimestamp){
+
+            return $this->hashids->encode(Carbon::now()->timestamp);
+
+        }
+
+
         $ID = $this->getLastInsertedID();
 
         do {
@@ -47,6 +62,8 @@ class KeyGenerator
         } while (ShortURL::where('url_key', $key)->exists());
 
         return $key;
+
+
     }
 
     /**
@@ -82,4 +99,8 @@ class KeyGenerator
 
         return 0;
     }
+
+
+
+
 }
