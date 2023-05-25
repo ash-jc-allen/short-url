@@ -2,10 +2,10 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
-use AshAllenDesign\ShortURL\Middleware\ShortURLMiddleware;
 use AshAllenDesign\ShortURL\Controllers\ShortURLController;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
+use AshAllenDesign\ShortURL\Middleware\ShortURLMiddleware;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
