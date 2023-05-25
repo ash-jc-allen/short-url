@@ -482,6 +482,8 @@ You can also use this same approach to define middleware groups rather than indi
 ],
 ```
 
+You can access the current `ShortURL` instance in the middleware through `$request->get('shortURL')`.
+
 It's important to note that this middleware will only be automatically applied to the default short URL route that ships with the package. If you are defining your own route, you'll need to apply this middleware to your route yourself.
 
 #### Disabling the Default Route
