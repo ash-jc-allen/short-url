@@ -16,13 +16,11 @@ class ShortURLController
      *
      * @param  Request  $request
      * @param  Resolver  $resolver
-     * @param  string  $shortURLKey
      * @return RedirectResponse
      */
-    public function __invoke(Request $request, Resolver $resolver, string $shortURLKey): RedirectResponse
+    public function __invoke(Request $request, Resolver $resolver): RedirectResponse
     {
-        $shortURL = ShortURL::where('url_key', $shortURLKey)->firstOrFail();
-
+        $shortURL = $request->get('shortURL');
         $resolver->handleVisit(request(), $shortURL);
 
         if ($shortURL->forward_query_params) {

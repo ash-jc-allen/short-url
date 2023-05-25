@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Middleware\ShortURLMiddleware;
 use AshAllenDesign\ShortURL\Controllers\ShortURLController;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
@@ -206,7 +207,7 @@ class Builder
      */
     public function middleware(): array
     {
-        return config('short-url.middleware', []);
+        return [ShortURLMiddleware::class, ...config('short-url.middleware', [])];
     }
 
     /**
