@@ -82,6 +82,13 @@ class ShortURL extends Model
         'updated_at',
     ];
 
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->fillable =  config('short-url.short_url_attributes');
+    }
+
     /**
      * @return Factory<ShortURL>
      */

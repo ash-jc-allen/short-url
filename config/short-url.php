@@ -173,4 +173,52 @@ return [
     |
     */
     'validate_config' => false,
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ShortURL Model Fillable Attributes
+    |--------------------------------------------------------------------------
+    |
+    | Define which attributes you would like to add to the model
+    |
+    */
+    'short_url_attributes' => [
+        'destination_url',
+        'default_short_url',
+        'url_key',
+        'single_use',
+        'forward_query_params',
+        'track_visits',
+        'redirect_status_code',
+        'track_ip_address',
+        'track_operating_system',
+        'track_operating_system_version',
+        'track_browser',
+        'track_browser_version',
+        'track_referer_url',
+        'track_device_type',
+        'activated_at',
+        'deactivated_at',
+    ],
+
+    /*
+  |--------------------------------------------------------------------------
+  | ShortURLVisit Model Fillable Attributes
+  |--------------------------------------------------------------------------
+  |
+  | Define which attributes you would like to add to the model
+  |
+  */
+    'short_url_visit_attributes' => [
+        'short_url_id',
+        'ip_address',
+        'operating_system',
+        'operating_system_version',
+        'browser',
+        'browser_version',
+        'visited_at',
+        'referer_url',
+        'device_type',
+    ],
 ];

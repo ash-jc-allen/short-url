@@ -84,6 +84,12 @@ class ShortURLVisit extends Model
         'visited_at'   => 'datetime',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->fillable =  config('short-url.short_url_visit_attributes');
+    }
+
     /**
      * @return Factory<ShortURLVisit>
      */
