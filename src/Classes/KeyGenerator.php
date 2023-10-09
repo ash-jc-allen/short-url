@@ -76,10 +76,6 @@ class KeyGenerator
      */
     protected function getLastInsertedID(): int
     {
-        if ($lastInserted = ShortURL::latest()->select('id')->first()) {
-            return $lastInserted->id;
-        }
-
-        return 0;
+        return ShortURL::max('id') ?? 0;
     }
 }
