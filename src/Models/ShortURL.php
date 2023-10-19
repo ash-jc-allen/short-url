@@ -82,6 +82,15 @@ class ShortURL extends Model
         'updated_at',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        if (null !== config('short-url.connection')) {
+            $this->setConnection(config('short-url.connection'));
+        }
+    }
+
     /**
      * @return Factory<ShortURL>
      */

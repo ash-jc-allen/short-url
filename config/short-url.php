@@ -15,6 +15,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom Connection
+    |--------------------------------------------------------------------------
+    |
+    | This configuration value is used to override the connection that
+    | will be used by models of this package. Default: null (no override)
+    |
+    */
+    'connection' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Middleware
     |--------------------------------------------------------------------------
     |
