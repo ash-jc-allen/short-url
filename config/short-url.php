@@ -15,6 +15,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom Database Connection
+    |--------------------------------------------------------------------------
+    |
+    | This configuration value is used to override the database connection
+    | that will be used by models of this package. If set to `null`, your
+    | application's default database connection will be used.
+    |
+    */
+    'connection' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Middleware
     |--------------------------------------------------------------------------
     |

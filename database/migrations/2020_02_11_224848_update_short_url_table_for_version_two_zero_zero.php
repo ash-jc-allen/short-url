@@ -14,7 +14,7 @@ class UpdateShortURLTableForVersionTwoZeroZero extends Migration
      */
     public function up()
     {
-        Schema::table('short_urls', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_urls', function (Blueprint $table) {
             $table->integer('redirect_status_code')->after('track_visits')->default(301);
             $table->boolean('track_ip_address')->after('redirect_status_code')->default(false);
             $table->boolean('track_operating_system')->after('track_ip_address')->default(false);
@@ -43,7 +43,7 @@ class UpdateShortURLTableForVersionTwoZeroZero extends Migration
      */
     public function down()
     {
-        Schema::table('short_urls', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_urls', function (Blueprint $table) {
             $table->dropColumn([
                 'redirect_status_code',
                 'track_ip_address',
