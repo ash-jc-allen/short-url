@@ -1,5 +1,10 @@
 # Changelog
 
+**v7.7.0 (released 2023-10-26):**
+- Added the ability to specify the database connection for the package's models. [#214](https://github.com/ash-jc-allen/short-url/pull/214)
+- Improve the query key generation performance. [#213](https://github.com/ash-jc-allen/short-url/pull/213)
+- Added PHP 8.3 CI tests. [#217](https://github.com/ash-jc-allen/short-url/pull/217)
+
 **v7.6.0 (released 2023-03-21):**
 - Added support for `hashids/hashids` v5.0. [#183](https://github.com/ash-jc-allen/short-url/pull/183)
 - Added the ability to pass a seed that can be used when generating the short URL key. [#185](https://github.com/ash-jc-allen/short-url/pull/185)
