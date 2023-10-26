@@ -86,7 +86,7 @@ class ShortURL extends Model
     {
         parent::__construct($attributes);
 
-        if (null !== config('short-url.connection')) {
+        if (config('short-url.connection')) {
             $this->setConnection(config('short-url.connection'));
         }
     }
