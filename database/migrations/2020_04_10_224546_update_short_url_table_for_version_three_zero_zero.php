@@ -13,7 +13,7 @@ class UpdateShortURLTableForVersionThreeZeroZero extends Migration
      */
     public function up()
     {
-        Schema::table('short_urls', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_urls', function (Blueprint $table) {
             $table->timestamp('activated_at')->after('track_device_type')->nullable()->default(now());
             $table->timestamp('deactivated_at')->after('activated_at')->nullable();
         });
@@ -26,7 +26,7 @@ class UpdateShortURLTableForVersionThreeZeroZero extends Migration
      */
     public function down()
     {
-        Schema::table('short_urls', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_urls', function (Blueprint $table) {
             $table->dropColumn(['activated_at', 'deactivated_at']);
         });
     }

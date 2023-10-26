@@ -13,7 +13,7 @@ class UpdateShortURLVisitsTableForVersionTwoZeroZero extends Migration
      */
     public function up()
     {
-        Schema::table('short_url_visits', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_url_visits', function (Blueprint $table) {
             $table->string('referer_url')->after('browser_version')->nullable();
             $table->string('device_type')->after('referer_url')->nullable();
         });
@@ -26,7 +26,7 @@ class UpdateShortURLVisitsTableForVersionTwoZeroZero extends Migration
      */
     public function down()
     {
-        Schema::table('short_url_visits', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_url_visits', function (Blueprint $table) {
             $table->dropColumn(['referer_url', 'device_type']);
         });
     }
