@@ -47,6 +47,7 @@
             - [Default Tracking](#default-tracking)
             - [Tracking Fields](#tracking-fields)
         - [Config Validation](#config-validation)
+        - [Custom Database Connection](#custom-database-connection)
     - [Helper Methods](#helper-methods)
         - [Visits](#visits)
         - [Find by URL Key](#find-by-url-key)
@@ -564,6 +565,16 @@ following option in the config:
 ```
 'validate_config' => true,
 ``` 
+
+#### Custom Database Connection
+
+By default, Short URL will use your application's default database connection. But there may be times that you'd like to use a different connection. For example, you might be building a multi-tenant application that uses a separate connection for each tenant, and you may want to store the short URLs in a central database.
+
+To do this, you can set the connection name using the `connection` config value in the `config/short-url.php` file like so:
+
+```
+'connection' => 'custom_database_connection_name',
+```
 
 ### Helper Methods
 #### Visits
