@@ -40,7 +40,7 @@ class ShortURLTest extends TestCase
             'track_utm'         => true,4
         ]);
 
-        $this->get('/short/12345?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner')
+        $this->get('/short/12345?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner&utm_term=short_url')
             ->assertStatus(301)
             ->assertRedirect('https://domain.com');
 
@@ -53,6 +53,7 @@ class ShortURLTest extends TestCase
             'utm_medium'   => 'email',
             'utm_campaign' => 'spring_sale',
             'utm_content'  => 'promo_banner',
+            'utm_term'     => 'short_url',
         ]);
     }
 }
