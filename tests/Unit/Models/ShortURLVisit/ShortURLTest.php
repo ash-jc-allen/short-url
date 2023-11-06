@@ -56,4 +56,32 @@ class ShortURLTest extends TestCase
             'utm_term'     => 'short_url',
         ]);
     }
+
+    public function short_url_can_be_fetched_from_visit_with_utm_params_within_destination_url(): void
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'   => 'https://domain.com??utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner&utm_term=short_url',
+            'default_short_url' => 'https://domain.com/12345',
+            'url_key'           => '12345',
+            'single_use'        => true,
+            'track_visits'      => true,
+            'track_utm'         => true,4
+        ]);
+
+        $this->get('/short/12345')
+            ->assertStatus(301)
+            ->assertRedirect('https://domain.com?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner&utm_term=short_url');
+
+        // Get the visit that was just logged.
+        $visit = ShortURLVisit::first();
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id' => $shortURL->id,
+            'utm_source'   => 'newsletter',
+            'utm_medium'   => 'email',
+            'utm_campaign' => 'spring_sale',
+            'utm_content'  => 'promo_banner',
+            'utm_term'     => 'short_url',
+        ]);
+    }
 }

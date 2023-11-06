@@ -342,6 +342,74 @@ class ResolverTest extends TestCase
     }
 
     /** @test */
+    public function utm_is_stored_if_it_is_enabled()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'                => 'https://google.com',
+            'default_short_url'              => config('short-url.default_url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => true,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => true,
+            'track_device_type'              => true,
+            'track_utm'                      => true,
+            'activated_at'                   => now()->subSecond(),
+        ]);
+
+        $request = Request::create(config('short-url.default_url').'/short/12345?utm_source=google', 'GET', [], [], [], [
+            'HTTP_referer' => 'https://google.com',
+        ]);
+
+        $resolver = new Resolver();
+        $result = $resolver->handleVisit($request, $shortURL);
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id'             => $shortURL->id,
+            'utm_source'               => 'google',
+        ]);
+    }
+
+    /** @test */
+    public function utm_is_stored_within_short_url_if_it_is_enabled()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'                => 'https://google.com?utm_source=google',
+            'default_short_url'              => config('short-url.default_url').'/short/12345',
+            'url_key'                        => '12345',
+            'single_use'                     => false,
+            'track_visits'                   => true,
+            'track_ip_address'               => true,
+            'track_operating_system'         => true,
+            'track_operating_system_version' => true,
+            'track_browser'                  => true,
+            'track_browser_version'          => true,
+            'track_referer_url'              => true,
+            'track_device_type'              => true,
+            'track_utm'                      => true,
+            'activated_at'                   => now()->subSecond(),
+        ]);
+
+        $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
+            'HTTP_referer' => 'https://google.com',
+        ]);
+
+        $resolver = new Resolver();
+        $result = $resolver->handleVisit($request, $shortURL);
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id'             => $shortURL->id,
+            'utm_source'               => 'google',
+        ]);
+    }
+
+    /** @test */
     public function fields_are_not_recorded_if_all_are_true_but_track_visits_is_disabled()
     {
         $shortURL = ShortURL::create([

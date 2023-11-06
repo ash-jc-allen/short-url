@@ -161,11 +161,18 @@ class Resolver
         }
 
         if ($shortURL->track_utm) {
-            $visit->utm_source = $request->query('utm_source');
-            $visit->utm_medium = $request->query('utm_medium');
-            $visit->utm_campaign = $request->query('utm_campaign');
-            $visit->utm_term = $request->query('utm_term');
-            $visit->utm_content = $request->query('utm_content');
+
+            $parsedUrl = parse_url($shortURL->destination_url);
+
+            if (isset($parsedUrl['query'])) {
+                parse_str($parsedUrl['query'], $parsedQuery);
+            }
+
+            $visit->utm_source = $parsedQuery['utm_source'] ?? $request->query('utm_source');
+            $visit->utm_medium = $parsedQuery['utm_medium'] ?? $request->query('utm_medium');
+            $visit->utm_campaign = $parsedQuery['utm_campaign'] ?? $request->query('utm_campaign');
+            $visit->utm_term = $parsedQuery['utm_term'] ?? $request->query('utm_term');
+            $visit->utm_content = $parsedQuery['utm_content'] ?? $request->query('utm_content');
         }
     }
 
