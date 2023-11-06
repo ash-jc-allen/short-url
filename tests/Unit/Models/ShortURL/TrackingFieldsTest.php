@@ -27,6 +27,7 @@ class TrackingFieldsTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
+            'track_utm'                      => true,
         ]);
 
         $this->assertSame([
@@ -35,6 +36,11 @@ class TrackingFieldsTest extends TestCase
             'browser',
             'browser_version',
             'device_type',
+            'utm_source',
+            'utm_medium',
+            'utm_campaign',
+            'utm_term',
+            'utm_content',
         ], $shortURL->trackingFields());
     }
 
@@ -55,6 +61,7 @@ class TrackingFieldsTest extends TestCase
             'track_browser_version'          => false,
             'track_referer_url'              => false,
             'track_device_type'              => false,
+            'track_utm'                      => false,
         ]);
 
         $this->assertSame([], $shortURL->trackingFields());

@@ -32,6 +32,7 @@ class ShortURLFactory extends Factory
             'track_browser_version' => $this->faker->boolean(),
             'track_referer_url' => $this->faker->boolean(),
             'track_device_type' => $this->faker->boolean(),
+            'track_utm' => $this->faker->boolean(),
             'activated_at' => now(),
             'deactivated_at' => null,
             'created_at' => now(),

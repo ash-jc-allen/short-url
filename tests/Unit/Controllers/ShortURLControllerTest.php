@@ -55,6 +55,7 @@ class ShortURLControllerTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
+            'track_utm'                      => true,
             'activated_at'                   => now()->subMinute(),
             'deactivated_at'                 => null,
         ]);

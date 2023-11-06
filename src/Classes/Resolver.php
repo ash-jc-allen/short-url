@@ -159,6 +159,14 @@ class Resolver
         if ($shortURL->track_device_type) {
             $visit->device_type = $this->guessDeviceType();
         }
+
+        if ($shortURL->track_utm) {
+            $visit->utm_source = $request->query('utm_source');
+            $visit->utm_medium = $request->query('utm_medium');
+            $visit->utm_campaign = $request->query('utm_campaign');
+            $visit->utm_term = $request->query('utm_term');
+            $visit->utm_content = $request->query('utm_content');
+        }
     }
 
     /**

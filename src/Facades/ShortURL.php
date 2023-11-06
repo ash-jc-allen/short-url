@@ -20,6 +20,7 @@ use RuntimeException;
  * @method static self trackBrowserVersion(bool $track)
  * @method static self trackRefererURL(bool $track)
  * @method static self trackDeviceType(bool $track)
+ * @method static self trackUtm(bool $track)
  * @method static self urlKey(string $key)
  * @method static self keyGenerator(KeyGenerator $keyGenerator)
  * @method static self redirectStatusCode(int $statusCode)

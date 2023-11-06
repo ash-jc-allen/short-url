@@ -27,4 +27,32 @@ class ShortURLTest extends TestCase
 
         $this->assertTrue($visit->shortURL->is($shortURL));
     }
+
+    /** @test */
+    public function short_url_can_be_fetched_from_visit_with_utm_params(): void
+    {
+        $shortURL = ShortURL::create([
+            'destination_url'   => 'https://domain.com',
+            'default_short_url' => 'https://domain.com/12345',
+            'url_key'           => '12345',
+            'single_use'        => true,
+            'track_visits'      => true,
+            'track_utm'         => true,4
+        ]);
+
+        $this->get('/short/12345?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner')
+            ->assertStatus(301)
+            ->assertRedirect('https://domain.com');
+
+        // Get the visit that was just logged.
+        $visit = ShortURLVisit::first();
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id' => $shortURL->id,
+            'utm_source'   => 'newsletter',
+            'utm_medium'   => 'email',
+            'utm_campaign' => 'spring_sale',
+            'utm_content'  => 'promo_banner',
+        ]);
+    }
 }

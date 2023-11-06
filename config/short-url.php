@@ -171,6 +171,7 @@ return [
             'browser_version'          => true,
             'referer_url'              => true,
             'device_type'              => true,
+            'utm'                      => true,
         ],
     ],
 

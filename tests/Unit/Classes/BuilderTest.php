@@ -263,6 +263,23 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function track_utm_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    {
+        Config::set('short-url.tracking.fields.utm', true);
+
+        $domain = "https://example.com/?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner";
+
+        $builder = new Builder();
+        $shortUrl = $builder->destinationUrl($domain)->trackUTM(false)->make();
+        $this->assertFalse($shortUrl->track_utm);
+
+        Config::set('short-url.tracking.fields.utm', false);
+
+        $shortUrl = $builder->destinationUrl($domain)->trackUTM()->make();
+        $this->assertTrue($shortUrl->track_utm);
+    }
+
+    /** @test */
     public function exception_is_thrown_if_the_url_key_is_explicitly_set_and_already_exists_in_the_db()
     {
         ShortURL::create([
@@ -327,6 +344,7 @@ class BuilderTest extends TestCase
             'track_browser_version'          => true,
             'track_referer_url'              => false,
             'track_device_type'              => true,
+            'track_utm'                      => true,
             'activated_at'                   => now(),
             'deactivated_at'                 => null,
         ]);

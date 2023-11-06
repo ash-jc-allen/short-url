@@ -28,6 +28,7 @@
             - [Tracking Operating System & Operating System Version](#tracking-operating-system--operating-system-version)
             - [Tracking Device Type](#tracking-device-type)
             - [Tracking Referer URL](#tracking-referer-url)
+            - [Tracking UTM Sources](#tracking-utm)
         - [Single Use](#single-use)
         - [Enforce HTTPS](#enforce-https)
         - [Forwarding Query Parameters](#forwarding-query-parameters)
@@ -233,6 +234,18 @@ The example below shows how to enable referer URL tracking for the URL and overr
 $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 
 $shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackRefererURL()->make();
+```
+
+##### Tracking UTM
+
+If you want to override whether if referral UTM tracking is enabled or not when creating a shortened URL, you can use the
+``` ->trackUTM() ``` method. This method accepts a boolean but defaults to ``` true ``` if a parameter is not passed.
+
+The example below shows how to enable referral UTM tracking for the URL and override the default config variable:
+```php
+$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+
+$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackUTM()->make();
 ```
 
 #### Single Use
@@ -553,6 +566,7 @@ For example, the snippet below shows how we could record all of the fields apart
             'browser_version'          => true,
             'referer_url'              => true,
             'device_type'              => true,
+            'utm'                      => true,
         ],
     ],
 ```

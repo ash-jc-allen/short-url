@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool $track_browser_version
  * @property bool $track_referer_url
  * @property bool $track_device_type
+ * @property bool $track_utm
  * @property Carbon $activated_at
  * @property Carbon|null $deactivated_at
  * @property Carbon $created_at
@@ -63,6 +64,7 @@ class ShortURL extends Model
         'track_browser_version',
         'track_referer_url',
         'track_device_type',
+        'track_utm',
         'activated_at',
         'deactivated_at',
     ];
@@ -119,6 +121,7 @@ class ShortURL extends Model
         'track_browser_version'          => 'boolean',
         'track_referer_url'              => 'boolean',
         'track_device_type'              => 'boolean',
+        'track_utm'                      => 'boolean',
         'activated_at'                   => 'datetime',
         'deactivated_at'                 => 'datetime',
     ];
@@ -205,6 +208,14 @@ class ShortURL extends Model
 
         if ($this->track_device_type) {
             $fields[] = 'device_type';
+        }
+
+        if ($this->track_utm) {
+            $fields[] = 'utm_source';
+            $fields[] = 'utm_medium';
+            $fields[] = 'utm_campaign';
+            $fields[] = 'utm_term';
+            $fields[] = 'utm_content';
         }
 
         return $fields;

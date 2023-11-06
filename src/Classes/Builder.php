@@ -138,6 +138,14 @@ class Builder
     protected $trackDeviceType = null;
 
     /**
+     * Whether or not the referer's UTM should
+     * be recorded.
+     *
+     * @var bool|null
+     */
+    protected $trackUtm = null;
+
+    /**
      * The date and time that the short URL should become
      * active so that it can be visited.
      *
@@ -399,6 +407,20 @@ class Builder
     }
 
     /**
+     * Set whether if the short URL should track the
+     * utm parameters of the visitor.
+     *
+     * @param  bool  $track
+     * @return $this
+     */
+    public function trackUTM(bool $track = true): self
+    {
+        $this->trackUtm = $track;
+
+        return $this;
+    }
+
+    /**
      * Explicitly set a URL key for this short URL.
      *
      * @param  string  $key
@@ -543,6 +565,7 @@ class Builder
             'track_browser_version'          => $this->trackBrowserVersion,
             'track_referer_url'              => $this->trackRefererURL,
             'track_device_type'              => $this->trackDeviceType,
+            'track_utm'                      => $this->trackUtm,
             'activated_at'                   => $this->activateAt,
             'deactivated_at'                 => $this->deactivateAt,
         ];
@@ -628,6 +651,10 @@ class Builder
         if ($this->trackDeviceType === null) {
             $this->trackDeviceType = config('short-url.tracking.fields.device_type');
         }
+
+        if ($this->trackUtm === null) {
+            $this->trackUtm = config('short-url.tracking.fields.utm');
+        }
     }
 
     /**
@@ -654,6 +681,7 @@ class Builder
         $this->trackBrowserVersion = null;
         $this->trackRefererURL = null;
         $this->trackDeviceType = null;
+        $this->trackUtm = null;
 
         return $this;
     }

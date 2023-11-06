@@ -19,6 +19,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $browser
  * @property string $browser_version
  * @property string $device_type
+ * @property string $utm_source
+ * @property string $utm_medium
+ * @property string $utm_campaign
+ * @property string $utm_term
+ * @property string $utm_content
  * @property Carbon $visited_at
  * @property string $referer_url
  * @property Carbon $created_at
@@ -55,6 +60,11 @@ class ShortURLVisit extends Model
         'operating_system_version',
         'browser',
         'browser_version',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
         'visited_at',
         'referer_url',
         'device_type',
