@@ -267,7 +267,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.utm', true);
 
-        $domain = "https://example.com/?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner";
+        $domain = 'https://example.com/?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner';
 
         $builder = new Builder();
         $shortUrl = $builder->destinationUrl($domain)->trackUTM(false)->make();

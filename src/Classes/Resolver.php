@@ -161,7 +161,6 @@ class Resolver
         }
 
         if ($shortURL->track_utm) {
-
             $parsedUrl = parse_url($shortURL->destination_url);
 
             if (isset($parsedUrl['query'])) {

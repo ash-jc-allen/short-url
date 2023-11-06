@@ -37,7 +37,7 @@ class ShortURLTest extends TestCase
             'url_key'           => '12345',
             'single_use'        => true,
             'track_visits'      => true,
-            'track_utm'         => true,4
+            'track_utm'         => true,
         ]);
 
         $this->get('/short/12345?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale&utm_content=promo_banner&utm_term=short_url')
@@ -65,7 +65,7 @@ class ShortURLTest extends TestCase
             'url_key'           => '12345',
             'single_use'        => true,
             'track_visits'      => true,
-            'track_utm'         => true,4
+            'track_utm'         => true,
         ]);
 
         $this->get('/short/12345')
