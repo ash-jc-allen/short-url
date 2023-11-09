@@ -500,7 +500,7 @@ class Builder
     /**
      * Set the seed to be used when generating a short URL key.
      *
-     * @param int $generateUsing
+     * @param  int  $generateUsing
      * @return $this
      */
     public function generateKeyUsing(int $generateUsing): self
@@ -513,7 +513,7 @@ class Builder
     /**
      * Pass the Short URL model into the callback before it is created.
      *
-     * @param Closure $callback
+     * @param  Closure  $callback
      * @return $this
      */
     public function beforeCreate(Closure $callback): self
