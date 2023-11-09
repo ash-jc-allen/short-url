@@ -163,6 +163,14 @@ class Builder
     protected ?int $generateKeyUsing = null;
 
     /**
+     * Define a callback to access the ShortURL
+     * model prior to creation.
+     *
+     * @var Closure|null
+     */
+    protected ?Closure $beforeCreate = null;
+
+    /**
      * Builder constructor.
      *
      * When constructing this class, ensure that the
@@ -489,6 +497,12 @@ class Builder
         return $this;
     }
 
+    /**
+     * Set the seed to be used when generating a short URL key.
+     *
+     * @param int $generateUsing
+     * @return $this
+     */
     public function generateKeyUsing(int $generateUsing): self
     {
         $this->generateKeyUsing = $generateUsing;
@@ -497,14 +511,26 @@ class Builder
     }
 
     /**
+     * Pass the Short URL model into the callback before it is created.
+     *
+     * @param Closure $callback
+     * @return $this
+     */
+    public function beforeCreate(Closure $callback): self
+    {
+        $this->beforeCreate = $callback;
+
+        return $this;
+    }
+
+    /**
      * Attempt to build a shortened URL and return it.
      *
-     * @param Closure|null $callback
      * @return ShortURL
      *
      * @throws ShortURLException
      */
-    public function make(Closure $callback = null): ShortURL
+    public function make(): ShortURL
     {
         if (! $this->destinationUrl) {
             throw new ShortURLException('No destination URL has been set.');
@@ -516,7 +542,9 @@ class Builder
 
         $shortURL = new ShortURL($data);
 
-        value($callback, $shortURL);
+        if ($this->beforeCreate) {
+            value($this->beforeCreate, $shortURL);
+        }
 
         $shortURL->save();
 
@@ -660,6 +688,11 @@ class Builder
         $this->trackBrowserVersion = null;
         $this->trackRefererURL = null;
         $this->trackDeviceType = null;
+
+        $this->activateAt = null;
+        $this->deactivateAt = null;
+        $this->generateKeyUsing = null;
+        $this->beforeCreate = null;
 
         return $this;
     }
