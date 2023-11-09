@@ -514,7 +514,7 @@ class Builder
 
         $this->checkKeyDoesNotExist();
 
-        $shortURL = ShortURL::make($data);
+        $shortURL = new ShortURL($data);
 
         value($callback, $shortURL);
 
