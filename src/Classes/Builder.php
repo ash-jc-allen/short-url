@@ -7,6 +7,7 @@ use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
@@ -498,11 +499,12 @@ class Builder
     /**
      * Attempt to build a shortened URL and return it.
      *
+     * @param Closure|null $callback
      * @return ShortURL
      *
      * @throws ShortURLException
      */
-    public function make(): ShortURL
+    public function make(Closure $callback = null): ShortURL
     {
         if (! $this->destinationUrl) {
             throw new ShortURLException('No destination URL has been set.');
@@ -512,7 +514,11 @@ class Builder
 
         $this->checkKeyDoesNotExist();
 
-        $shortURL = ShortURL::create($data);
+        $shortURL = ShortURL::make($data);
+
+        value($callback, $shortURL);
+
+        $shortURL->save();
 
         $this->resetOptions();
 
