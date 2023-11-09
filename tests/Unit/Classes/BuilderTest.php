@@ -554,9 +554,10 @@ class BuilderTest extends TestCase
     {
         $shortUrl = (new Builder())
             ->destinationUrl('https://foo.com')
-            ->make(function (ShortURL $shortURL) {
+            ->beforeCreate(function (ShortURL $shortURL) {
                 $shortURL->destination_url = 'https://bar.com';
-            });
+            })
+            ->make();
 
         $this->assertSame('https://bar.com', $shortUrl->destination_url);
     }
