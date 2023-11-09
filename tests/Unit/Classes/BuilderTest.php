@@ -550,6 +550,18 @@ class BuilderTest extends TestCase
     }
 
     /** @test */
+    public function data_can_be_overridden_on_model_using_make_callback(): void
+    {
+        $shortUrl = (new Builder())
+            ->destinationUrl('https://foo.com')
+            ->make(function (ShortURL $shortURL) {
+                $shortURL->destination_url = 'https://bar.com';
+            });
+
+        $this->assertSame('https://bar.com', $shortUrl->destination_url);
+    }
+
+    /** @test */
     public function app_url_is_set_if_the_default_url_config_value_is_not_set(): void
     {
         Config::set('short-url.default_url', null);
