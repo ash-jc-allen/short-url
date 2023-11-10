@@ -168,7 +168,7 @@ class Builder
      *
      * @var Closure|null
      */
-    protected ?Closure $beforeCreate = null;
+    protected ?Closure $beforeCreateCallback = null;
 
     /**
      * Builder constructor.
@@ -518,7 +518,7 @@ class Builder
      */
     public function beforeCreate(Closure $callback): self
     {
-        $this->beforeCreate = $callback;
+        $this->beforeCreateCallback = $callback;
 
         return $this;
     }
@@ -542,8 +542,8 @@ class Builder
 
         $shortURL = new ShortURL($data);
 
-        if ($this->beforeCreate) {
-            value($this->beforeCreate, $shortURL);
+        if ($this->beforeCreateCallback) {
+            value($this->beforeCreateCallback, $shortURL);
         }
 
         $shortURL->save();
@@ -692,7 +692,7 @@ class Builder
         $this->activateAt = null;
         $this->deactivateAt = null;
         $this->generateKeyUsing = null;
-        $this->beforeCreate = null;
+        $this->beforeCreateCallback = null;
 
         return $this;
     }
