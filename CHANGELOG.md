@@ -1,5 +1,8 @@
 # Changelog
 
+**v7.8.0 (released 2023-11-11):**
+- Added the ability to store custom database fields when creating short URLs. [#225](https://github.com/ash-jc-allen/short-url/pull/225)
+
 **v7.7.0 (released 2023-10-26):**
 - Added the ability to specify the database connection for the package's models. [#214](https://github.com/ash-jc-allen/short-url/pull/214)
 - Improve the query key generation performance. [#213](https://github.com/ash-jc-allen/short-url/pull/213)
