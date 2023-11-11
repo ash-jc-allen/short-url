@@ -245,6 +245,9 @@ To do this you can use the `beforeCreate` method when building your short URL. T
 The example below shows how to add a `tenant_id` field to the `AshAllenDesign\ShortURL\Models\ShortURL` model:
 
 ```php
+use AshAllenDesign\ShortURL\Models\ShortURL;
+use AshAllenDesign\ShortURL\Facades\ShortURL as ShortUrlBuilder;
+
 $tenantId = 123;
 
 $shortURL = ShortUrlBuilder::destinationUrl($url)
