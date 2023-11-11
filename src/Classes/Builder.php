@@ -7,6 +7,7 @@ use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
@@ -160,6 +161,14 @@ class Builder
      * @var int|null
      */
     protected ?int $generateKeyUsing = null;
+
+    /**
+     * Define a callback to access the ShortURL
+     * model prior to creation.
+     *
+     * @var Closure|null
+     */
+    protected ?Closure $beforeCreateCallback = null;
 
     /**
      * Builder constructor.
@@ -488,9 +497,28 @@ class Builder
         return $this;
     }
 
+    /**
+     * Set the seed to be used when generating a short URL key.
+     *
+     * @param  int  $generateUsing
+     * @return $this
+     */
     public function generateKeyUsing(int $generateUsing): self
     {
         $this->generateKeyUsing = $generateUsing;
+
+        return $this;
+    }
+
+    /**
+     * Pass the Short URL model into the callback before it is created.
+     *
+     * @param  Closure  $callback
+     * @return $this
+     */
+    public function beforeCreate(Closure $callback): self
+    {
+        $this->beforeCreateCallback = $callback;
 
         return $this;
     }
@@ -512,7 +540,13 @@ class Builder
 
         $this->checkKeyDoesNotExist();
 
-        $shortURL = ShortURL::create($data);
+        $shortURL = new ShortURL($data);
+
+        if ($this->beforeCreateCallback) {
+            value($this->beforeCreateCallback, $shortURL);
+        }
+
+        $shortURL->save();
 
         $this->resetOptions();
 
@@ -654,6 +688,11 @@ class Builder
         $this->trackBrowserVersion = null;
         $this->trackRefererURL = null;
         $this->trackDeviceType = null;
+
+        $this->activateAt = null;
+        $this->deactivateAt = null;
+        $this->generateKeyUsing = null;
+        $this->beforeCreateCallback = null;
 
         return $this;
     }
