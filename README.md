@@ -251,7 +251,7 @@ $shortURL = ShortUrlBuilder::destinationUrl($url)
     ->beforeCreate(function (ShortURL $model): void {
         $model->tenant_id = $tenantId;
     })
-    )->make();
+    ->make();
 ```
 
 Please remember that to store custom fields in the database, you'll have to make sure those fields are added to the `short_urls` table. You can do this by creating a new migration that adds the fields to the table, or by updating the migrations that ship with this package.
