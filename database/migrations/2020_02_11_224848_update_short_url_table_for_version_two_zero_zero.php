@@ -25,7 +25,7 @@ class UpdateShortURLTableForVersionTwoZeroZero extends Migration
             $table->boolean('track_device_type')->after('track_referer_url')->default(false);
         });
 
-        DB::table('short_urls')->update([
+        DB::connection(config('short-url.connection'))->table('short_urls')->update([
             'track_ip_address'               => config('short-url.tracking.fields.ip_address'),
             'track_operating_system'         => config('short-url.tracking.fields.operating_system'),
             'track_operating_system_version' => config('short-url.tracking.fields.operating_system_version'),
