@@ -267,10 +267,10 @@ class BuilderTest extends TestCase
     {
         ShortURL::create([
             'default_short_url' => 'https://short.com/urlkey123',
-            'destination_url'   => 'https://destination.com/ashallendesign',
-            'url_key'           => 'urlkey123',
-            'single_use'        => false,
-            'track_visits'      => false,
+            'destination_url' => 'https://destination.com/ashallendesign',
+            'url_key' => 'urlkey123',
+            'single_use' => false,
+            'track_visits' => false,
         ]);
 
         $this->expectException(ShortURLException::class);
@@ -314,21 +314,21 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'              => 'https://short-url.com/short/customKey',
-            'url_key'                        => 'customKey',
-            'destination_url'                => 'https://domain.com',
-            'track_visits'                   => false,
-            'single_use'                     => false,
-            'redirect_status_code'           => 301,
-            'track_ip_address'               => true,
-            'track_operating_system'         => true,
+            'default_short_url' => 'https://short-url.com/short/customKey',
+            'url_key' => 'customKey',
+            'destination_url' => 'https://domain.com',
+            'track_visits' => false,
+            'single_use' => false,
+            'redirect_status_code' => 301,
+            'track_ip_address' => true,
+            'track_operating_system' => true,
             'track_operating_system_version' => false,
-            'track_browser'                  => true,
-            'track_browser_version'          => true,
-            'track_referer_url'              => false,
-            'track_device_type'              => true,
-            'activated_at'                   => now(),
-            'deactivated_at'                 => null,
+            'track_browser' => true,
+            'track_browser_version' => true,
+            'track_referer_url' => false,
+            'track_device_type' => true,
+            'activated_at' => now(),
+            'deactivated_at' => null,
         ]);
     }
 
@@ -342,11 +342,11 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => 'https://short-url.com/short/customKey',
-            'url_key'              => 'customKey',
-            'destination_url'      => 'https://domain.com',
-            'track_visits'         => false,
-            'single_use'           => false,
+            'default_short_url' => 'https://short-url.com/short/customKey',
+            'url_key' => 'customKey',
+            'destination_url' => 'https://domain.com',
+            'track_visits' => false,
+            'single_use' => false,
             'redirect_status_code' => 301,
         ]);
     }
@@ -362,11 +362,11 @@ class BuilderTest extends TestCase
             ->make();
 
         $this->assertDatabaseHas('short_urls', [
-            'default_short_url'    => 'https://short-url.com/short/customKey',
-            'url_key'              => 'customKey',
-            'destination_url'      => 'https://domain.com',
-            'track_visits'         => false,
-            'single_use'           => false,
+            'default_short_url' => 'https://short-url.com/short/customKey',
+            'url_key' => 'customKey',
+            'destination_url' => 'https://domain.com',
+            'track_visits' => false,
+            'single_use' => false,
             'redirect_status_code' => 302,
         ]);
     }
@@ -438,9 +438,9 @@ class BuilderTest extends TestCase
 
         $this->assertDatabaseHas('short_urls', [
             'default_short_url' => 'https://short-url.com/short/customKey',
-            'url_key'           => 'customKey',
-            'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
-            'deactivated_at'    => null,
+            'url_key' => 'customKey',
+            'activated_at' => $activateTime->format('Y-m-d H:i:s'),
+            'deactivated_at' => null,
         ]);
     }
 
@@ -458,9 +458,9 @@ class BuilderTest extends TestCase
 
         $this->assertDatabaseHas('short_urls', [
             'default_short_url' => 'https://short-url.com/short/customKey',
-            'url_key'           => 'customKey',
-            'activated_at'      => $activateTime->format('Y-m-d H:i:s'),
-            'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
+            'url_key' => 'customKey',
+            'activated_at' => $activateTime->format('Y-m-d H:i:s'),
+            'deactivated_at' => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -476,9 +476,9 @@ class BuilderTest extends TestCase
 
         $this->assertDatabaseHas('short_urls', [
             'default_short_url' => 'https://short-url.com/short/customKey',
-            'url_key'           => 'customKey',
-            'activated_at'      => now(),
-            'deactivated_at'    => $deactivateTime->format('Y-m-d H:i:s'),
+            'url_key' => 'customKey',
+            'activated_at' => now(),
+            'deactivated_at' => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
     }
 

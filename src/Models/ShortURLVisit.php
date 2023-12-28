@@ -81,7 +81,7 @@ class ShortURLVisit extends Model
      */
     protected $casts = [
         'short_url_id' => 'integer',
-        'visited_at'   => 'datetime',
+        'visited_at' => 'datetime',
     ];
 
     public function __construct(array $attributes = [])

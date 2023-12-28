@@ -35,11 +35,11 @@ class ResolverTest extends TestCase
         $this->expectException(NotFoundHttpException::class);
 
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
+            'destination_url' => 'https://google.com',
             'default_short_url' => config('short-url.default_url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => true,
+            'url_key' => '12345',
+            'single_use' => true,
+            'track_visits' => true,
         ]);
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
@@ -54,12 +54,12 @@ class ResolverTest extends TestCase
     public function request_is_not_aborted_if_url_is_single_use_and_has_not_been_visited()
     {
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
+            'destination_url' => 'https://google.com',
             'default_short_url' => config('short-url.default_url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => true,
-            'activated_at'      => now()->subSecond(),
+            'url_key' => '12345',
+            'single_use' => true,
+            'track_visits' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
@@ -74,12 +74,12 @@ class ResolverTest extends TestCase
     public function request_is_not_aborted_if_url_is_not_single_use_and_has_been_visited()
     {
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
+            'destination_url' => 'https://google.com',
             'default_short_url' => config('short-url.default_url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => false,
-            'track_visits'      => true,
-            'activated_at'      => now()->subSecond(),
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
@@ -95,12 +95,12 @@ class ResolverTest extends TestCase
     public function visit_details_are_not_recorded_if_url_does_not_have_tracking_enabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
+            'destination_url' => 'https://google.com',
             'default_short_url' => config('short-url.default_url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => false,
-            'track_visits'      => false,
-            'activated_at'      => now()->subSecond(),
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => false,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
@@ -110,13 +110,13 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
 
         $this->assertDatabaseHas('short_url_visits', [
-            'short_url_id'             => $shortURL->id,
-            'ip_address'               => null,
-            'operating_system'         => null,
+            'short_url_id' => $shortURL->id,
+            'ip_address' => null,
+            'operating_system' => null,
             'operating_system_version' => null,
-            'browser'                  => null,
-            'browser_version'          => null,
-            'referer_url'              => null,
+            'browser' => null,
+            'browser_version' => null,
+            'referer_url' => null,
         ]);
     }
 
@@ -124,19 +124,19 @@ class ResolverTest extends TestCase
     public function visit_is_recorded_if_url_has_tracking_enabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.default_url').'/short/12345',
-            'url_key'                        => '12345',
-            'single_use'                     => false,
-            'track_visits'                   => true,
-            'track_ip_address'               => true,
-            'track_operating_system'         => true,
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => true,
+            'track_ip_address' => true,
+            'track_operating_system' => true,
             'track_operating_system_version' => true,
-            'track_browser'                  => true,
-            'track_browser_version'          => true,
-            'track_referer_url'              => true,
-            'track_device_type'              => true,
-            'activated_at'                   => now()->subSecond(),
+            'track_browser' => true,
+            'track_browser_version' => true,
+            'track_referer_url' => true,
+            'track_device_type' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
@@ -157,14 +157,14 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
 
         $this->assertDatabaseHas('short_url_visits', [
-            'short_url_id'             => $shortURL->id,
-            'ip_address'               => $request->ip(),
-            'operating_system'         => 'Ubuntu',
+            'short_url_id' => $shortURL->id,
+            'ip_address' => $request->ip(),
+            'operating_system' => 'Ubuntu',
             'operating_system_version' => '19.10',
-            'browser'                  => 'Firefox',
-            'browser_version'          => '71.0',
-            'referer_url'              => null,
-            'device_type'              => 'mobile',
+            'browser' => 'Firefox',
+            'browser_version' => '71.0',
+            'referer_url' => null,
+            'device_type' => 'mobile',
         ]);
     }
 
@@ -175,19 +175,19 @@ class ResolverTest extends TestCase
         // version and referer URL.
 
         $shortURL = ShortURL::create([
-            'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.default_url').'/short/12345',
-            'url_key'                        => '12345',
-            'single_use'                     => false,
-            'track_visits'                   => true,
-            'track_ip_address'               => false,
-            'track_operating_system'         => true,
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => true,
+            'track_ip_address' => false,
+            'track_operating_system' => true,
             'track_operating_system_version' => true,
-            'track_browser'                  => true,
-            'track_browser_version'          => false,
-            'track_referer_url'              => false,
-            'track_device_type'              => true,
-            'activated_at'                   => now()->subSecond(),
+            'track_browser' => true,
+            'track_browser_version' => false,
+            'track_referer_url' => false,
+            'track_device_type' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
@@ -210,14 +210,14 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
 
         $this->assertDatabaseHas('short_url_visits', [
-            'short_url_id'             => $shortURL->id,
-            'ip_address'               => null,
-            'operating_system'         => 'Ubuntu',
+            'short_url_id' => $shortURL->id,
+            'ip_address' => null,
+            'operating_system' => 'Ubuntu',
             'operating_system_version' => '19.10',
-            'browser'                  => 'Firefox',
-            'browser_version'          => null,
-            'referer_url'              => null,
-            'device_type'              => 'tablet',
+            'browser' => 'Firefox',
+            'browser_version' => null,
+            'referer_url' => null,
+            'device_type' => 'tablet',
         ]);
     }
 
@@ -225,12 +225,12 @@ class ResolverTest extends TestCase
     public function request_is_aborted_if_url_is_single_use_and_the_tracking_is_not_enabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://google.com',
+            'destination_url' => 'https://google.com',
             'default_short_url' => config('short-url.default_url').'/short/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => false,
-            'activated_at'      => now()->subSecond(),
+            'url_key' => '12345',
+            'single_use' => true,
+            'track_visits' => false,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
@@ -250,19 +250,19 @@ class ResolverTest extends TestCase
     public function referer_url_is_stored_if_it_is_enabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.default_url').'/short/12345',
-            'url_key'                        => '12345',
-            'single_use'                     => false,
-            'track_visits'                   => true,
-            'track_ip_address'               => true,
-            'track_operating_system'         => true,
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => true,
+            'track_ip_address' => true,
+            'track_operating_system' => true,
             'track_operating_system_version' => true,
-            'track_browser'                  => true,
-            'track_browser_version'          => true,
-            'track_referer_url'              => true,
-            'track_device_type'              => true,
-            'activated_at'                   => now()->subSecond(),
+            'track_browser' => true,
+            'track_browser_version' => true,
+            'track_referer_url' => true,
+            'track_device_type' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
@@ -282,13 +282,13 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
 
         $this->assertDatabaseHas('short_url_visits', [
-            'short_url_id'             => $shortURL->id,
-            'ip_address'               => $request->ip(),
-            'operating_system'         => 'Ubuntu',
+            'short_url_id' => $shortURL->id,
+            'ip_address' => $request->ip(),
+            'operating_system' => 'Ubuntu',
             'operating_system_version' => '19.10',
-            'browser'                  => 'Firefox',
-            'browser_version'          => 0,
-            'referer_url'              => 'https://google.com',
+            'browser' => 'Firefox',
+            'browser_version' => 0,
+            'referer_url' => 'https://google.com',
         ]);
     }
 
@@ -296,19 +296,19 @@ class ResolverTest extends TestCase
     public function device_type_is_stored_if_it_is_enabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.default_url').'/short/12345',
-            'url_key'                        => '12345',
-            'single_use'                     => false,
-            'track_visits'                   => true,
-            'track_ip_address'               => true,
-            'track_operating_system'         => true,
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => true,
+            'track_ip_address' => true,
+            'track_operating_system' => true,
             'track_operating_system_version' => true,
-            'track_browser'                  => true,
-            'track_browser_version'          => true,
-            'track_referer_url'              => true,
-            'track_device_type'              => true,
-            'activated_at'                   => now()->subSecond(),
+            'track_browser' => true,
+            'track_browser_version' => true,
+            'track_referer_url' => true,
+            'track_device_type' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
@@ -330,14 +330,14 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
 
         $this->assertDatabaseHas('short_url_visits', [
-            'short_url_id'             => $shortURL->id,
-            'ip_address'               => $request->ip(),
-            'operating_system'         => 'Ubuntu',
+            'short_url_id' => $shortURL->id,
+            'ip_address' => $request->ip(),
+            'operating_system' => 'Ubuntu',
             'operating_system_version' => '19.10',
-            'browser'                  => 'Firefox',
-            'browser_version'          => '71.0',
-            'referer_url'              => 'https://google.com',
-            'device_type'              => 'desktop',
+            'browser' => 'Firefox',
+            'browser_version' => '71.0',
+            'referer_url' => 'https://google.com',
+            'device_type' => 'desktop',
         ]);
     }
 
@@ -345,19 +345,19 @@ class ResolverTest extends TestCase
     public function fields_are_not_recorded_if_all_are_true_but_track_visits_is_disabled()
     {
         $shortURL = ShortURL::create([
-            'destination_url'                => 'https://google.com',
-            'default_short_url'              => config('short-url.default_url').'/short/12345',
-            'url_key'                        => '12345',
-            'single_use'                     => false,
-            'track_visits'                   => false,
-            'track_ip_address'               => true,
-            'track_operating_system'         => true,
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => false,
+            'track_ip_address' => true,
+            'track_operating_system' => true,
             'track_operating_system_version' => true,
-            'track_browser'                  => true,
-            'track_browser_version'          => true,
-            'track_referer_url'              => true,
-            'track_device_type'              => true,
-            'activated_at'                   => now()->subSecond(),
+            'track_browser' => true,
+            'track_browser_version' => true,
+            'track_referer_url' => true,
+            'track_device_type' => true,
+            'activated_at' => now()->subSecond(),
         ]);
 
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
@@ -378,14 +378,14 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
 
         $this->assertDatabaseHas('short_url_visits', [
-            'short_url_id'             => $shortURL->id,
-            'ip_address'               => null,
-            'operating_system'         => null,
+            'short_url_id' => $shortURL->id,
+            'ip_address' => null,
+            'operating_system' => null,
             'operating_system_version' => null,
-            'browser'                  => null,
-            'browser_version'          => null,
-            'referer_url'              => null,
-            'device_type'              => null,
+            'browser' => null,
+            'browser_version' => null,
+            'referer_url' => null,
+            'device_type' => null,
         ]);
     }
 }
