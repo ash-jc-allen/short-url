@@ -1,5 +1,9 @@
 # Changelog
 
+**v7.8.1 (released 2023-12-28):**
+- Fixed bug in a database migration tht was using the wrong database connection. [#228](https://github.com/ash-jc-allen/short-url/pull/228)
+- Code style fixes. [#230](https://github.com/ash-jc-allen/short-url/pull/230)
+
 **v7.8.0 (released 2023-11-11):**
 - Added the ability to store custom database fields when creating short URLs. [#225](https://github.com/ash-jc-allen/short-url/pull/225)
 
