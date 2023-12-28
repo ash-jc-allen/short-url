@@ -15,11 +15,11 @@ class ShortURLTest extends TestCase
     public function short_url_can_be_fetched_from_visit(): void
     {
         $shortURL = ShortURL::create([
-            'destination_url'   => 'https://example.com',
+            'destination_url' => 'https://example.com',
             'default_short_url' => 'https://domain.com/12345',
-            'url_key'           => '12345',
-            'single_use'        => true,
-            'track_visits'      => true,
+            'url_key' => '12345',
+            'single_use' => true,
+            'track_visits' => true,
         ]);
 
         /** @var ShortURLVisit $visit */

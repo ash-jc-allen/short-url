@@ -103,7 +103,7 @@ return [
     | method.
     |
     */
-    'enforce_https'         => true,
+    'enforce_https' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ return [
     |       used, a 4 character long key will be created.
     |
     */
-    'key_length'            => 5,
+    'key_length' => 5,
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +135,7 @@ return [
     | generated keys are unique.
     |
     */
-    'key_salt'              => 'AshAllenDesign\ShortURL',
+    'key_salt' => 'AshAllenDesign\ShortURL',
 
     /*
     |--------------------------------------------------------------------------
@@ -147,7 +147,7 @@ return [
     | and cannot contain spaces.
     |
     */
-    'alphabet'              => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+    'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
 
     /*
     |--------------------------------------------------------------------------
@@ -160,17 +160,17 @@ return [
     | be overridden when creating a short URL.
     |
     */
-    'tracking'              => [
+    'tracking' => [
         'default_enabled' => true,
 
         'fields' => [
-            'ip_address'               => true,
-            'operating_system'         => true,
+            'ip_address' => true,
+            'operating_system' => true,
             'operating_system_version' => true,
-            'browser'                  => true,
-            'browser_version'          => true,
-            'referer_url'              => true,
-            'device_type'              => true,
+            'browser' => true,
+            'browser_version' => true,
+            'referer_url' => true,
+            'device_type' => true,
         ],
     ],
 

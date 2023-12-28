@@ -563,22 +563,22 @@ class Builder
         $this->setOptions();
 
         return [
-            'destination_url'                => $this->destinationUrl,
-            'default_short_url'              => $this->buildDefaultShortUrl(),
-            'url_key'                        => $this->urlKey,
-            'single_use'                     => $this->singleUse,
-            'forward_query_params'           => $this->forwardQueryParams,
-            'track_visits'                   => $this->trackVisits,
-            'redirect_status_code'           => $this->redirectStatusCode,
-            'track_ip_address'               => $this->trackIPAddress,
-            'track_operating_system'         => $this->trackOperatingSystem,
+            'destination_url' => $this->destinationUrl,
+            'default_short_url' => $this->buildDefaultShortUrl(),
+            'url_key' => $this->urlKey,
+            'single_use' => $this->singleUse,
+            'forward_query_params' => $this->forwardQueryParams,
+            'track_visits' => $this->trackVisits,
+            'redirect_status_code' => $this->redirectStatusCode,
+            'track_ip_address' => $this->trackIPAddress,
+            'track_operating_system' => $this->trackOperatingSystem,
             'track_operating_system_version' => $this->trackOperatingSystemVersion,
-            'track_browser'                  => $this->trackBrowser,
-            'track_browser_version'          => $this->trackBrowserVersion,
-            'track_referer_url'              => $this->trackRefererURL,
-            'track_device_type'              => $this->trackDeviceType,
-            'activated_at'                   => $this->activateAt,
-            'deactivated_at'                 => $this->deactivateAt,
+            'track_browser' => $this->trackBrowser,
+            'track_browser_version' => $this->trackBrowserVersion,
+            'track_referer_url' => $this->trackRefererURL,
+            'track_device_type' => $this->trackDeviceType,
+            'activated_at' => $this->activateAt,
+            'deactivated_at' => $this->deactivateAt,
         ];
     }
 

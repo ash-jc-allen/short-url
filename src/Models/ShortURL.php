@@ -109,18 +109,18 @@ class ShortURL extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'single_use'                     => 'boolean',
-        'forward_query_parameters'       => 'boolean',
-        'track_visits'                   => 'boolean',
-        'track_ip_address'               => 'boolean',
-        'track_operating_system'         => 'boolean',
+        'single_use' => 'boolean',
+        'forward_query_parameters' => 'boolean',
+        'track_visits' => 'boolean',
+        'track_ip_address' => 'boolean',
+        'track_operating_system' => 'boolean',
         'track_operating_system_version' => 'boolean',
-        'track_browser'                  => 'boolean',
-        'track_browser_version'          => 'boolean',
-        'track_referer_url'              => 'boolean',
-        'track_device_type'              => 'boolean',
-        'activated_at'                   => 'datetime',
-        'deactivated_at'                 => 'datetime',
+        'track_browser' => 'boolean',
+        'track_browser_version' => 'boolean',
+        'track_referer_url' => 'boolean',
+        'track_device_type' => 'boolean',
+        'activated_at' => 'datetime',
+        'deactivated_at' => 'datetime',
     ];
 
     /**
