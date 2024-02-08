@@ -110,7 +110,7 @@ class ShortURL extends Model
      */
     protected $casts = [
         'single_use' => 'boolean',
-        'forward_query_parameters' => 'boolean',
+        'forward_query_params' => 'boolean',
         'track_visits' => 'boolean',
         'track_ip_address' => 'boolean',
         'track_operating_system' => 'boolean',
