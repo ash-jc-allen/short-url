@@ -1,5 +1,9 @@
 # Changelog
 
+**v7.8.2 (released 2024-02-12):**
+- Fixed a bug in the `ShortURL` model that prevented a boolean field from being cast. [#234](https://github.com/ash-jc-allen/short-url/pull/234)
+- Added missing methods to the `ShortURL` facade's docblock. [#233](https://github.com/ash-jc-allen/short-url/pull/233)
+
 **v7.8.1 (released 2023-12-28):**
 - Fixed bug in a database migration that was using the wrong database connection. [#228](https://github.com/ash-jc-allen/short-url/pull/228)
 - Code style fixes. [#230](https://github.com/ash-jc-allen/short-url/pull/230)
