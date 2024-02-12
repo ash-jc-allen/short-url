@@ -31,4 +31,12 @@ final class CastsTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $shortUrl->created_at);
         $this->assertInstanceOf(Carbon::class, $shortUrl->updated_at);
     }
+
+    /** @test */
+    public function forward_query_params_is_casted_correctly(): void
+    {
+        $shortUrl = ShortURL::factory()->create(['forward_query_params' => 1]);
+
+        $this->assertTrue($shortUrl->forward_query_params);
+    }
 }
