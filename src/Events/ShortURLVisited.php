@@ -27,14 +27,22 @@ class ShortURLVisited
     public $shortURLVisit;
 
     /**
+     * Get user, if authenticated
+     *
+     * @var User
+     */
+    public $user;
+
+    /**
      * Create a new event instance.
      *
      * @param  ShortURL  $shortURL
      * @param  ShortURLVisit  $shortURLVisit
      */
-    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit)
+    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit, $user)
     {
         $this->shortURL = $shortURL;
         $this->shortURLVisit = $shortURLVisit;
+        $this->user = $user;
     }
 }
