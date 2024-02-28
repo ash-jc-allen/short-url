@@ -39,7 +39,7 @@ class ShortURLVisited
      * @param  ShortURL  $shortURL
      * @param  ShortURLVisit  $shortURLVisit
      */
-    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit, $user)
+    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit, ?$user)
     {
         $this->shortURL = $shortURL;
         $this->shortURLVisit = $shortURLVisit;
