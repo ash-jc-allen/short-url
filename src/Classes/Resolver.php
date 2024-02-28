@@ -61,7 +61,7 @@ class Resolver
 
         $visit = $this->recordVisit($request, $shortURL);
 
-        Event::dispatch(new ShortURLVisited($shortURL, $visit));
+        Event::dispatch(new ShortURLVisited($shortURL, $visit, auth()->id()));
 
         return true;
     }
