@@ -4,12 +4,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TrackingEnabledTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function true_is_returned_if_tracking_is_enabled_for_the_short_url()
     {

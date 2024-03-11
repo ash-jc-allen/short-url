@@ -7,7 +7,6 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Jenssegers\Agent\Agent;
@@ -16,8 +15,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ResolverTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid()
     {

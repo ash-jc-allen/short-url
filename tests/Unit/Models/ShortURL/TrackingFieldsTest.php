@@ -4,12 +4,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TrackingFieldsTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function array_is_returned_with_tracked_fields()
     {

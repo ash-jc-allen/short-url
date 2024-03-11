@@ -5,12 +5,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ShortURLVisitFactoryTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function test_that_short_url_visit_model_factory_works_fine(): void
     {

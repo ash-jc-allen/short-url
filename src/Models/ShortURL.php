@@ -46,7 +46,7 @@ class ShortURL extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int,string>
      */
     protected $fillable = [
         'destination_url',

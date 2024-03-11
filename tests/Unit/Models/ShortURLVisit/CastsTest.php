@@ -8,12 +8,9 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 final class CastsTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function carbon_date_objects_are_returned(): void
     {
