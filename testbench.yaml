@@ -1,0 +1,5 @@
+migrations:
+  - database/migrations
+
+workbench:
+  install: false

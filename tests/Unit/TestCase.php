@@ -6,11 +6,13 @@ use AshAllenDesign\ShortURL\Facades\ShortURL;
 use AshAllenDesign\ShortURL\Providers\ShortURLProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
     use LazilyRefreshDatabase;
+    use WithWorkbench;
 
     /**
      * Load package service provider.
@@ -34,44 +36,5 @@ abstract class TestCase extends OrchestraTestCase
         return [
             'ShortURL' => ShortURL::class,
         ];
-    }
-
-    /**
-     * Define environment setup.
-     *
-     * @param  Application  $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-        $app['config']->set('database.default', 'testdb');
-        $app['config']->set('database.connections.testdb', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-        ]);
-
-        $this->migrateDatabase();
-    }
-
-    /**
-     * Include each of the migrations and migrate them to
-     * finish preparing the database for running the
-     * tests.
-     */
-    private function migrateDatabase(): void
-    {
-        include_once __DIR__.'/../../database/migrations/2019_12_22_015115_create_short_urls_table.php';
-        include_once __DIR__.'/../../database/migrations/2019_12_22_015214_create_short_url_visits_table.php';
-        include_once __DIR__.'/../../database/migrations/2020_02_11_224848_update_short_url_table_for_version_two_zero_zero.php';
-        include_once __DIR__.'/../../database/migrations/2020_02_12_008432_update_short_url_visits_table_for_version_two_zero_zero.php';
-        include_once __DIR__.'/../../database/migrations/2020_04_10_224546_update_short_url_table_for_version_three_zero_zero.php';
-        include_once __DIR__.'/../../database/migrations/2020_04_20_009283_update_short_url_table_add_option_to_forward_query_params.php';
-
-        (new \CreateShortUrlsTable)->up();
-        (new \CreateShortUrlVisitsTable)->up();
-        (new \UpdateShortURLTableForVersionTwoZeroZero)->up();
-        (new \UpdateShortURLVisitsTableForVersionTwoZeroZero)->up();
-        (new \UpdateShortURLTableForVersionThreeZeroZero)->up();
-        (new \UpdateShortUrlTableAddOptionToForwardQueryParams)->up();
     }
 }
