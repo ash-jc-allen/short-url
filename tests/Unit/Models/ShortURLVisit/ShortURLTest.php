@@ -5,12 +5,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 class ShortURLTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function short_url_can_be_fetched_from_visit(): void
     {

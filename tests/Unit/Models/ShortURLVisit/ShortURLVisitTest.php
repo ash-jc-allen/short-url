@@ -6,12 +6,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 final class ShortURLVisitTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function connection_can_be_overridden(): void
     {

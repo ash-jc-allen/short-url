@@ -4,12 +4,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ShortURLFactoryTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_that_the_short_url_model_factory_works_fine()
     {
         $shortURL = ShortURL::factory()->create();

@@ -4,12 +4,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 class ShortURLDisableRouteTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('short-url.disable_default_route', true);

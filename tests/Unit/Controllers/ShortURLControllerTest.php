@@ -6,13 +6,10 @@ use AshAllenDesign\ShortURL\Events\ShortURLVisited;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 
 class ShortURLControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function request_is_aborted_with_http_404_if_the_short_url_cannot_be_found()
     {
