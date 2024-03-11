@@ -184,7 +184,7 @@ class ShortURLControllerTest extends TestCase
         $this->get($requestUrl)->assertStatus(301)->assertRedirect($expectedDestinationUrl);
     }
 
-    public function forwardQueryParamsProvider(): array
+    public static function forwardQueryParamsProvider(): array
     {
         return [
             [
