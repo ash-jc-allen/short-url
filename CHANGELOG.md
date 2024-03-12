@@ -1,5 +1,10 @@
 # Changelog
 
+**v7.9.0 (released 2024-03-12):**
+
+- Added support for Laravel 11. [#239](https://github.com/ash-jc-allen/short-url/pull/239)
+- Only add the "utf8mb4_bin" collation if using MySQL. [#241](https://github.com/ash-jc-allen/short-url/pull/241)
+
 **v7.8.2 (released 2024-02-12):**
 - Fixed a bug in the `ShortURL` model that prevented a boolean field from being cast. [#234](https://github.com/ash-jc-allen/short-url/pull/234)
 - Added missing methods to the `ShortURL` facade's docblock. [#233](https://github.com/ash-jc-allen/short-url/pull/233)
