@@ -137,19 +137,19 @@ class Resolver
         }
 
         if ($shortURL->track_operating_system) {
-            $visit->operating_system = $this->agent->platform();
+            $visit->operating_system = $this->agent->platform() ?: null;
         }
 
         if ($shortURL->track_operating_system_version) {
-            $visit->operating_system_version = $this->agent->version($this->agent->platform());
+            $visit->operating_system_version = $this->agent->version($this->agent->platform()) ?: null;
         }
 
         if ($shortURL->track_browser) {
-            $visit->browser = $this->agent->browser();
+            $visit->browser = $this->agent->browser() ?: null;
         }
 
         if ($shortURL->track_browser_version) {
-            $visit->browser_version = $this->agent->version($this->agent->browser());
+            $visit->browser_version = $this->agent->version($this->agent->browser()) ?: null;
         }
 
         if ($shortURL->track_referer_url) {
@@ -165,9 +165,9 @@ class Resolver
      * Guess and return the device type that was used to
      * visit the short URL.
      *
-     * @return string
+     * @return ?string
      */
-    protected function guessDeviceType(): string
+    protected function guessDeviceType(): ?string
     {
         if ($this->agent->isDesktop()) {
             return ShortURLVisit::DEVICE_TYPE_DESKTOP;
@@ -185,6 +185,6 @@ class Resolver
             return ShortURLVisit::DEVICE_TYPE_ROBOT;
         }
 
-        return '';
+        return null;
     }
 }
