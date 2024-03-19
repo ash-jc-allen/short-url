@@ -1,5 +1,9 @@
 # Changelog
 
+**v7.10.0 (released 2024-03-19):**
+
+- Added support for nesbot/carbon 3.0. [#246](https://github.com/ash-jc-allen/short-url/pull/246)
+
 **v7.9.0 (released 2024-03-12):**
 
 - Added support for Laravel 11. [#239](https://github.com/ash-jc-allen/short-url/pull/239)
