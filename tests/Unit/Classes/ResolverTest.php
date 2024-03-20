@@ -284,7 +284,7 @@ class ResolverTest extends TestCase
             'operating_system' => 'Ubuntu',
             'operating_system_version' => '19.10',
             'browser' => 'Firefox',
-            'browser_version' => 0,
+            'browser_version' => null,
             'referer_url' => 'https://google.com',
         ]);
     }
@@ -377,6 +377,46 @@ class ResolverTest extends TestCase
         $this->assertDatabaseHas('short_url_visits', [
             'short_url_id' => $shortURL->id,
             'ip_address' => null,
+            'operating_system' => null,
+            'operating_system_version' => null,
+            'browser' => null,
+            'browser_version' => null,
+            'referer_url' => null,
+            'device_type' => null,
+        ]);
+    }
+
+    /** @test */
+    public function fields_are_set_to_null_if_all_are_true_but_user_agent_headers_are_not_provided()
+    {
+        $shortURL = ShortURL::create([
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => true,
+            'track_ip_address' => true,
+            'track_operating_system' => true,
+            'track_operating_system_version' => true,
+            'track_browser' => true,
+            'track_browser_version' => true,
+            'track_referer_url' => true,
+            'track_device_type' => true,
+            'activated_at' => now()->subSecond(),
+        ]);
+
+        $request = Request::create(config('short-url.default_url').'/short/12345');
+
+        $mock = Mockery::mock(Agent::class)->makePartial();
+        $mock->shouldReceive('isDesktop')->andReturn(false);
+
+        $resolver = new Resolver($mock);
+        $result = $resolver->handleVisit($request, $shortURL);
+        $this->assertTrue($result);
+
+        $this->assertDatabaseHas('short_url_visits', [
+            'short_url_id' => $shortURL->id,
+            'ip_address' => '127.0.0.1',
             'operating_system' => null,
             'operating_system_version' => null,
             'browser' => null,

@@ -13,14 +13,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $short_url_id
- * @property string $ip_address
- * @property string $operating_system
- * @property string $operating_system_version
- * @property string $browser
- * @property string $browser_version
- * @property string $device_type
+ * @property ?string $ip_address
+ * @property ?string $operating_system
+ * @property ?string $operating_system_version
+ * @property ?string $browser
+ * @property ?string $browser_version
+ * @property ?string $referer_url
+ * @property ?string $device_type
  * @property Carbon $visited_at
- * @property string $referer_url
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
