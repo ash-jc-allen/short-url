@@ -6,10 +6,10 @@ use AshAllenDesign\ShortURL\Events\ShortURLVisited;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
+use foroco\BrowserDetection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use foroco\BrowserDetection;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class Resolver
@@ -168,8 +168,7 @@ class Resolver
      * Guess and return the device type that was used to
      * visit the short URL.
      *
-     * @param  BrowserDetection  $agentInfo The user agent information from the browser detection package.
-     *
+     * @param  BrowserDetection  $agentInfo  The user agent information from the browser detection package.
      * @return string
      */
     protected function guessDeviceType($agentInfo): string

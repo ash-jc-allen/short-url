@@ -7,11 +7,11 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use foroco\BrowserDetection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Mockery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use foroco\BrowserDetection;
 
 class ResolverTest extends TestCase
 {
