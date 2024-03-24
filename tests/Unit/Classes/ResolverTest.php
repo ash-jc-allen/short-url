@@ -9,9 +9,9 @@ use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use Jenssegers\Agent\Agent;
 use Mockery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use foroco\BrowserDetection;
 
 class ResolverTest extends TestCase
 {
@@ -141,13 +141,14 @@ class ResolverTest extends TestCase
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
-        $mock->shouldReceive('version')->once()->withArgs(['Firefox'])->andReturn('71.0');
-        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(false);
-        $mock->shouldReceive('isMobile')->once()->withNoArgs()->andReturn(true);
+        $mock = Mockery::mock(BrowserDetection::class)->makePartial();
+        $mock->shouldReceive('getAll')->once()->andReturn([
+            'os_name' => 'Ubuntu',
+            'os_version' => '19.10',
+            'browser_name' => 'Firefox',
+            'browser_version' => '71.0',
+            'os_type' => 'mobile',
+        ]);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -194,13 +195,14 @@ class ResolverTest extends TestCase
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->once()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
-        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(false);
-        $mock->shouldReceive('isMobile')->once()->withNoArgs()->andReturn(false);
-        $mock->shouldReceive('isTablet')->once()->withNoArgs()->andReturn(true);
+        $mock = Mockery::mock(BrowserDetection::class)->makePartial();
+        $mock->shouldReceive('getAll')->once()->andReturn([
+            'os_name' => 'Ubuntu',
+            'os_version' => '19.10',
+            'browser_name' => 'Firefox',
+            'browser_version' => '71.0',
+            'os_type' => 'mixed',
+        ]);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -229,11 +231,9 @@ class ResolverTest extends TestCase
             'track_visits' => false,
             'activated_at' => now()->subSecond(),
         ]);
-
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
         $resolver = new Resolver();
-
         // Visit the URL for the first time. This should be allowed.
         $resolver->handleVisit($request, $shortURL);
 
@@ -269,10 +269,14 @@ class ResolverTest extends TestCase
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
+        $mock = Mockery::mock(BrowserDetection::class)->makePartial();
+        $mock->shouldReceive('getAll')->once()->andReturn([
+            'os_name' => 'Ubuntu',
+            'os_version' => '19.10',
+            'browser_name' => 'Firefox',
+            'browser_version' => false,
+            'os_type' => 'mixed',
+        ]);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -311,16 +315,17 @@ class ResolverTest extends TestCase
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
         ]);
-
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
-        $mock->shouldReceive('version')->once()->withArgs(['Firefox'])->andReturn('71.0');
-        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(true);
+        $mock = Mockery::mock(BrowserDetection::class)->makePartial();
+        $mock->shouldReceive('getAll')->once()->andReturn([
+            'os_name' => 'Ubuntu',
+            'os_version' => '19.10',
+            'browser_name' => 'Firefox',
+            'browser_version' => '71.0',
+            'os_type' => 'desktop',
+        ]);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -364,11 +369,8 @@ class ResolverTest extends TestCase
         // Mock the Agent class so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->never();
-        $mock->shouldReceive('browser')->never();
-        $mock->shouldReceive('version')->never();
-        $mock->shouldReceive('isDesktop')->never();
+        $mock = Mockery::mock(BrowserDetection::class)->makePartial();
+        $mock->shouldReceive('getAll')->never();
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);

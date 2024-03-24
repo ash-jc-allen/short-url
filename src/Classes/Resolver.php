@@ -8,7 +8,9 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
-use Jenssegers\Agent\Agent;
+use Illuminate\Support\Str;
+use foroco\BrowserDetection;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class Resolver
 {
@@ -16,7 +18,7 @@ class Resolver
      * A class that can be used to try and detect the
      * browser and operating system of the visitor.
      *
-     * @var Agent
+     * @var BrowserDetection
      */
     private $agent;
 
@@ -26,18 +28,18 @@ class Resolver
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Agent|null  $agent
+     * @param  BrowserDetection|null  $agent
      * @param  Validation|null  $validation
      *
      * @throws ValidationException
      */
-    public function __construct(Agent $agent = null, Validation $validation = null)
+    public function __construct(BrowserDetection $agent = null, Validation $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
         }
 
-        $this->agent = $agent ?? new Agent();
+        $this->agent = $agent ?? new BrowserDetection();
 
         $validation->validateConfig();
     }
@@ -132,24 +134,25 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
+        $agentInfo = $this->agent->getAll($request->headers->get('User-Agent'));
         if ($shortURL->track_ip_address) {
             $visit->ip_address = $request->ip();
         }
 
         if ($shortURL->track_operating_system) {
-            $visit->operating_system = $this->agent->platform();
+            $visit->operating_system = $agentInfo['os_name'];
         }
 
         if ($shortURL->track_operating_system_version) {
-            $visit->operating_system_version = $this->agent->version($this->agent->platform());
+            $visit->operating_system_version = $agentInfo['os_version'];
         }
 
         if ($shortURL->track_browser) {
-            $visit->browser = $this->agent->browser();
+            $visit->browser = $agentInfo['browser_name'];
         }
 
         if ($shortURL->track_browser_version) {
-            $visit->browser_version = $this->agent->version($this->agent->browser());
+            $visit->browser_version = $agentInfo['browser_version'];
         }
 
         if ($shortURL->track_referer_url) {
@@ -157,7 +160,7 @@ class Resolver
         }
 
         if ($shortURL->track_device_type) {
-            $visit->device_type = $this->guessDeviceType();
+            $visit->device_type = $this->guessDeviceType($agentInfo);
         }
     }
 
@@ -165,26 +168,28 @@ class Resolver
      * Guess and return the device type that was used to
      * visit the short URL.
      *
+     * @param  BrowserDetection  $agentInfo The user agent information from the browser detection package.
+     *
      * @return string
      */
-    protected function guessDeviceType(): string
+    protected function guessDeviceType($agentInfo): string
     {
-        if ($this->agent->isDesktop()) {
-            return ShortURLVisit::DEVICE_TYPE_DESKTOP;
-        }
+        $CrawlerDetect = new CrawlerDetect;
 
-        if ($this->agent->isMobile()) {
-            return ShortURLVisit::DEVICE_TYPE_MOBILE;
-        }
-
-        if ($this->agent->isTablet()) {
-            return ShortURLVisit::DEVICE_TYPE_TABLET;
-        }
-
-        if ($this->agent->isRobot()) {
+        // first as it is seen as more reliable.
+        if ($CrawlerDetect->isCrawler()) {
             return ShortURLVisit::DEVICE_TYPE_ROBOT;
         }
 
-        return '';
+        switch (Str::lower($agentInfo['os_type'])) {
+            case 'desktop':
+                return ShortURLVisit::DEVICE_TYPE_DESKTOP;
+            case 'mobile':
+                return ShortURLVisit::DEVICE_TYPE_MOBILE;
+            case 'mixed':
+                return ShortURLVisit::DEVICE_TYPE_TABLET;
+            default:
+                return '';
+        }
     }
 }
