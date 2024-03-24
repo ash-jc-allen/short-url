@@ -8,7 +8,8 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
-use Jenssegers\Agent\Agent;
+use WhichBrowser\Resolver as WhichBrowserResolver;
+use WhichBrowser\Parser;
 
 class Resolver
 {
@@ -16,7 +17,7 @@ class Resolver
      * A class that can be used to try and detect the
      * browser and operating system of the visitor.
      *
-     * @var Agent
+     * @var Parser
      */
     private $agent;
 
@@ -26,18 +27,18 @@ class Resolver
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Agent|null  $agent
+     * @param  Parser|null  $agent
      * @param  Validation|null  $validation
      *
      * @throws ValidationException
      */
-    public function __construct(Agent $agent = null, Validation $validation = null)
+    public function __construct(Parser $agent = null, Validation $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
         }
 
-        $this->agent = $agent ?? new Agent();
+        $this->agent = $agent ?? new Parser();
 
         $validation->validateConfig();
     }
@@ -132,24 +133,25 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
+        $userAgent = $this->agent->analyse(array_map(fn($x) => $x[0], $request->headers->all()));
         if ($shortURL->track_ip_address) {
             $visit->ip_address = $request->ip();
         }
 
         if ($shortURL->track_operating_system) {
-            $visit->operating_system = $this->agent->platform();
+            $visit->operating_system = $userAgent->os->name;
         }
 
         if ($shortURL->track_operating_system_version) {
-            $visit->operating_system_version = $this->agent->version($this->agent->platform());
+            $visit->operating_system_version = $userAgent->os->version->value;
         }
 
         if ($shortURL->track_browser) {
-            $visit->browser = $this->agent->browser();
+            $visit->browser = $userAgent->browser->name;
         }
 
         if ($shortURL->track_browser_version) {
-            $visit->browser_version = $this->agent->version($this->agent->browser());
+            $visit->browser_version = $userAgent->browser->version->value;
         }
 
         if ($shortURL->track_referer_url) {
@@ -157,7 +159,7 @@ class Resolver
         }
 
         if ($shortURL->track_device_type) {
-            $visit->device_type = $this->guessDeviceType();
+            $visit->device_type = $this->guessDeviceType($userAgent);
         }
     }
 
@@ -165,26 +167,27 @@ class Resolver
      * Guess and return the device type that was used to
      * visit the short URL.
      *
+     * @param  WhichBrowserResolver  $userAgent
+     *
      * @return string
      */
-    protected function guessDeviceType(): string
+    protected function guessDeviceType(WhichBrowserResolver $userAgent): string
     {
-        if ($this->agent->isDesktop()) {
-            return ShortURLVisit::DEVICE_TYPE_DESKTOP;
+        switch ($userAgent->device->type) {
+            case 'bot':
+                return ShortURLVisit::DEVICE_TYPE_BOT;
+            case 'desktop':
+                return ShortURLVisit::DEVICE_TYPE_DESKTOP;
+            case 'tablet':
+                return ShortURLVisit::DEVICE_TYPE_TABLET;
+            case 'mobile':
+                return ShortURLVisit::DEVICE_TYPE_MOBILE;
+            default:
+                // If the device is mobile, but set to a more specific device type (e.g. pda), then we should set it to mobile.
+                if ($userAgent->isMobile()) {
+                    return ShortURLVisit::DEVICE_TYPE_MOBILE;
+                }
+                return '';
         }
-
-        if ($this->agent->isMobile()) {
-            return ShortURLVisit::DEVICE_TYPE_MOBILE;
-        }
-
-        if ($this->agent->isTablet()) {
-            return ShortURLVisit::DEVICE_TYPE_TABLET;
-        }
-
-        if ($this->agent->isRobot()) {
-            return ShortURLVisit::DEVICE_TYPE_ROBOT;
-        }
-
-        return '';
     }
 }

@@ -9,9 +9,14 @@ use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use Jenssegers\Agent\Agent;
 use Mockery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use WhichBrowser\Model\Browser;
+use WhichBrowser\Model\Device;
+use WhichBrowser\Model\OS;
+use WhichBrowser\Parser;
+use WhichBrowser\Resolver as WhichBrowserResolver;
+use WhichBrowser\Model\Version;
 
 class ResolverTest extends TestCase
 {
@@ -138,16 +143,27 @@ class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
-        // Mock the Agent class so that we don't have
+        // Mock the WhichBrowser classes so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
-        $mock->shouldReceive('version')->once()->withArgs(['Firefox'])->andReturn('71.0');
-        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(false);
-        $mock->shouldReceive('isMobile')->once()->withNoArgs()->andReturn(true);
+        $mockOSVersion = Mockery::mock(Version::class)->makePartial();
+        $mockOSVersion->value = '19.10';
+        $mockOS = Mockery::mock(OS::class)->makePartial();
+        $mockOS->name = 'Ubuntu';
+        $mockOS->version = $mockOSVersion;
+        $mockBrowserVersion = Mockery::mock(Version::class)->makePartial();
+        $mockBrowserVersion->value = '71.0';
+        $mockBrowser = Mockery::mock(Browser::class)->makePartial();
+        $mockBrowser->name = 'Firefox';
+        $mockBrowser->version = $mockBrowserVersion;
+        $mockDevice = Mockery::mock(Device::class)->makePartial();
+        $mockDevice->type = 'mobile';
+        $mockResolver = Mockery::mock(WhichBrowserResolver::class)->makePartial();
+        $mockResolver->os = $mockOS;
+        $mockResolver->browser = $mockBrowser;
+        $mockResolver->device = $mockDevice;
+        $mock = Mockery::mock(Parser::class)->makePartial();
+        $mock->shouldReceive('analyse')->once()->andReturn($mockResolver);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -191,16 +207,27 @@ class ResolverTest extends TestCase
             'HTTP_referer' => 'https://google.com',
         ]);
 
-        // Mock the Agent class so that we don't have
+        // Mock the WhichBrowser classes so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->once()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
-        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(false);
-        $mock->shouldReceive('isMobile')->once()->withNoArgs()->andReturn(false);
-        $mock->shouldReceive('isTablet')->once()->withNoArgs()->andReturn(true);
+        $mockOSVersion = Mockery::mock(Version::class)->makePartial();
+        $mockOSVersion->value = '19.10';
+        $mockOS = Mockery::mock(OS::class)->makePartial();
+        $mockOS->name = 'Ubuntu';
+        $mockOS->version = $mockOSVersion;
+        $mockBrowserVersion = Mockery::mock(Version::class)->makePartial();
+        $mockBrowserVersion->value = '71.0';
+        $mockBrowser = Mockery::mock(Browser::class)->makePartial();
+        $mockBrowser->name = 'Firefox';
+        $mockBrowser->version = $mockBrowserVersion;
+        $mockDevice = Mockery::mock(Device::class)->makePartial();
+        $mockDevice->type = 'tablet';
+        $mockResolver = Mockery::mock(WhichBrowserResolver::class)->makePartial();
+        $mockResolver->os = $mockOS;
+        $mockResolver->browser = $mockBrowser;
+        $mockResolver->device = $mockDevice;
+        $mock = Mockery::mock(Parser::class)->makePartial();
+        $mock->shouldReceive('analyse')->once()->andReturn($mockResolver);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -266,13 +293,27 @@ class ResolverTest extends TestCase
             'HTTP_referer' => 'https://google.com',
         ]);
 
-        // Mock the Agent class so that we don't have
+        // Mock the WhichBrowser classes so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
+        $mockOSVersion = Mockery::mock(Version::class)->makePartial();
+        $mockOSVersion->value = '19.10';
+        $mockOS = Mockery::mock(OS::class)->makePartial();
+        $mockOS->name = 'Ubuntu';
+        $mockOS->version = $mockOSVersion;
+        $mockBrowserVersion = Mockery::mock(Version::class)->makePartial();
+        $mockBrowserVersion->value = false;
+        $mockBrowser = Mockery::mock(Browser::class)->makePartial();
+        $mockBrowser->name = 'Firefox';
+        $mockBrowser->version = $mockBrowserVersion;
+        $mockDevice = Mockery::mock(Device::class)->makePartial();
+        $mockDevice->type = 'mobile';
+        $mockResolver = Mockery::mock(WhichBrowserResolver::class)->makePartial();
+        $mockResolver->os = $mockOS;
+        $mockResolver->browser = $mockBrowser;
+        $mockResolver->device = $mockDevice;
+        $mock = Mockery::mock(Parser::class)->makePartial();
+        $mock->shouldReceive('analyse')->once()->andReturn($mockResolver);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -312,15 +353,27 @@ class ResolverTest extends TestCase
             'HTTP_referer' => 'https://google.com',
         ]);
 
-        // Mock the Agent class so that we don't have
+        // Mock the WhichBrowser classes so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->twice()->withNoArgs()->andReturn('Ubuntu');
-        $mock->shouldReceive('browser')->twice()->withNoArgs()->andReturn('Firefox');
-        $mock->shouldReceive('version')->once()->withArgs(['Ubuntu'])->andReturn('19.10');
-        $mock->shouldReceive('version')->once()->withArgs(['Firefox'])->andReturn('71.0');
-        $mock->shouldReceive('isDesktop')->once()->withNoArgs()->andReturn(true);
+        $mockOSVersion = Mockery::mock(Version::class)->makePartial();
+        $mockOSVersion->value = '19.10';
+        $mockOS = Mockery::mock(OS::class)->makePartial();
+        $mockOS->name = 'Ubuntu';
+        $mockOS->version = $mockOSVersion;
+        $mockBrowserVersion = Mockery::mock(Version::class)->makePartial();
+        $mockBrowserVersion->value = '71.0';
+        $mockBrowser = Mockery::mock(Browser::class)->makePartial();
+        $mockBrowser->name = 'Firefox';
+        $mockBrowser->version = $mockBrowserVersion;
+        $mockDevice = Mockery::mock(Device::class)->makePartial();
+        $mockDevice->type = 'desktop';
+        $mockResolver = Mockery::mock(WhichBrowserResolver::class)->makePartial();
+        $mockResolver->os = $mockOS;
+        $mockResolver->browser = $mockBrowser;
+        $mockResolver->device = $mockDevice;
+        $mock = Mockery::mock(Parser::class)->makePartial();
+        $mock->shouldReceive('analyse')->once()->andReturn($mockResolver);
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
@@ -361,14 +414,11 @@ class ResolverTest extends TestCase
             'HTTP_referer' => 'https://google.com',
         ]);
 
-        // Mock the Agent class so that we don't have
+        // Mock the Parser class so that we don't have
         // to mock the User-Agent header in the
         // request.
-        $mock = Mockery::mock(Agent::class)->makePartial();
-        $mock->shouldReceive('platform')->never();
-        $mock->shouldReceive('browser')->never();
-        $mock->shouldReceive('version')->never();
-        $mock->shouldReceive('isDesktop')->never();
+        $mock = Mockery::mock(Parser::class)->makePartial();
+        $mock->shouldReceive('analyse')->never();
 
         $resolver = new Resolver($mock);
         $result = $resolver->handleVisit($request, $shortURL);
