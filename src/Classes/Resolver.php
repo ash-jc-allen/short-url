@@ -8,8 +8,8 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
-use WhichBrowser\Resolver as WhichBrowserResolver;
 use WhichBrowser\Parser;
+use WhichBrowser\Resolver as WhichBrowserResolver;
 
 class Resolver
 {
@@ -133,7 +133,7 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
-        $userAgent = $this->agent->analyse(array_map(fn($x) => $x[0], $request->headers->all()));
+        $userAgent = $this->agent->analyse(array_map(fn ($x) => $x[0], $request->headers->all()));
         if ($shortURL->track_ip_address) {
             $visit->ip_address = $request->ip();
         }
@@ -168,7 +168,6 @@ class Resolver
      * visit the short URL.
      *
      * @param  WhichBrowserResolver  $userAgent
-     *
      * @return string
      */
     protected function guessDeviceType(WhichBrowserResolver $userAgent): string
@@ -187,6 +186,7 @@ class Resolver
                 if ($userAgent->isMobile()) {
                     return ShortURLVisit::DEVICE_TYPE_MOBILE;
                 }
+
                 return '';
         }
     }

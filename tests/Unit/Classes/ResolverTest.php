@@ -14,9 +14,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WhichBrowser\Model\Browser;
 use WhichBrowser\Model\Device;
 use WhichBrowser\Model\OS;
+use WhichBrowser\Model\Version;
 use WhichBrowser\Parser;
 use WhichBrowser\Resolver as WhichBrowserResolver;
-use WhichBrowser\Model\Version;
 
 class ResolverTest extends TestCase
 {
