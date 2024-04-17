@@ -1,13 +1,13 @@
 {
-  "name": "c-delouvencourt/short-url",
+  "name": "ashallendesign/short-url",
   "description": "A Laravel package for creating shortened URLs for your web apps.",
   "type": "library",
-  "homepage": "https://github.com/c-delouvencourt/short-url",
+  "homepage": "https://github.com/ash-jc-allen/short-url",
   "license": "MIT",
   "authors": [
     {
-      "name": "Clément de Louvencourt",
-      "email": "clement@meilleursbiens.com"
+      "name": "Ash Allen",
+      "email": "mail@ashallendesign.co.uk"
     }
   ],
   "keywords": [
