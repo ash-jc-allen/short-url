@@ -4,6 +4,7 @@
   "type": "library",
   "homepage": "https://github.com/c-delouvencourt/short-url",
   "license": "MIT",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "Ash Allen",
