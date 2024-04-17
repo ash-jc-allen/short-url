@@ -590,6 +590,44 @@ following option in the config:
 'validate_config' => true,
 ``` 
 
+#### Custom Tables and Models
+
+By default, the package will use the `short_urls` and `short_url_visits` tables and the `ShortURL` and `ShortURLVisit` models. However, you may want to use your own custom tables and models.
+
+To do this, you can set the connection name using the `urls_model`, `urls_table`, `visits_model` and `visits_table`' config value in the `config/short-url.php` file like so:
+
+```
+'urls_model' => \AshAllenDesign\ShortURL\Models\ShortURL::class,
+'urls_table' => 'short_urls',
+
+'visits_model' => \AshAllenDesign\ShortURL\Models\ShortURLVisit::class,
+'visits_table' => 'short_url_visits',
+```
+
+And then create your own models that extend the package's models:
+
+```php
+namespace App\Models;
+
+use AshAllenDesign\ShortURL\Models\ShortURL as ShortURLModel;
+
+class ShortURL extends ShortURLModel
+{
+    // Your custom code here.
+}
+```
+
+```php
+namespace App\Models;
+
+use AshAllenDesign\ShortURL\Models\ShortURLVisit as ShortURLVisitModel;
+
+class ShortURLVisit extends ShortURLVisitModel
+{
+    // Your custom code here.
+}
+```
+
 #### Custom Database Connection
 
 By default, Short URL will use your application's default database connection. But there may be times that you'd like to use a different connection. For example, you might be building a multi-tenant application that uses a separate connection for each tenant, and you may want to store the short URLs in a central database.

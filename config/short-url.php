@@ -39,6 +39,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Models
+    |--------------------------------------------------------------------------
+    |
+    | Define the models that are used by this package. If you have
+    | overridden the models, you can specify them here.
+    |
+    */
+    'urls_model' => \AshAllenDesign\ShortURL\Models\ShortURL::class,
+    'urls_table' => 'short_urls',
+
+    'visits_model' => \AshAllenDesign\ShortURL\Models\ShortURLVisit::class,
+    'visits_table' => 'short_url_visits',
+
+    /*
+    |--------------------------------------------------------------------------
     | Eloquent Factories
     |--------------------------------------------------------------------------
     |

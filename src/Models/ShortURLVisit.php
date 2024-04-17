@@ -41,7 +41,7 @@ class ShortURLVisit extends Model
      *
      * @var string
      */
-    protected $table = 'short_url_visits';
+    protected $table;
 
     /**
      * The attributes that are mass assignable.
@@ -91,6 +91,10 @@ class ShortURLVisit extends Model
         if (config('short-url.connection')) {
             $this->setConnection(config('short-url.connection'));
         }
+
+        if(config('short-url.visits_table')) {
+            $this->table = config('short-url.visits_table');
+        }
     }
 
     /**
@@ -112,6 +116,6 @@ class ShortURLVisit extends Model
      */
     public function shortURL(): BelongsTo
     {
-        return $this->belongsTo(ShortURL::class, 'short_url_id');
+        return $this->belongsTo(config('urls_model'), 'short_url_id');
     }
 }
