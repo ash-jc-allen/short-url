@@ -3,8 +3,10 @@
 namespace AshAllenDesign\ShortURL\Providers;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
+use AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver;
 use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
+use AshAllenDesign\ShortURL\Interfaces\UserAgentDriver;
 use Illuminate\Support\ServiceProvider;
 
 class ShortURLProvider extends ServiceProvider
@@ -48,5 +50,9 @@ class ShortURLProvider extends ServiceProvider
         if (config('short-url') && config('short-url.validate_config')) {
             (new Validation())->validateConfig();
         }
+
+        // TODO Rename the interface.
+        // TODO Make the driver configurable.
+        $this->app->bind(UserAgentDriver::class, ParserPhpDriver::class);
     }
 }
