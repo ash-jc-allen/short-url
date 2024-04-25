@@ -2,11 +2,11 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ValidationTest extends TestCase
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ShortURLVisitTest extends TestCase
 {
