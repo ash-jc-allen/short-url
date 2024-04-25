@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Events;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
