@@ -4,6 +4,7 @@ namespace AshAllenDesign\ShortURL\Models\Factories;
 
 use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
+use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,7 +16,7 @@ class ShortURLFactory extends Factory
 
     public function definition(): array
     {
-        $urlKey = (new KeyGenerator())->generateRandom();
+        $urlKey = (new KeyGenerator(new Hashids()))->generateRandom();
 
         return [
             'destination_url' => $this->faker->url(),

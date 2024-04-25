@@ -179,7 +179,7 @@ class Builder
      *
      * @throws ValidationException
      */
-    public function __construct(Validation $validation = null)
+    public function __construct(UrlKeyGenerator $urlKeyGenerator, Validation $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
@@ -187,7 +187,7 @@ class Builder
 
         $validation->validateConfig();
 
-        $this->keyGenerator = app(UrlKeyGenerator::class);
+        $this->keyGenerator = $urlKeyGenerator;
     }
 
     /**

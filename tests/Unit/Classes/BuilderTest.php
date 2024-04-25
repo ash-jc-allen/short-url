@@ -3,10 +3,12 @@
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
+use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
 use ShortURL as ShortURLAlias;
 
@@ -28,7 +30,7 @@ class BuilderTest extends TestCase
 
         Config::set('short-url.key_length', 'INVALID');
 
-        new Builder();
+        app(Builder::class);
     }
 
     /** @test */
@@ -37,7 +39,7 @@ class BuilderTest extends TestCase
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The destination URL must begin with http:// or https://');
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $builder->destinationUrl('INVALID');
     }
 
@@ -47,14 +49,14 @@ class BuilderTest extends TestCase
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('No destination URL has been set.');
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $builder->make();
     }
 
     /** @test */
     public function destination_url_is_changed_to_https_if_secure_flag_has_been_set()
     {
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure()->make();
         $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
@@ -62,7 +64,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function destination_url_is_not_changed_to_https_if_secure_flag_has_been_set_to_false()
     {
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure(false)->make();
         $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }
@@ -71,7 +73,7 @@ class BuilderTest extends TestCase
     public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_true_from_the_config()
     {
         Config::set('short-url.enforce_https', true);
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
         $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
@@ -80,7 +82,7 @@ class BuilderTest extends TestCase
     public function destination_url_is_not_changed_to_https_if_enforce_https_flag_is_set_to_false_from_the_config()
     {
         Config::set('short-url.enforce_https', false);
-        $builder = new Builder();
+        $builder = new Builder(new KeyGenerator(new Hashids()));
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
         $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }
@@ -89,7 +91,7 @@ class BuilderTest extends TestCase
     public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url()
     {
         Config::set('short-url.enforce_https', false);
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure()->make();
         $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
@@ -99,7 +101,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.forward_query_params', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
         $this->assertTrue($shortUrl->forward_query_params);
 
@@ -114,7 +116,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.forward_query_params', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->forwardQueryParams(false)->make();
         $this->assertFalse($shortUrl->forward_query_params);
 
@@ -129,7 +131,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.default_enabled', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
         $this->assertTrue($shortUrl->track_visits);
 
@@ -144,7 +146,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.default_enabled', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackVisits(false)->make();
         $this->assertFalse($shortUrl->track_visits);
 
@@ -159,7 +161,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.ip_address', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackIPAddress(false)->make();
         $this->assertFalse($shortUrl->track_ip_address);
 
@@ -174,7 +176,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.browser', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackBrowser(false)->make();
         $this->assertFalse($shortUrl->track_browser);
 
@@ -189,7 +191,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.browser_version', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackBrowserVersion(false)->make();
         $this->assertFalse($shortUrl->track_browser_version);
 
@@ -204,7 +206,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.operating_system', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackOperatingSystem(false)->make();
         $this->assertFalse($shortUrl->track_operating_system);
 
@@ -219,7 +221,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.operating_system_version', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackOperatingSystemVersion(false)->make();
         $this->assertFalse($shortUrl->track_operating_system_version);
 
@@ -234,7 +236,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.referer_url', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackRefererURL(false)->make();
         $this->assertFalse($shortUrl->track_referer_url);
 
@@ -249,7 +251,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.tracking.fields.device_type', true);
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->trackDeviceType(false)->make();
         $this->assertFalse($shortUrl->track_device_type);
 
@@ -273,14 +275,14 @@ class BuilderTest extends TestCase
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('A short URL with this key already exists.');
 
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $builder->destinationUrl('https://domain.com')->urlKey('urlkey123')->make();
     }
 
     /** @test */
     public function explicitly_defined_url_key_can_be_used_if_it_does_not_exist_in_the_db()
     {
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $builder->destinationUrl('https://domain.com')->urlKey('urlkey123')->make();
 
         $this->assertDatabaseHas('short_urls', ['url_key' => 'urlkey123']);
@@ -289,7 +291,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function random_url_key_is_generated_if_one_is_not_explicitly_defined()
     {
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortURL = $builder->destinationUrl('https://domain.com')->make();
 
         $this->assertNotNull($shortURL->url_key);
@@ -299,7 +301,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_and_stored_in_the_database()
     {
-        $builder = new Builder();
+        $builder = app(Builder::class);
         $shortURL = $builder->destinationUrl('http://domain.com')
             ->urlKey('customKey')
             ->secure()
@@ -535,7 +537,7 @@ class BuilderTest extends TestCase
      */
     public function data_can_be_set_on_the_builder_using_when(bool $flag, string $destination): void
     {
-        $shortUrl = (new Builder())
+        $shortUrl = (app(Builder::class))
             ->when(
                 $flag,
                 fn (Builder $builder): Builder => $builder->destinationUrl('https://domain.com'),
@@ -549,7 +551,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function data_can_be_overridden_on_model_using_make_callback(): void
     {
-        $shortUrl = (new Builder())
+        $shortUrl = (app(Builder::class))
             ->destinationUrl('https://foo.com')
             ->beforeCreate(function (ShortURL $shortURL) {
                 $shortURL->destination_url = 'https://bar.com';
@@ -564,7 +566,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.default_url', null);
 
-        $shortUrl = (new Builder())
+        $shortUrl = (app(Builder::class))
             ->destinationUrl('https://domain.com')
             ->urlKey('abc123')
             ->make();
@@ -575,7 +577,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_with_a_custom_integer_seed(): void
     {
-        $shortUrlOne = (new Builder())
+        $shortUrlOne = (app(Builder::class))
             ->destinationUrl('https://domain.com')
             ->generateKeyUsing(123)
             ->make();
@@ -586,7 +588,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_using_the_url_key_if_the_key_and_seeder_are_both_set(): void
     {
-        $shortUrl = (new Builder())
+        $shortUrl = (app(Builder::class))
             ->destinationUrl('https://domain.com')
             ->generateKeyUsing(111111)
             ->urlKey('abc123')
