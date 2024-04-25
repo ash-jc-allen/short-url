@@ -3,6 +3,8 @@
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
 use AshAllenDesign\ShortURL\Classes\Resolver;
+use AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver;
+use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
@@ -91,7 +93,7 @@ class ResolverTest extends TestCase
 
         Config::set('short-url.key_length', 'INVALID');
 
-        new Resolver();
+        app(Resolver::class);
     }
 
     /** @test */
@@ -111,7 +113,7 @@ class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $resolver->handleVisit($request, $shortURL);
     }
 
@@ -129,7 +131,7 @@ class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
 
         $this->assertTrue($result);
@@ -151,7 +153,7 @@ class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
     }
@@ -170,7 +172,7 @@ class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
-        $resolver = new Resolver();
+        $resolver = new Resolver(new ParserPhpDriver(), new Validation());
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
@@ -215,7 +217,7 @@ class ResolverTest extends TestCase
             ]
         );
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
@@ -253,7 +255,7 @@ class ResolverTest extends TestCase
             ]
         );
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
@@ -295,7 +297,7 @@ class ResolverTest extends TestCase
             ]
         );
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
@@ -341,7 +343,7 @@ class ResolverTest extends TestCase
             ]
         );
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
@@ -372,7 +374,7 @@ class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345');
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
 
         // Visit the URL for the first time. This should be allowed.
         $resolver->handleVisit($request, $shortURL);
@@ -407,7 +409,7 @@ class ResolverTest extends TestCase
             'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0],
         ]);
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 
@@ -443,7 +445,7 @@ class ResolverTest extends TestCase
             'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0],
         ]);
 
-        $resolver = new Resolver();
+        $resolver = app(Resolver::class);
         $result = $resolver->handleVisit($request, $shortURL);
         $this->assertTrue($result);
 

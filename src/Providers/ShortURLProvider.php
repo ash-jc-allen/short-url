@@ -28,6 +28,7 @@ class ShortURLProvider extends ServiceProvider
 
         $this->app->bind('short-url.builder', function (Application $app): Builder {
             return new Builder(
+                validation: $app->make(Validation::class),
                 urlKeyGenerator: $app->make(UrlKeyGenerator::class),
             );
         });

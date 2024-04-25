@@ -170,21 +170,10 @@ class Builder
     protected ?Closure $beforeCreateCallback = null;
 
     /**
-     * Builder constructor.
-     *
-     * When constructing this class, ensure that the
-     * config variables are validated.
-     *
-     * @param  Validation|null  $validation
-     *
      * @throws ValidationException
      */
-    public function __construct(UrlKeyGenerator $urlKeyGenerator, Validation $validation = null)
+    public function __construct(Validation $validation, UrlKeyGenerator $urlKeyGenerator)
     {
-        if (! $validation) {
-            $validation = new Validation();
-        }
-
         $validation->validateConfig();
 
         $this->keyGenerator = $urlKeyGenerator;
