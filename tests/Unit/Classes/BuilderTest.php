@@ -498,19 +498,12 @@ final class BuilderTest extends TestCase
         ]);
     }
 
-    /**
-     *
-     *           ["/s", "s"]
-     *           ["/s/", "s"]
-     *           ["s/", "s"]
-     *           [null, null]
-     */
     #[Test]
-    #[TestWith('["s", "s"]
-["/s", "s"]
-["/s/", "s"]
-["s/", "s"]
-[null, null]')]
+    #[TestWith(["s", "s"])]
+    #[TestWith(["/s", "s"])]
+    #[TestWith(["/s/", "s"])]
+    #[TestWith(["s/", "s"])]
+    #[TestWith([null, null])]
     public function correct_prefix_is_returned(?string $prefix, ?string $expected): void
     {
         Config::set('short-url.prefix', $prefix);
@@ -536,13 +529,9 @@ final class BuilderTest extends TestCase
         ]);
     }
 
-    /**
-     *
-     *           [false, "https://fallback.com"]
-     */
     #[Test]
-    #[TestWith('[true, "https://domain.com"]
-[false, "https://fallback.com"]')]
+    #[TestWith([true, "https://domain.com"])]
+    #[TestWith([false, "https://fallback.com"])]
     public function data_can_be_set_on_the_builder_using_when(bool $flag, string $destination): void
     {
         $shortUrl = app(Builder::class)
