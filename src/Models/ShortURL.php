@@ -138,9 +138,6 @@ class ShortURL extends Model
     /**
      * A helper method that can be used for finding
      * a ShortURL model with the given URL key.
-     *
-     * @param  string  $URLKey
-     * @return ShortURL|null
      */
     public static function findByKey(string $URLKey): ?self
     {
@@ -152,7 +149,6 @@ class ShortURL extends Model
      * all of the ShortURL models with the given
      * destination URL.
      *
-     * @param  string  $destinationURL
      * @return Collection<int, ShortURL>
      */
     public static function findByDestinationURL(string $destinationURL): Collection
@@ -163,8 +159,6 @@ class ShortURL extends Model
     /**
      * A helper method to determine whether if tracking
      * is currently enabled for the short URL.
-     *
-     * @return bool
      */
     public function trackingEnabled(): bool
     {
@@ -174,8 +168,6 @@ class ShortURL extends Model
     /**
      * Return an array containing the fields that are
      * set to be tracked for the short URL.
-     *
-     * @return array
      */
     public function trackingFields(): array
     {
