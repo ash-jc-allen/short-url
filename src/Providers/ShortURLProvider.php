@@ -3,7 +3,6 @@
 namespace AshAllenDesign\ShortURL\Providers;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
-use AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver;
 use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Interfaces\UserAgentDriver;
