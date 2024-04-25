@@ -185,4 +185,16 @@ return [
     |
     */
     'validate_config' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | User Agent Parser
+    |--------------------------------------------------------------------------
+    |
+    | Define the class that should be used to handle the parsing of the user
+    | agent string. This class must implement the following interface:
+    | AshAllenDesign\ShortURL\Interfaces\UserAgentDriver.
+    |
+    */
+    'user_agent_driver' => \AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver::class,
 ];

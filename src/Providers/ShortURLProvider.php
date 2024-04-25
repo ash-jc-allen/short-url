@@ -51,8 +51,6 @@ class ShortURLProvider extends ServiceProvider
             (new Validation())->validateConfig();
         }
 
-        // TODO Rename the interface.
-        // TODO Make the driver configurable.
-        $this->app->bind(UserAgentDriver::class, ParserPhpDriver::class);
+        $this->app->bind(UserAgentDriver::class, config('short-url.user_agent_driver'));
     }
 }
