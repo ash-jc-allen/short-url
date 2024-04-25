@@ -6,7 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
-class ShortURLDisableRouteTest extends TestCase
+final class ShortURLDisableRouteTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {

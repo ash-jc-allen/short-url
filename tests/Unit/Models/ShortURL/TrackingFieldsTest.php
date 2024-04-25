@@ -6,7 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
-class TrackingFieldsTest extends TestCase
+final class TrackingFieldsTest extends TestCase
 {
     #[Test]
     public function array_is_returned_with_tracked_fields(): void

@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ResolverTest extends TestCase
+final class ResolverTest extends TestCase
 {
     public static function trackingFieldsProvider(): array
     {

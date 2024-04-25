@@ -8,7 +8,7 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Support\Facades\Config;
 
-class ValidationTest extends TestCase
+final class ValidationTest extends TestCase
 {
     #[Test]
     public function exception_is_thrown_if_the_key_length_is_not_an_integer(): void

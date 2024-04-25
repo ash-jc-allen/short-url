@@ -15,7 +15,7 @@ use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
 use ShortURL as ShortURLAlias;
 
-class BuilderTest extends TestCase
+final class BuilderTest extends TestCase
 {
     protected function setUp(): void
     {

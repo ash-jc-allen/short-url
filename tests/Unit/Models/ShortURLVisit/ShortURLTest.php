@@ -7,7 +7,7 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
-class ShortURLTest extends TestCase
+final class ShortURLTest extends TestCase
 {
     #[Test]
     public function short_url_can_be_fetched_from_visit(): void

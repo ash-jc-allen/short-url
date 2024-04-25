@@ -6,7 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
-class TrackingEnabledTest extends TestCase
+final class TrackingEnabledTest extends TestCase
 {
     #[Test]
     public function true_is_returned_if_tracking_is_enabled_for_the_short_url(): void

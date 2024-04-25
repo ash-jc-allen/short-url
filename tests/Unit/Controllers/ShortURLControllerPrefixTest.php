@@ -6,7 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
-class ShortURLControllerPrefixTest extends TestCase
+final class ShortURLControllerPrefixTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
