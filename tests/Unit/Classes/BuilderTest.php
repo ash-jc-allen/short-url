@@ -2,8 +2,6 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\TestWith;
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Classes\Validation;
@@ -13,6 +11,8 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use ShortURL as ShortURLAlias;
 
 final class BuilderTest extends TestCase
@@ -499,10 +499,10 @@ final class BuilderTest extends TestCase
     }
 
     #[Test]
-    #[TestWith(["s", "s"])]
-    #[TestWith(["/s", "s"])]
-    #[TestWith(["/s/", "s"])]
-    #[TestWith(["s/", "s"])]
+    #[TestWith(['s', 's'])]
+    #[TestWith(['/s', 's'])]
+    #[TestWith(['/s/', 's'])]
+    #[TestWith(['s/', 's'])]
     #[TestWith([null, null])]
     public function correct_prefix_is_returned(?string $prefix, ?string $expected): void
     {
@@ -530,8 +530,8 @@ final class BuilderTest extends TestCase
     }
 
     #[Test]
-    #[TestWith([true, "https://domain.com"])]
-    #[TestWith([false, "https://fallback.com"])]
+    #[TestWith([true, 'https://domain.com'])]
+    #[TestWith([false, 'https://fallback.com'])]
     public function data_can_be_set_on_the_builder_using_when(bool $flag, string $destination): void
     {
         $shortUrl = app(Builder::class)

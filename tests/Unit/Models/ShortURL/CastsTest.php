@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
 
 final class CastsTest extends TestCase
 {
