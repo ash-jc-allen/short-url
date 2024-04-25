@@ -18,7 +18,7 @@
     "laravel-package"
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "nesbot/carbon": "^2.0|^3.0",
     "illuminate/container": "^8.0|^9.0|^10.0|^11.0",
     "illuminate/database": "^8.0|^9.0|^10.0|^11.0",
