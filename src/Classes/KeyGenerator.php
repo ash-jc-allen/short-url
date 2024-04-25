@@ -13,10 +13,8 @@ class KeyGenerator implements UrlKeyGenerator
     /**
      * The library class that is used for generating
      * the unique hash.
-     *
-     * @var Hashids
      */
-    private $hashids;
+    private Hashids $hashids;
 
     /**
      * KeyGenerator constructor.
@@ -33,8 +31,6 @@ class KeyGenerator implements UrlKeyGenerator
      * unlikely chance that a generated key collides with another
      * key, we increment the ID and then attempt to create a new
      * unique key again.
-     *
-     * @return string
      */
     public function generateRandom(): string
     {
@@ -52,9 +48,6 @@ class KeyGenerator implements UrlKeyGenerator
      * Generate a key for the short URL. This method allows you to pass a
      * seed value to the key generator. If no seed is passed, a random
      * key will be generated.
-     *
-     * @param  int|null  $seed
-     * @return string
      */
     public function generateKeyUsing(int $seed = null): string
     {
@@ -70,8 +63,6 @@ class KeyGenerator implements UrlKeyGenerator
      * called. From doing this, we can create a
      * unique hash without a reduced chance of
      * a collision.
-     *
-     * @return int
      */
     protected function getLastInsertedID(): int
     {
