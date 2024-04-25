@@ -161,23 +161,13 @@ class Resolver
      */
     protected function guessDeviceType(UserAgentDriver $userAgentParser): ?string
     {
-        if ($userAgentParser->isDesktop()) {
-            return ShortURLVisit::DEVICE_TYPE_DESKTOP;
-        }
-
-        if ($userAgentParser->isMobile()) {
-            return ShortURLVisit::DEVICE_TYPE_MOBILE;
-        }
-
-        if ($userAgentParser->isTablet()) {
-            return ShortURLVisit::DEVICE_TYPE_TABLET;
-        }
-
-        if ($userAgentParser->isRobot()) {
-            return ShortURLVisit::DEVICE_TYPE_ROBOT;
-        }
-
-        return null;
+        return match (true) {
+            $userAgentParser->isDesktop() => ShortURLVisit::DEVICE_TYPE_DESKTOP,
+            $userAgentParser->isMobile() => ShortURLVisit::DEVICE_TYPE_MOBILE,
+            $userAgentParser->isTablet() => ShortURLVisit::DEVICE_TYPE_TABLET,
+            $userAgentParser->isRobot() => ShortURLVisit::DEVICE_TYPE_ROBOT,
+            default => null,
+        };
     }
 
     private function userAgentParser(): UserAgentDriver
