@@ -2,7 +2,6 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
-use AshAllenDesign\ShortURL\Classes\UserAgent\UserAgentManager;
 use AshAllenDesign\ShortURL\Events\ShortURLVisited;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Interfaces\UserAgentDriver;
