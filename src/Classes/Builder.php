@@ -23,65 +23,51 @@ class Builder
      * The class that is used for generating the
      * random URL keys.
      */
-    private UrlKeyGenerator $keyGenerator;
+    protected UrlKeyGenerator $keyGenerator;
 
     /**
      * The destination URL that the short URL will
      * redirect to.
-     *
-     * @var string|null
      */
-    protected $destinationUrl;
+    protected ?string $destinationUrl = null;
 
     /**
      * Whether or not if the shortened URL can be
      * accessed more than once.
-     *
-     * @var bool
      */
-    protected $singleUse = false;
+    protected ?bool $singleUse = false;
 
     /**
      * Whether or not to force the destination URL
      * and the shortened URL to use HTTPS rather
      * than HTTP.
-     *
-     * @var bool|null
      */
-    protected $secure;
+    protected ?bool $secure = null;
 
     /**
      * Whether or not the short url should
      * forward query params to the
      * destination url.
-     *
-     * @var bool|null
      */
-    protected $forwardQueryParams;
+    protected ?bool $forwardQueryParams = null;
 
     /**
      * Whether or not if the short URL should track
      * statistics about the visitors.
-     *
-     * @var bool|null
      */
-    protected $trackVisits;
+    protected ?bool $trackVisits = null;
 
     /**
      * This can hold a custom URL key that might be
      * explicitly set for this URL.
-     *
-     * @var string|null
      */
-    protected $urlKey;
+    protected ?string $urlKey = null;
 
     /**
      * The HTTP status code that will be used when
      * redirecting the user.
-     *
-     * @var int
      */
-    protected $redirectStatusCode = 301;
+    protected int $redirectStatusCode = 301;
 
     /**
      * Whether or not the visitor's IP address should
@@ -89,7 +75,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackIPAddress;
+    protected ?bool $trackIPAddress = null;
 
     /**
      * Whether or not the visitor's operating system
@@ -97,7 +83,7 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackOperatingSystem;
+    protected ?bool $trackOperatingSystem = null;
 
     /**
      * Whether or not the visitor's operating system
@@ -105,31 +91,25 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackOperatingSystemVersion;
+    protected ?bool $trackOperatingSystemVersion = null;
 
     /**
      * Whether or not the visitor's browser should
      * be recorded.
-     *
-     * @var bool|null
      */
-    protected $trackBrowser;
+    protected ?bool $trackBrowser = null;
 
     /**
      * Whether or not the visitor's browser version
      * should be recorded.
-     *
-     * @var bool|null
      */
-    protected $trackBrowserVersion;
+    protected ?bool $trackBrowserVersion = null;
 
     /**
      * Whether or not the visitor's referer URL should
      * be recorded.
-     *
-     * @var bool|null
      */
-    protected $trackRefererURL;
+    protected ?bool $trackRefererURL = null;
 
     /**
      * Whether or not the visitor's device type should
@@ -137,37 +117,29 @@ class Builder
      *
      * @var bool|null
      */
-    protected $trackDeviceType = null;
+    protected ?bool $trackDeviceType = null;
 
     /**
      * The date and time that the short URL should become
      * active so that it can be visited.
-     *
-     * @var Carbon|null
      */
-    protected $activateAt = null;
+    protected ?Carbon $activateAt = null;
 
     /**
      * The date and time that the short URL should be
      * deactivated so that it cannot be visited.
-     *
-     * @var Carbon|null
      */
-    protected $deactivateAt = null;
+    protected Carbon|null $deactivateAt = null;
 
     /**
      * Define an optional seed that can be used when generating
      * a short URL key.
-     *
-     * @var int|null
      */
     protected ?int $generateKeyUsing = null;
 
     /**
      * Define a callback to access the ShortURL
      * model prior to creation.
-     *
-     * @var Closure|null
      */
     protected ?Closure $beforeCreateCallback = null;
 
@@ -460,7 +432,7 @@ class Builder
      */
     public function make(): ShortURL
     {
-        if (! isset($this->destinationUrl)) {
+        if (! $this->destinationUrl) {
             throw new ShortURLException('No destination URL has been set.');
         }
 
@@ -601,6 +573,7 @@ class Builder
      */
     public function resetOptions(): self
     {
+        $this->destinationUrl = null;
         $this->urlKey = null;
         $this->singleUse = false;
         $this->secure = null;
