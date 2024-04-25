@@ -2,9 +2,9 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ShortURLDisableRouteTest extends TestCase
 {

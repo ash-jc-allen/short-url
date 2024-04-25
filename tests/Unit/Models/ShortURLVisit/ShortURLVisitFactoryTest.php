@@ -2,10 +2,10 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ShortURLVisitFactoryTest extends TestCase
 {
