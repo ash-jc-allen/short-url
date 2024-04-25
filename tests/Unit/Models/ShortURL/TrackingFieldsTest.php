@@ -2,12 +2,13 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 
+use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
 class TrackingFieldsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function array_is_returned_with_tracked_fields()
     {
         $shortURL = ShortURL::create([
@@ -35,7 +36,7 @@ class TrackingFieldsTest extends TestCase
         ], $shortURL->trackingFields());
     }
 
-    /** @test */
+    #[Test]
     public function empty_array_is_returned_if_no_fields_are_set_to_be_tracked()
     {
         $shortURL = ShortURL::create([

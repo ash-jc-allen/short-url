@@ -2,6 +2,8 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Classes\Resolver;
 use AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver;
 use AshAllenDesign\ShortURL\Classes\Validation;
@@ -85,7 +87,7 @@ class ResolverTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid()
     {
         $this->expectException(ValidationException::class);
@@ -96,7 +98,7 @@ class ResolverTest extends TestCase
         app(Resolver::class);
     }
 
-    /** @test */
+    #[Test]
     public function request_is_aborted_if_url_is_single_use_and_has_already_been_visited()
     {
         $this->expectException(NotFoundHttpException::class);
@@ -117,7 +119,7 @@ class ResolverTest extends TestCase
         $resolver->handleVisit($request, $shortURL);
     }
 
-    /** @test */
+    #[Test]
     public function request_is_not_aborted_if_url_is_single_use_and_has_not_been_visited()
     {
         $shortURL = ShortURL::create([
@@ -137,7 +139,7 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /** @test */
+    #[Test]
     public function request_is_not_aborted_if_url_is_not_single_use_and_has_been_visited()
     {
         $shortURL = ShortURL::create([
@@ -158,7 +160,7 @@ class ResolverTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /** @test */
+    #[Test]
     public function visit_details_are_not_recorded_if_url_does_not_have_tracking_enabled()
     {
         $shortURL = ShortURL::create([
@@ -187,11 +189,8 @@ class ResolverTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider trackingFieldsProvider
-     */
+    #[Test]
+    #[DataProvider('trackingFieldsProvider')]
     public function visit_is_recorded_if_url_has_tracking_enabled(string $userAgent, array $expectedTrackingData): void
     {
         $shortURL = ShortURL::create([
@@ -229,7 +228,7 @@ class ResolverTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function visit_is_recorded_if_url_has_tracking_enabled_and_the_user_agent_is_invalid(): void
     {
         $shortURL = ShortURL::create([
@@ -271,7 +270,7 @@ class ResolverTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function visit_is_recorded_if_url_has_tracking_enabled_and_the_user_agent_is_empty(): void
     {
         $shortURL = ShortURL::create([
@@ -313,7 +312,7 @@ class ResolverTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function only_specific_fields_are_recorded_if_enabled()
     {
         // Disable default tracking for the IP address, browser
@@ -360,7 +359,7 @@ class ResolverTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function request_is_aborted_if_url_is_single_use_and_the_tracking_is_not_enabled()
     {
         $shortURL = ShortURL::create([
@@ -385,7 +384,7 @@ class ResolverTest extends TestCase
         $resolver->handleVisit($request, $shortURL);
     }
 
-    /** @test */
+    #[Test]
     public function referer_url_is_stored_if_it_is_enabled()
     {
         $shortURL = ShortURL::create([
@@ -421,7 +420,7 @@ class ResolverTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function fields_are_not_recorded_if_all_are_true_but_track_visits_is_disabled(): void
     {
         $shortURL = ShortURL::create([

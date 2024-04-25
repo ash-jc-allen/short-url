@@ -2,12 +2,13 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 
+use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
 class TrackingEnabledTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function true_is_returned_if_tracking_is_enabled_for_the_short_url()
     {
         $shortURL = ShortURL::create([
@@ -22,7 +23,7 @@ class TrackingEnabledTest extends TestCase
         $this->assertTrue($shortURL->trackingEnabled());
     }
 
-    /** @test */
+    #[Test]
     public function false_is_returned_if_tracking_is_disabled_for_the_short_url()
     {
         $shortURL = ShortURL::create([

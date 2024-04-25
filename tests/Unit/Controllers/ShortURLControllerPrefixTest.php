@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
@@ -14,7 +15,7 @@ class ShortURLControllerPrefixTest extends TestCase
         parent::getEnvironmentSetUp($app);
     }
 
-    /** @test */
+    #[Test]
     public function visitor_is_redirected_to_the_destination_url_with_custom_prefix()
     {
         ShortURL::create([

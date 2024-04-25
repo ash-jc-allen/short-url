@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
+use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 
 class ValidationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_key_length_is_not_an_integer()
     {
         $this->expectException(ValidationException::class);
@@ -21,7 +22,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_key_length_is_below_3()
     {
         $this->expectException(ValidationException::class);
@@ -33,7 +34,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_default_enabled_variable_is_not_a_boolean()
     {
         $this->expectException(ValidationException::class);
@@ -45,7 +46,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_any_of_the_tracking_options_are_not_null()
     {
         $this->expectException(ValidationException::class);
@@ -57,7 +58,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_disable_default_route_option_is_not_a_boolean()
     {
         $this->expectException(ValidationException::class);
@@ -69,7 +70,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_key_salt_is_not_a_string()
     {
         $this->expectException(ValidationException::class);
@@ -81,7 +82,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_key_salt_is_less_than_one_character_long()
     {
         $this->expectException(ValidationException::class);
@@ -93,7 +94,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_enforce_https_variable_is_not_a_boolean()
     {
         $this->expectException(ValidationException::class);
@@ -105,7 +106,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_forward_query_params_variable_is_not_a_boolean()
     {
         $this->expectException(ValidationException::class);
@@ -117,7 +118,7 @@ class ValidationTest extends TestCase
         $validation->validateConfig();
     }
 
-    /** @test */
+    #[Test]
     public function exception_is_thrown_if_the_default_url_is_not_a_string(): void
     {
         $this->expectException(ValidationException::class);

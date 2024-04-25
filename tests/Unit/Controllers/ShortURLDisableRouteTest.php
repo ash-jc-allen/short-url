@@ -2,6 +2,7 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
+use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 
@@ -14,7 +15,7 @@ class ShortURLDisableRouteTest extends TestCase
         parent::getEnvironmentSetUp($app);
     }
 
-    /** @test */
+    #[Test]
     public function request_is_aborted_if_custom_routing_is_enabled_but_the_default_route_has_been_used(): void
     {
         ShortURL::create([
