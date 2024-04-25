@@ -5,6 +5,7 @@ namespace AshAllenDesign\ShortURL\Classes;
 use AshAllenDesign\ShortURL\Controllers\ShortURLController;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
+use AshAllenDesign\ShortURL\Interfaces\UrlKeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
 use Closure;
@@ -19,10 +20,8 @@ class Builder
     /**
      * The class that is used for generating the
      * random URL keys.
-     *
-     * @var KeyGenerator
      */
-    private $keyGenerator;
+    private UrlKeyGenerator $keyGenerator;
 
     /**
      * The destination URL that the short URL will
@@ -177,11 +176,10 @@ class Builder
      * config variables are validated.
      *
      * @param  Validation|null  $validation
-     * @param  KeyGenerator|null  $keyGenerator
      *
      * @throws ValidationException
      */
-    public function __construct(Validation $validation = null, KeyGenerator $keyGenerator = null)
+    public function __construct(Validation $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
@@ -189,7 +187,7 @@ class Builder
 
         $validation->validateConfig();
 
-        $this->keyGenerator = $keyGenerator ?? new KeyGenerator();
+        $this->keyGenerator = app(UrlKeyGenerator::class);
     }
 
     /**
@@ -422,11 +420,8 @@ class Builder
 
     /**
      * Explicitly set the key generator.
-     *
-     * @param  KeyGenerator  $keyGenerator
-     * @return $this
      */
-    public function keyGenerator(KeyGenerator $keyGenerator): self
+    public function keyGenerator(UrlKeyGenerator $keyGenerator): self
     {
         $this->keyGenerator = $keyGenerator;
 

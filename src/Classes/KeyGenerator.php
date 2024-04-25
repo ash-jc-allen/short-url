@@ -2,10 +2,11 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Interfaces\UrlKeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Hashids\Hashids;
 
-class KeyGenerator
+class KeyGenerator implements UrlKeyGenerator
 {
     /**
      * The library class that is used for generating
@@ -18,21 +19,17 @@ class KeyGenerator
     /**
      * KeyGenerator constructor.
      */
-    public function __construct(Hashids $hashids = null)
+    public function __construct(Hashids $hashids)
     {
-        $this->hashids = $hashids ?: new Hashids(config('short-url.key_salt'), config('short-url.key_length'), config('short-url.alphabet'));
+        $this->hashids = $hashids;
     }
 
     /**
-     * Generate a unique and random URL key using the
-     * Hashids package. We start by predicting the
-     * unique ID that the ShortURL will have in
-     * the database. Then we can encode the ID
-     * to create a unique hash. On the very
-     * unlikely chance that a generated
-     * key collides with another key,
-     * we increment the ID and then
-     * attempt to create a new
+     * Generate a unique and random URL key using the Hashids package. We start by
+     * predicting the unique ID that the ShortURL will have in the database.
+     * Then we can encode the ID to create a unique hash. On the very
+     * unlikely chance that a generated key collides with another
+     * key, we increment the ID and then attempt to create a new
      * unique key again.
      *
      * @return string
