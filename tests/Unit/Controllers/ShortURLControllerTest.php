@@ -7,17 +7,19 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Support\Facades\Event;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-class ShortURLControllerTest extends TestCase
+final class ShortURLControllerTest extends TestCase
 {
-    /** @test */
-    public function request_is_aborted_with_http_404_if_the_short_url_cannot_be_found()
+    #[Test]
+    public function request_is_aborted_with_http_404_if_the_short_url_cannot_be_found(): void
     {
         $this->get('/short/INVALID')->assertNotFound();
     }
 
-    /** @test */
-    public function visitor_is_redirected_to_the_destination_url()
+    #[Test]
+    public function visitor_is_redirected_to_the_destination_url(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -32,8 +34,8 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345')->assertStatus(301)->assertRedirect('https://google.com');
     }
 
-    /** @test */
-    public function event_is_dispatched_when_the_short_url_is_visited()
+    #[Test]
+    public function event_is_dispatched_when_the_short_url_is_visited(): void
     {
         Event::fake();
 
@@ -74,8 +76,8 @@ class ShortURLControllerTest extends TestCase
         });
     }
 
-    /** @test */
-    public function visitor_is_redirected_with_correct_status_code()
+    #[Test]
+    public function visitor_is_redirected_with_correct_status_code(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -90,8 +92,8 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
     }
 
-    /** @test */
-    public function request_is_aborted_if_the_activation_date_is_in_the_future()
+    #[Test]
+    public function request_is_aborted_if_the_activation_date_is_in_the_future(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -107,8 +109,8 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345')->assertNotFound();
     }
 
-    /** @test */
-    public function request_is_aborted_if_the_deactivation_date_is_in_the_past()
+    #[Test]
+    public function request_is_aborted_if_the_deactivation_date_is_in_the_past(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -124,8 +126,8 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345')->assertNotFound();
     }
 
-    /** @test */
-    public function visitor_is_redirected_to_the_destination_url_if_the_deactivation_date_is_in_the_future()
+    #[Test]
+    public function visitor_is_redirected_to_the_destination_url_if_the_deactivation_date_is_in_the_future(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -141,8 +143,8 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345')->assertStatus(302)->assertRedirect('https://google.com');
     }
 
-    /** @test */
-    public function visitor_is_redirected_to_the_destination_without_source_query_parameters_if_option_set_to_false()
+    #[Test]
+    public function visitor_is_redirected_to_the_destination_without_source_query_parameters_if_option_set_to_false(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com?param1=abc',
@@ -157,11 +159,8 @@ class ShortURLControllerTest extends TestCase
         $this->get('/short/12345?param1=test&param2=test2')->assertStatus(301)->assertRedirect('https://google.com?param1=abc');
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider forwardQueryParamsProvider
-     */
+    #[Test]
+    #[DataProvider('forwardQueryParamsProvider')]
     public function visitor_is_redirected_to_the_destination_with_source_query_parameters_if_option_set_to_true(
         string $shortUrl,
         string $requestUrl,

@@ -7,10 +7,11 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
 
 final class CastsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function carbon_date_objects_are_returned(): void
     {
         $shortUrl = ShortURL::factory()
@@ -29,7 +30,7 @@ final class CastsTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $shortUrl->updated_at);
     }
 
-    /** @test */
+    #[Test]
     public function forward_query_params_is_casted_correctly(): void
     {
         $shortUrl = ShortURL::factory()->create(['forward_query_params' => 1]);

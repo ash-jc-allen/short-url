@@ -5,10 +5,11 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
-class ShortURLVisitFactoryTest extends TestCase
+final class ShortURLVisitFactoryTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_that_short_url_visit_model_factory_works_fine(): void
     {
         $shortURL = ShortURL::factory()->create();

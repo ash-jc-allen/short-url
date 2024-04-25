@@ -11,9 +11,11 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use ShortURL as ShortURLAlias;
 
-class BuilderTest extends TestCase
+final class BuilderTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -23,8 +25,8 @@ class BuilderTest extends TestCase
         Config::set('app.url', 'https://app-url.com');
     }
 
-    /** @test */
-    public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid()
+    #[Test]
+    public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid(): void
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('The config URL length is not a valid integer.');
@@ -34,8 +36,8 @@ class BuilderTest extends TestCase
         app(Builder::class);
     }
 
-    /** @test */
-    public function exception_is_thrown_if_the_destination_url_does_not_begin_with_http_or_https()
+    #[Test]
+    public function exception_is_thrown_if_the_destination_url_does_not_begin_with_http_or_https(): void
     {
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The destination URL must begin with http:// or https://');
@@ -44,8 +46,8 @@ class BuilderTest extends TestCase
         $builder->destinationUrl('INVALID');
     }
 
-    /** @test */
-    public function exception_is_thrown_if_no_destination_url_is_set()
+    #[Test]
+    public function exception_is_thrown_if_no_destination_url_is_set(): void
     {
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('No destination URL has been set.');
@@ -54,24 +56,24 @@ class BuilderTest extends TestCase
         $builder->make();
     }
 
-    /** @test */
-    public function destination_url_is_changed_to_https_if_secure_flag_has_been_set()
+    #[Test]
+    public function destination_url_is_changed_to_https_if_secure_flag_has_been_set(): void
     {
         $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure()->make();
         $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
 
-    /** @test */
-    public function destination_url_is_not_changed_to_https_if_secure_flag_has_been_set_to_false()
+    #[Test]
+    public function destination_url_is_not_changed_to_https_if_secure_flag_has_been_set_to_false(): void
     {
         $builder = app(Builder::class);
         $shortUrl = $builder->destinationUrl('http://domain.com')->secure(false)->make();
         $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }
 
-    /** @test */
-    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_true_from_the_config()
+    #[Test]
+    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_true_from_the_config(): void
     {
         Config::set('short-url.enforce_https', true);
         $builder = app(Builder::class);
@@ -79,8 +81,8 @@ class BuilderTest extends TestCase
         $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
 
-    /** @test */
-    public function destination_url_is_not_changed_to_https_if_enforce_https_flag_is_set_to_false_from_the_config()
+    #[Test]
+    public function destination_url_is_not_changed_to_https_if_enforce_https_flag_is_set_to_false_from_the_config(): void
     {
         Config::set('short-url.enforce_https', false);
         $builder = new Builder(new Validation(), new KeyGenerator(new Hashids()));
@@ -88,8 +90,8 @@ class BuilderTest extends TestCase
         $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }
 
-    /** @test */
-    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url()
+    #[Test]
+    public function destination_url_is_changed_to_https_if_enforce_https_flag_is_set_to_false_in_the_config_but_set_when_creating_url(): void
     {
         Config::set('short-url.enforce_https', false);
         $builder = app(Builder::class);
@@ -97,8 +99,8 @@ class BuilderTest extends TestCase
         $this->assertSame('https://domain.com', $shortUrl->destination_url);
     }
 
-    /** @test */
-    public function forward_query_params_is_set_from_the_config_if_it_is_not_explicitly_set()
+    #[Test]
+    public function forward_query_params_is_set_from_the_config_if_it_is_not_explicitly_set(): void
     {
         Config::set('short-url.forward_query_params', true);
 
@@ -112,8 +114,8 @@ class BuilderTest extends TestCase
         $this->assertFalse($shortUrl->forward_query_params);
     }
 
-    /** @test */
-    public function forward_query_params_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function forward_query_params_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.forward_query_params', true);
 
@@ -127,8 +129,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->forward_query_params);
     }
 
-    /** @test */
-    public function track_visits_flag_is_set_from_the_config_if_it_is_not_explicitly_set()
+    #[Test]
+    public function track_visits_flag_is_set_from_the_config_if_it_is_not_explicitly_set(): void
     {
         Config::set('short-url.tracking.default_enabled', true);
 
@@ -142,8 +144,8 @@ class BuilderTest extends TestCase
         $this->assertFalse($shortUrl->track_visits);
     }
 
-    /** @test */
-    public function track_visits_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_visits_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.default_enabled', true);
 
@@ -157,8 +159,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_visits);
     }
 
-    /** @test */
-    public function track_ip_address_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_ip_address_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.ip_address', true);
 
@@ -172,8 +174,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_ip_address);
     }
 
-    /** @test */
-    public function track_browser_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_browser_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.browser', true);
 
@@ -187,8 +189,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_browser);
     }
 
-    /** @test */
-    public function track_browser_version_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_browser_version_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.browser_version', true);
 
@@ -202,8 +204,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_browser_version);
     }
 
-    /** @test */
-    public function track_operating_system_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_operating_system_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.operating_system', true);
 
@@ -217,8 +219,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_operating_system);
     }
 
-    /** @test */
-    public function track_operating_system_version_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_operating_system_version_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.operating_system_version', true);
 
@@ -232,8 +234,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_operating_system_version);
     }
 
-    /** @test */
-    public function track_referer_url_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_referer_url_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.referer_url', true);
 
@@ -247,8 +249,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_referer_url);
     }
 
-    /** @test */
-    public function track_device_type_flag_is_not_set_from_the_config_if_it_is_explicitly_set()
+    #[Test]
+    public function track_device_type_flag_is_not_set_from_the_config_if_it_is_explicitly_set(): void
     {
         Config::set('short-url.tracking.fields.device_type', true);
 
@@ -262,8 +264,8 @@ class BuilderTest extends TestCase
         $this->assertTrue($shortUrl->track_device_type);
     }
 
-    /** @test */
-    public function exception_is_thrown_if_the_url_key_is_explicitly_set_and_already_exists_in_the_db()
+    #[Test]
+    public function exception_is_thrown_if_the_url_key_is_explicitly_set_and_already_exists_in_the_db(): void
     {
         ShortURL::create([
             'default_short_url' => 'https://short.com/urlkey123',
@@ -280,8 +282,8 @@ class BuilderTest extends TestCase
         $builder->destinationUrl('https://domain.com')->urlKey('urlkey123')->make();
     }
 
-    /** @test */
-    public function explicitly_defined_url_key_can_be_used_if_it_does_not_exist_in_the_db()
+    #[Test]
+    public function explicitly_defined_url_key_can_be_used_if_it_does_not_exist_in_the_db(): void
     {
         $builder = app(Builder::class);
         $builder->destinationUrl('https://domain.com')->urlKey('urlkey123')->make();
@@ -289,8 +291,8 @@ class BuilderTest extends TestCase
         $this->assertDatabaseHas('short_urls', ['url_key' => 'urlkey123']);
     }
 
-    /** @test */
-    public function random_url_key_is_generated_if_one_is_not_explicitly_defined()
+    #[Test]
+    public function random_url_key_is_generated_if_one_is_not_explicitly_defined(): void
     {
         $builder = app(Builder::class);
         $shortURL = $builder->destinationUrl('https://domain.com')->make();
@@ -299,8 +301,8 @@ class BuilderTest extends TestCase
         $this->assertSame(5, strlen($shortURL->url_key));
     }
 
-    /** @test */
-    public function short_url_can_be_created_and_stored_in_the_database()
+    #[Test]
+    public function short_url_can_be_created_and_stored_in_the_database(): void
     {
         $builder = app(Builder::class);
         $shortURL = $builder->destinationUrl('http://domain.com')
@@ -332,8 +334,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function short_url_can_be_created_and_stored_in_the_database_using_the_facade()
+    #[Test]
+    public function short_url_can_be_created_and_stored_in_the_database_using_the_facade(): void
     {
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
@@ -351,8 +353,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function correct_redirect_status_code_is_stored_if_explicitly_set()
+    #[Test]
+    public function correct_redirect_status_code_is_stored_if_explicitly_set(): void
     {
         ShortURLAlias::destinationUrl('http://domain.com')
             ->urlKey('customKey')
@@ -371,8 +373,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function exception_is_thrown_if_the_redirect_status_code_is_not_valid()
+    #[Test]
+    public function exception_is_thrown_if_the_redirect_status_code_is_not_valid(): void
     {
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The redirect status code must be a valid redirect HTTP status code.');
@@ -389,8 +391,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function exception_is_thrown_if_the_activation_date_is_in_the_past()
+    #[Test]
+    public function exception_is_thrown_if_the_activation_date_is_in_the_past(): void
     {
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The activation date must not be in the past.');
@@ -401,8 +403,8 @@ class BuilderTest extends TestCase
             ->make();
     }
 
-    /** @test */
-    public function exception_is_thrown_if_the_deactivation_date_is_in_the_past()
+    #[Test]
+    public function exception_is_thrown_if_the_deactivation_date_is_in_the_past(): void
     {
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The deactivation date must not be in the past.');
@@ -413,8 +415,8 @@ class BuilderTest extends TestCase
             ->make();
     }
 
-    /** @test */
-    public function exception_is_thrown_if_the_deactivation_date_is_before_the_activation_date()
+    #[Test]
+    public function exception_is_thrown_if_the_deactivation_date_is_before_the_activation_date(): void
     {
         $this->expectException(ShortURLException::class);
         $this->expectExceptionMessage('The deactivation date must not be before the activation date.');
@@ -426,8 +428,8 @@ class BuilderTest extends TestCase
             ->make();
     }
 
-    /** @test */
-    public function short_url_can_be_created_with_an_explicit_activation_date()
+    #[Test]
+    public function short_url_can_be_created_with_an_explicit_activation_date(): void
     {
         $activateTime = now()->addHour();
 
@@ -444,8 +446,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function short_url_can_be_created_with_an_explicit_activation_date_and_deactivation_date()
+    #[Test]
+    public function short_url_can_be_created_with_an_explicit_activation_date_and_deactivation_date(): void
     {
         $activateTime = now()->addHour();
         $deactivateTime = now()->addHours(2);
@@ -464,8 +466,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function short_url_can_be_created_with_an_explicit_deactivation_date()
+    #[Test]
+    public function short_url_can_be_created_with_an_explicit_deactivation_date(): void
     {
         $deactivateTime = now()->addHours(2);
 
@@ -482,8 +484,8 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function short_url_prefix_can_be_changed_via_configuration()
+    #[Test]
+    public function short_url_prefix_can_be_changed_via_configuration(): void
     {
         Config::set('short-url.prefix', '/s');
 
@@ -496,23 +498,20 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @testWith ["s", "s"]
-     *           ["/s", "s"]
-     *           ["/s/", "s"]
-     *           ["s/", "s"]
-     *           [null, null]
-     */
-    public function correct_prefix_is_returned(?string $prefix, ?string $expected)
+    #[Test]
+    #[TestWith(['s', 's'])]
+    #[TestWith(['/s', 's'])]
+    #[TestWith(['/s/', 's'])]
+    #[TestWith(['s/', 's'])]
+    #[TestWith([null, null])]
+    public function correct_prefix_is_returned(?string $prefix, ?string $expected): void
     {
         Config::set('short-url.prefix', $prefix);
 
         self::assertSame($expected, ShortURLAlias::prefix());
     }
 
-    /** @test */
+    #[Test]
     public function short_url_can_be_created_with_a_null_prefix(): void
     {
         $deactivateTime = now()->addHours(2);
@@ -530,12 +529,9 @@ class BuilderTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     *
-     * @testWith [true, "https://domain.com"]
-     *           [false, "https://fallback.com"]
-     */
+    #[Test]
+    #[TestWith([true, 'https://domain.com'])]
+    #[TestWith([false, 'https://fallback.com'])]
     public function data_can_be_set_on_the_builder_using_when(bool $flag, string $destination): void
     {
         $shortUrl = app(Builder::class)
@@ -549,7 +545,7 @@ class BuilderTest extends TestCase
         $this->assertSame($destination, $shortUrl->destination_url);
     }
 
-    /** @test */
+    #[Test]
     public function data_can_be_overridden_on_model_using_make_callback(): void
     {
         $shortUrl = app(Builder::class)
@@ -562,7 +558,7 @@ class BuilderTest extends TestCase
         $this->assertSame('https://bar.com', $shortUrl->destination_url);
     }
 
-    /** @test */
+    #[Test]
     public function app_url_is_set_if_the_default_url_config_value_is_not_set(): void
     {
         Config::set('short-url.default_url', null);
@@ -575,7 +571,7 @@ class BuilderTest extends TestCase
         $this->assertSame('https://app-url.com/short/abc123', $shortUrl->default_short_url);
     }
 
-    /** @test */
+    #[Test]
     public function short_url_can_be_created_with_a_custom_integer_seed(): void
     {
         $shortUrlOne = app(Builder::class)
@@ -586,7 +582,7 @@ class BuilderTest extends TestCase
         $this->assertSame('https://short-url.com/short/4ZRw4', $shortUrlOne->default_short_url);
     }
 
-    /** @test */
+    #[Test]
     public function short_url_can_be_created_using_the_url_key_if_the_key_and_seeder_are_both_set(): void
     {
         $shortUrl = app(Builder::class)
