@@ -4,6 +4,7 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\KeyGenerator;
+use AshAllenDesign\ShortURL\Classes\Validation;
 use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
@@ -82,7 +83,7 @@ class BuilderTest extends TestCase
     public function destination_url_is_not_changed_to_https_if_enforce_https_flag_is_set_to_false_from_the_config()
     {
         Config::set('short-url.enforce_https', false);
-        $builder = new Builder(new KeyGenerator(new Hashids()));
+        $builder = new Builder(new Validation(), new KeyGenerator(new Hashids()));
         $shortUrl = $builder->destinationUrl('http://domain.com')->make();
         $this->assertSame('http://domain.com', $shortUrl->destination_url);
     }

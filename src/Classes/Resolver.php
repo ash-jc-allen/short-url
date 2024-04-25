@@ -12,23 +12,21 @@ use Illuminate\Support\Facades\Event;
 
 class Resolver
 {
+    private UserAgentDriver $userAgentDriver;
+
     /**
      * Resolver constructor.
      *
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Validation|null  $validation
-     *
      * @throws ValidationException
      */
-    public function __construct(Validation $validation = null)
+    public function __construct(UserAgentDriver $userAgentDriver, Validation $validation)
     {
-        if (! $validation) {
-            $validation = new Validation();
-        }
-
         $validation->validateConfig();
+
+        $this->userAgentDriver = $userAgentDriver;
     }
 
     /**
@@ -121,7 +119,7 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
-        $userAgentParser = $this->userAgentParser()->usingUserAgentString($request->userAgent());
+        $userAgentParser = $this->userAgentDriver->usingUserAgentString($request->userAgent());
 
         if ($shortURL->track_ip_address) {
             $visit->ip_address = $request->ip();
@@ -168,10 +166,5 @@ class Resolver
             $userAgentParser->isRobot() => ShortURLVisit::DEVICE_TYPE_ROBOT,
             default => null,
         };
-    }
-
-    private function userAgentParser(): UserAgentDriver
-    {
-        return app(UserAgentDriver::class);
     }
 }
