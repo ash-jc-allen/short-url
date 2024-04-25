@@ -2,42 +2,32 @@
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ShortURL\Classes\UserAgent\UserAgentManager;
 use AshAllenDesign\ShortURL\Events\ShortURLVisited;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
+use AshAllenDesign\ShortURL\Interfaces\UserAgentDriver;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
-use Jenssegers\Agent\Agent;
 
 class Resolver
 {
-    /**
-     * A class that can be used to try and detect the
-     * browser and operating system of the visitor.
-     *
-     * @var Agent
-     */
-    private $agent;
-
     /**
      * Resolver constructor.
      *
      * When constructing this class, ensure that the
      * config variables are validated.
      *
-     * @param  Agent|null  $agent
      * @param  Validation|null  $validation
      *
      * @throws ValidationException
      */
-    public function __construct(Agent $agent = null, Validation $validation = null)
+    public function __construct(Validation $validation = null)
     {
         if (! $validation) {
             $validation = new Validation();
         }
-
-        $this->agent = $agent ?? new Agent();
 
         $validation->validateConfig();
     }
@@ -132,24 +122,26 @@ class Resolver
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
+        $userAgentParser = $this->userAgentParser()->usingUserAgentString($request->userAgent());
+
         if ($shortURL->track_ip_address) {
             $visit->ip_address = $request->ip();
         }
 
         if ($shortURL->track_operating_system) {
-            $visit->operating_system = $this->agent->platform();
+            $visit->operating_system = $userAgentParser->getOperatingSystem();
         }
 
         if ($shortURL->track_operating_system_version) {
-            $visit->operating_system_version = $this->agent->version($this->agent->platform());
+            $visit->operating_system_version = $userAgentParser->getOperatingSystemVersion();
         }
 
         if ($shortURL->track_browser) {
-            $visit->browser = $this->agent->browser();
+            $visit->browser = $userAgentParser->getBrowser();
         }
 
         if ($shortURL->track_browser_version) {
-            $visit->browser_version = $this->agent->version($this->agent->browser());
+            $visit->browser_version = $userAgentParser->getBrowserVersion();
         }
 
         if ($shortURL->track_referer_url) {
@@ -157,34 +149,40 @@ class Resolver
         }
 
         if ($shortURL->track_device_type) {
-            $visit->device_type = $this->guessDeviceType();
+            $visit->device_type = $this->guessDeviceType($userAgentParser);
         }
     }
 
     /**
-     * Guess and return the device type that was used to
-     * visit the short URL.
+     * Guess and return the device type that was used to visit the short URL. Null
+     * will be returned if we cannot determine the device type.
      *
-     * @return string
+     * @param UserAgentDriver $userAgentParser
+     * @return string|null
      */
-    protected function guessDeviceType(): string
+    protected function guessDeviceType(UserAgentDriver $userAgentParser): ?string
     {
-        if ($this->agent->isDesktop()) {
+        if ($userAgentParser->isDesktop()) {
             return ShortURLVisit::DEVICE_TYPE_DESKTOP;
         }
 
-        if ($this->agent->isMobile()) {
+        if ($userAgentParser->isMobile()) {
             return ShortURLVisit::DEVICE_TYPE_MOBILE;
         }
 
-        if ($this->agent->isTablet()) {
+        if ($userAgentParser->isTablet()) {
             return ShortURLVisit::DEVICE_TYPE_TABLET;
         }
 
-        if ($this->agent->isRobot()) {
+        if ($userAgentParser->isRobot()) {
             return ShortURLVisit::DEVICE_TYPE_ROBOT;
         }
 
-        return '';
+        return null;
+    }
+
+    private function userAgentParser(): UserAgentDriver
+    {
+        return app(UserAgentDriver::class);
     }
 }
