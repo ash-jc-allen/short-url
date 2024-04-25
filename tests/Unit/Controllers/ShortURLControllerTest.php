@@ -2,13 +2,13 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Events\ShortURLVisited;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Support\Facades\Event;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ShortURLControllerTest extends TestCase
 {

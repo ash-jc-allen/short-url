@@ -2,8 +2,6 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\TestWith;
 use AshAllenDesign\ShortURL\Classes\Builder;
 use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Classes\Validation;
@@ -13,6 +11,8 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use ShortURL as ShortURLAlias;
 
 final class BuilderTest extends TestCase
@@ -499,11 +499,10 @@ final class BuilderTest extends TestCase
     }
 
     /**
-     *
      *           ["/s", "s"]
      *           ["/s/", "s"]
      *           ["s/", "s"]
-     *           [null, null]
+     *           [null, null].
      */
     #[Test]
     #[TestWith('["s", "s"]
@@ -537,8 +536,7 @@ final class BuilderTest extends TestCase
     }
 
     /**
-     *
-     *           [false, "https://fallback.com"]
+     *           [false, "https://fallback.com"].
      */
     #[Test]
     #[TestWith('[true, "https://domain.com"]

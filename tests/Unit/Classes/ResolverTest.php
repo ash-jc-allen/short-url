@@ -2,8 +2,6 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Test;
 use AshAllenDesign\ShortURL\Classes\Resolver;
 use AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver;
 use AshAllenDesign\ShortURL\Classes\Validation;
@@ -13,6 +11,8 @@ use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ResolverTest extends TestCase
