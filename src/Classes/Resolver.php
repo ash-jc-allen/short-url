@@ -156,7 +156,7 @@ class Resolver
      * Guess and return the device type that was used to visit the short URL. Null
      * will be returned if we cannot determine the device type.
      *
-     * @param UserAgentDriver $userAgentParser
+     * @param  UserAgentDriver  $userAgentParser
      * @return string|null
      */
     protected function guessDeviceType(UserAgentDriver $userAgentParser): ?string

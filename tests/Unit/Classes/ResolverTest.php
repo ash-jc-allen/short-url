@@ -101,7 +101,7 @@ class ResolverTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
@@ -109,7 +109,7 @@ class ResolverTest extends TestCase
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345');
+        $request = Request::create(config('short-url.default_url').'/short/12345');
 
         $resolver = new Resolver();
         $resolver->handleVisit($request, $shortURL);
@@ -120,14 +120,14 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
             'activated_at' => now()->subSecond(),
         ]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345');
+        $request = Request::create(config('short-url.default_url').'/short/12345');
 
         $resolver = new Resolver();
         $result = $resolver->handleVisit($request, $shortURL);
@@ -140,7 +140,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => true,
@@ -149,7 +149,7 @@ class ResolverTest extends TestCase
 
         ShortURLVisit::create(['short_url_id' => $shortURL->id, 'visited_at' => now()]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345');
+        $request = Request::create(config('short-url.default_url').'/short/12345');
 
         $resolver = new Resolver();
         $result = $resolver->handleVisit($request, $shortURL);
@@ -161,14 +161,14 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => false,
             'activated_at' => now()->subSecond(),
         ]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345');
+        $request = Request::create(config('short-url.default_url').'/short/12345');
 
         $resolver = new Resolver();
         $result = $resolver->handleVisit($request, $shortURL);
@@ -187,13 +187,14 @@ class ResolverTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider trackingFieldsProvider
      */
     public function visit_is_recorded_if_url_has_tracking_enabled(string $userAgent, array $expectedTrackingData): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => true,
@@ -208,7 +209,7 @@ class ResolverTest extends TestCase
         ]);
 
         $request = Request::create(
-            uri: config('short-url.default_url') . '/short/12345',
+            uri: config('short-url.default_url').'/short/12345',
             server: [
                 'HTTP_USER_AGENT' => $userAgent,
             ]
@@ -231,7 +232,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => true,
@@ -246,7 +247,7 @@ class ResolverTest extends TestCase
         ]);
 
         $request = Request::create(
-            uri: config('short-url.default_url') . '/short/12345',
+            uri: config('short-url.default_url').'/short/12345',
             server: [
                 'HTTP_USER_AGENT' => 'INVALID',
             ]
@@ -273,7 +274,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => true,
@@ -288,7 +289,7 @@ class ResolverTest extends TestCase
         ]);
 
         $request = Request::create(
-            uri: config('short-url.default_url') . '/short/12345',
+            uri: config('short-url.default_url').'/short/12345',
             server: [
                 'HTTP_USER_AGENT' => null,
             ]
@@ -318,7 +319,7 @@ class ResolverTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => true,
@@ -333,7 +334,7 @@ class ResolverTest extends TestCase
         ]);
 
         $request = Request::create(
-            uri: config('short-url.default_url') . '/short/12345',
+            uri: config('short-url.default_url').'/short/12345',
             server: [
                 'HTTP_referer' => 'https://google.com',
                 'HTTP_USER_AGENT' => self::trackingFieldsProvider()[1][0],
@@ -362,14 +363,14 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => false,
             'activated_at' => now()->subSecond(),
         ]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345');
+        $request = Request::create(config('short-url.default_url').'/short/12345');
 
         $resolver = new Resolver();
 
@@ -387,7 +388,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => true,
@@ -401,9 +402,9 @@ class ResolverTest extends TestCase
             'activated_at' => now()->subSecond(),
         ]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345', 'GET', [], [], [], [
+        $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
-            'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0]
+            'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0],
         ]);
 
         $resolver = new Resolver();
@@ -423,7 +424,7 @@ class ResolverTest extends TestCase
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url') . '/short/12345',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
             'url_key' => '12345',
             'single_use' => false,
             'track_visits' => false,
@@ -437,7 +438,7 @@ class ResolverTest extends TestCase
             'activated_at' => now()->subSecond(),
         ]);
 
-        $request = Request::create(config('short-url.default_url') . '/short/12345', 'GET', [], [], [], [
+        $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
             'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0],
         ]);
