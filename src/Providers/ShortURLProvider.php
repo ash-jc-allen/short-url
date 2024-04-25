@@ -16,11 +16,6 @@ use Illuminate\Support\ServiceProvider;
 
 class ShortURLProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/short-url.php', 'short-url');
@@ -45,10 +40,6 @@ class ShortURLProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     *
      * @throws ValidationException
      */
     public function boot(): void

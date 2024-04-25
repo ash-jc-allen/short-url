@@ -11,14 +11,10 @@ use Hashids\Hashids;
 class KeyGenerator implements UrlKeyGenerator
 {
     /**
-     * The library class that is used for generating
-     * the unique hash.
+     * The library class that is used for generating the unique hash.
      */
     private Hashids $hashids;
 
-    /**
-     * KeyGenerator constructor.
-     */
     public function __construct(Hashids $hashids)
     {
         $this->hashids = $hashids;
@@ -57,12 +53,9 @@ class KeyGenerator implements UrlKeyGenerator
     }
 
     /**
-     * Get the ID of the last inserted ShortURL. This
-     * is done so that we can predict what the ID of
-     * the ShortURL that will be inserted will be
-     * called. From doing this, we can create a
-     * unique hash without a reduced chance of
-     * a collision.
+     * Get the ID of the last inserted ShortURL. This is done so that we can predict
+     * what the ID of the ShortURL that will be inserted will be called. From doing
+     * this, we can create a unique hash without a reduced chance of a collision.
      */
     protected function getLastInsertedID(): int
     {

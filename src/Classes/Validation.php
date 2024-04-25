@@ -9,8 +9,7 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 class Validation
 {
     /**
-     * Validate all of the config related to the
-     * library.
+     * Validate all the config related to the library.
      *
      * @throws ValidationException
      */
@@ -26,8 +25,8 @@ class Validation
     }
 
     /**
-     * Validate that the URL Length parameter specified
-     * in the config is an integer that is above 0.
+     * Validate that the URL Length parameter specified in the config is an integer
+     * that is above 0.
      *
      * @throws ValidationException
      */
@@ -47,8 +46,7 @@ class Validation
     }
 
     /**
-     * Assert that the key salt provided in the config is
-     * valid.
+     * Assert that the key salt provided in the config is valid.
      *
      * @throws ValidationException
      */
@@ -68,8 +66,7 @@ class Validation
     }
 
     /**
-     * Validate that each of the tracking options are
-     * booleans.
+     * Validate that each of the tracking options are booleans.
      *
      * @throws ValidationException
      */
@@ -91,8 +88,7 @@ class Validation
     }
 
     /**
-     * Validate that the disable_default_route option
-     * is a boolean.
+     * Validate that the disable_default_route option is a boolean.
      *
      * @throws ValidationException
      */

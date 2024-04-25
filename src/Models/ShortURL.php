@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class ShortURL.
- *
  * @property int $id
  * @property string $destination_url
  * @property string $default_short_url
@@ -121,8 +119,8 @@ class ShortURL extends Model
     }
 
     /**
-     * A helper method that can be used for finding
-     * a ShortURL model with the given URL key.
+     * A helper method that can be used for finding a ShortURL model with the
+     * given URL key.
      */
     public static function findByKey(string $URLKey): ?self
     {
@@ -130,9 +128,8 @@ class ShortURL extends Model
     }
 
     /**
-     * A helper method that can be used for finding
-     * all of the ShortURL models with the given
-     * destination URL.
+     * A helper method that can be used for finding all the ShortURL models
+     * with the given destination URL.
      *
      * @return Collection<int, ShortURL>
      */
@@ -142,8 +139,8 @@ class ShortURL extends Model
     }
 
     /**
-     * A helper method to determine whether if tracking
-     * is currently enabled for the short URL.
+     * A helper method to determine whether if tracking is currently enabled
+     * for the short URL.
      */
     public function trackingEnabled(): bool
     {
@@ -151,8 +148,8 @@ class ShortURL extends Model
     }
 
     /**
-     * Return an array containing the fields that are
-     * set to be tracked for the short URL.
+     * Return an array containing the fields that are set to be tracked for the
+     * short URL.
      */
     public function trackingFields(): array
     {

@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class ShortURLVisit.
- *
  * @property int $id
  * @property int $short_url_id
  * @property string $ip_address

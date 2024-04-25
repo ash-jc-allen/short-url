@@ -17,11 +17,6 @@ class Resolver
     private UserAgentDriver $userAgentDriver;
 
     /**
-     * Resolver constructor.
-     *
-     * When constructing this class, ensure that the
-     * config variables are validated.
-     *
      * @throws ValidationException
      */
     public function __construct(UserAgentDriver $userAgentDriver, Validation $validation)
@@ -32,11 +27,9 @@ class Resolver
     }
 
     /**
-     * Handle the visit. Check that the visitor is allowed
-     * to visit the URL. If the short URL has tracking
-     * enabled, track the visit in the database.
-     * If this method is executed successfully,
-     * return true.
+     * Handle the visit. Check that the visitor is allowed to visit the URL. If
+     * the short URL has tracking enabled, track the visit in the database.
+     * If this method is executed successfully, return true.
      */
     public function handleVisit(Request $request, ShortURL $shortURL): bool
     {
@@ -52,12 +45,10 @@ class Resolver
     }
 
     /**
-     * Determine whether if the visitor is allowed access
-     * to the URL. If the short URL is a single use URL
-     * and has already been visited, return false. If
-     * the URL is not activated yet, return false.
-     * If the URL has been deactivated, return
-     * false.
+     * Determine whether if the visitor is allowed access to the URL. If the short
+     * URL is a single use URL and has already been visited, return false. If
+     * the URL is not activated yet, return false. If the URL has been
+     * deactivated, return false.
      */
     protected function shouldAllowAccess(ShortURL $shortURL): bool
     {
@@ -77,11 +68,9 @@ class Resolver
     }
 
     /**
-     * Record the visit in the database. We record basic
-     * information of the visit if tracking even if
-     * tracking is not enabled. We do this so that
-     * we can check if single-use URLs have been
-     * visited before.
+     * Record the visit in the database. We record basic information of the visit if
+     * tracking even if tracking is not enabled. We do this so that we can check
+     * if single-use URLs have been visited before.
      */
     protected function recordVisit(Request $request, ShortURL $shortURL): ShortURLVisit
     {
@@ -100,9 +89,8 @@ class Resolver
     }
 
     /**
-     * Check which fields should be tracked and then
-     * store them if needed. Otherwise, add them
-     * as null.
+     * Check which fields should be tracked and then store them if needed. Otherwise, add
+     * them as null.
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {

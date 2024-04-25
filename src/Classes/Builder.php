@@ -20,126 +20,112 @@ class Builder
     use Conditionable;
 
     /**
-     * The class that is used for generating the
-     * random URL keys.
+     * The class that is used for generating the random URL keys.
      */
     protected UrlKeyGenerator $keyGenerator;
 
     /**
-     * The destination URL that the short URL will
-     * redirect to.
+     * The destination URL that the short URL will redirect to.
      */
     protected ?string $destinationUrl = null;
 
     /**
-     * Whether or not if the shortened URL can be
-     * accessed more than once.
+     * Whether the shortened URL can be accessed more than once. Null means the
+     * default value (set in the config) will be used.
      */
     protected ?bool $singleUse = false;
 
     /**
-     * Whether or not to force the destination URL
-     * and the shortened URL to use HTTPS rather
-     * than HTTP.
+     * Whether to force the destination URL and the shortened URL to use HTTPS
+     * rather than HTTP. Null means the default value (set in the config) will
+     * be used.
      */
     protected ?bool $secure = null;
 
     /**
-     * Whether or not the short url should
-     * forward query params to the
-     * destination url.
+     * Whether the short URL should forward query params to the destination URL.
+     * Null means the default value (set in the config) will be used.
      */
     protected ?bool $forwardQueryParams = null;
 
     /**
-     * Whether or not if the short URL should track
-     * statistics about the visitors.
+     * Whether the short URL should track statistics about the visitors. Null
+     * means the default value (set in the config) will be used.
      */
     protected ?bool $trackVisits = null;
 
     /**
-     * This can hold a custom URL key that might be
-     * explicitly set for this URL.
+     * A custom URL key that might be explicitly set for this URL.
      */
     protected ?string $urlKey = null;
 
     /**
-     * The HTTP status code that will be used when
-     * redirecting the user.
+     * The HTTP status code that will be used when redirecting the user.
      */
     protected int $redirectStatusCode = 301;
 
     /**
-     * Whether or not the visitor's IP address should
-     * be recorded.
-     *
-     * @var bool|null
+     * Whether the visitor's IP address should be recorded. Null means the default
+     * value (set in the config) will be used.
      */
     protected ?bool $trackIPAddress = null;
 
     /**
-     * Whether or not the visitor's operating system
-     * should be recorded.
-     *
-     * @var bool|null
+     * Whether the visitor's operating system should be recorded. Null means the
+     * default value (set in the config) will be used.
      */
     protected ?bool $trackOperatingSystem = null;
 
     /**
-     * Whether or not the visitor's operating system
-     * version should be recorded.
-     *
-     * @var bool|null
+     * Whether the visitor's operating system version should be recorded. Null means
+     * the default value (set in the config) will be used.
      */
     protected ?bool $trackOperatingSystemVersion = null;
 
     /**
-     * Whether or not the visitor's browser should
-     * be recorded.
+     * Whether the visitor's browser should be recorded. Null means the default value
+     * (set in the config) will be used.
      */
     protected ?bool $trackBrowser = null;
 
     /**
-     * Whether or not the visitor's browser version
-     * should be recorded.
+     * Whether the visitor's browser version should be recorded. Null means the default
+     * value (set in the config) will be used.
      */
     protected ?bool $trackBrowserVersion = null;
 
     /**
-     * Whether or not the visitor's referer URL should
-     * be recorded.
+     * Whether the visitor's referer URL should be recorded. Null means the default
+     * value (set in the config) will be used.
      */
     protected ?bool $trackRefererURL = null;
 
     /**
-     * Whether or not the visitor's device type should
-     * be recorded.
-     *
-     * @var bool|null
+     * Whether the visitor's device type should be recorded. Null means the default
+     * value (set in the config) will be used.
      */
     protected ?bool $trackDeviceType = null;
 
     /**
-     * The date and time that the short URL should become
-     * active so that it can be visited.
+     * The date and time that the short URL should become active so that it can
+     * be visited. If this is not set, the current date and time will be used.
      */
     protected ?Carbon $activateAt = null;
 
     /**
-     * The date and time that the short URL should be
-     * deactivated so that it cannot be visited.
+     * The date and time that the short URL should be deactivated so that it
+     * cannot be visited. If this is not set, the short URL will never
+     * be deactivated.
      */
-    protected Carbon|null $deactivateAt = null;
+    protected ?Carbon $deactivateAt = null;
 
     /**
-     * Define an optional seed that can be used when generating
-     * a short URL key.
+     * Define an optional seed that can be used when generating a short URL key.
      */
     protected ?int $generateKeyUsing = null;
 
     /**
-     * Define a callback to access the ShortURL
-     * model prior to creation.
+     * Define a callback to access the ShortURL model prior to creation.
      */
     protected ?Closure $beforeCreateCallback = null;
 
@@ -155,8 +141,6 @@ class Builder
 
     /**
      * Get the short URL route prefix.
-     *
-     * @return string|null
      */
     public function prefix(): ?string
     {
@@ -171,8 +155,6 @@ class Builder
 
     /**
      * Get the middleware for short URL route.
-     *
-     * @return array
      */
     public function middleware(): array
     {
@@ -193,8 +175,7 @@ class Builder
     }
 
     /**
-     * Set the destination URL that the shortened URL
-     * will redirect to.
+     * Set the destination URL that the shortened URL will redirect to.
      *
      * @throws ShortURLException
      */
@@ -210,8 +191,7 @@ class Builder
     }
 
     /**
-     * Set whether if the shortened URL can be accessed
-     * more than once.
+     * Set whether the shortened URL can be accessed more than once.
      */
     public function singleUse(bool $isSingleUse = true): self
     {
@@ -221,8 +201,7 @@ class Builder
     }
 
     /**
-     * Set whether if the destination URL and shortened
-     * URL should be forced to use HTTPS.
+     * Set whether the destination URL and shortened URL should be forced to use HTTPS.
      */
     public function secure(bool $isSecure = true): self
     {
@@ -232,8 +211,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should forward
-     * query params to the destination URL.
+     * Set whether the short URL should forward query params to the destination URL.
      */
     public function forwardQueryParams(bool $shouldForwardQueryParams = true): self
     {
@@ -243,8 +221,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track some
-     * statistics of the visitors.
+     * Set whether the short URL should track some statistics of the visitors.
      */
     public function trackVisits(bool $trackUrlVisits = true): self
     {
@@ -254,8 +231,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * IP address of the visitor.
+     * Set whether the short URL should track the IP address of the visitor.
      */
     public function trackIPAddress(bool $track = true): self
     {
@@ -265,8 +241,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * operating system of the visitor.
+     * Set whether the short URL should track the operating system of the visitor.
      */
     public function trackOperatingSystem(bool $track = true): self
     {
@@ -276,8 +251,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * operating system version of the visitor.
+     * Set whether the short URL should track the operating system version of the visitor.
      */
     public function trackOperatingSystemVersion(bool $track = true): self
     {
@@ -287,8 +261,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * browser of the visitor.
+     * Set whether if the short URL should track the browser of the visitor.
      */
     public function trackBrowser(bool $track = true): self
     {
@@ -298,8 +271,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * browser version of the visitor.
+     * Set whether if the short URL should track the browser version of the visitor.
      */
     public function trackBrowserVersion(bool $track = true): self
     {
@@ -309,8 +281,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * referer URL of the visitor.
+     * Set whether if the short URL should track the referer URL of the visitor.
      */
     public function trackRefererURL(bool $track = true): self
     {
@@ -320,8 +291,7 @@ class Builder
     }
 
     /**
-     * Set whether if the short URL should track the
-     * device type of the visitor.
+     * Set whether if the short URL should track the device type of the visitor.
      */
     public function trackDeviceType(bool $track = true): self
     {
@@ -351,8 +321,7 @@ class Builder
     }
 
     /**
-     * Override the HTTP status code that will be used
-     * for redirecting the visitor.
+     * Override the HTTP status code that will be used for redirecting the visitor.
      *
      * @throws ShortURLException
      */
@@ -368,8 +337,7 @@ class Builder
     }
 
     /**
-     * Set the date and time that the short URL should
-     * be activated and allowed to visit.
+     * Set the datetime that the short URL should be activated and allowed to visit.
      *
      * @throws ShortURLException
      */
@@ -385,8 +353,7 @@ class Builder
     }
 
     /**
-     * Set the date and time that the short URL should
-     * be deactivated and not allowed to visit.
+     * Set the datetime that the short URL should be deactivated and not allowed to visit.
      *
      * @throws ShortURLException
      */
@@ -483,9 +450,8 @@ class Builder
     }
 
     /**
-     * Check whether if a short URL already exists in
-     * the database with this explicitly defined
-     * URL key.
+     * Check whether if a short URL already exists in the database with this
+     * explicitly defined URL key.
      *
      * @throws ShortURLException
      */
@@ -497,8 +463,7 @@ class Builder
     }
 
     /**
-     * Set the options for the short URL that is being
-     * created.
+     * Set the options for the short URL that is being created.
      */
     private function setOptions(): void
     {
@@ -526,8 +491,7 @@ class Builder
     }
 
     /**
-     * Set the tracking-specific options for the short
-     * URL that is being created.
+     * Set the tracking-specific options for the short URL that is being created.
      */
     private function setTrackingOptions(): void
     {
@@ -565,11 +529,9 @@ class Builder
     }
 
     /**
-     * Reset the options for the class. This is useful
-     * for stopping options carrying over into
-     * different short URLs that are being
-     * created with the same instance of
-     * this class.
+     * Reset the options for the class. This is useful for stopping options
+     * carrying over into different short URLs that are being created with
+     * the same instance of this class.
      */
     public function resetOptions(): self
     {
@@ -597,8 +559,7 @@ class Builder
     }
 
     /**
-     * Build and return the default short URL that will be stored in the
-     * database.
+     * Build and return the default short URL that will be stored in the database.
      */
     private function buildDefaultShortUrl(): string
     {
