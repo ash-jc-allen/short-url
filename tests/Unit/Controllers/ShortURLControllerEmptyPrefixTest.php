@@ -16,7 +16,7 @@ class ShortURLControllerEmptyPrefixTest extends TestCase
     }
 
     #[Test]
-    public function visitor_is_redirected_to_the_destination_url_with_null_prefix()
+    public function visitor_is_redirected_to_the_destination_url_with_null_prefix(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',

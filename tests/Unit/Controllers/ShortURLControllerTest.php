@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Event;
 class ShortURLControllerTest extends TestCase
 {
     #[Test]
-    public function request_is_aborted_with_http_404_if_the_short_url_cannot_be_found()
+    public function request_is_aborted_with_http_404_if_the_short_url_cannot_be_found(): void
     {
         $this->get('/short/INVALID')->assertNotFound();
     }
 
     #[Test]
-    public function visitor_is_redirected_to_the_destination_url()
+    public function visitor_is_redirected_to_the_destination_url(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -35,7 +35,7 @@ class ShortURLControllerTest extends TestCase
     }
 
     #[Test]
-    public function event_is_dispatched_when_the_short_url_is_visited()
+    public function event_is_dispatched_when_the_short_url_is_visited(): void
     {
         Event::fake();
 
@@ -77,7 +77,7 @@ class ShortURLControllerTest extends TestCase
     }
 
     #[Test]
-    public function visitor_is_redirected_with_correct_status_code()
+    public function visitor_is_redirected_with_correct_status_code(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -93,7 +93,7 @@ class ShortURLControllerTest extends TestCase
     }
 
     #[Test]
-    public function request_is_aborted_if_the_activation_date_is_in_the_future()
+    public function request_is_aborted_if_the_activation_date_is_in_the_future(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -110,7 +110,7 @@ class ShortURLControllerTest extends TestCase
     }
 
     #[Test]
-    public function request_is_aborted_if_the_deactivation_date_is_in_the_past()
+    public function request_is_aborted_if_the_deactivation_date_is_in_the_past(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -127,7 +127,7 @@ class ShortURLControllerTest extends TestCase
     }
 
     #[Test]
-    public function visitor_is_redirected_to_the_destination_url_if_the_deactivation_date_is_in_the_future()
+    public function visitor_is_redirected_to_the_destination_url_if_the_deactivation_date_is_in_the_future(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -144,7 +144,7 @@ class ShortURLControllerTest extends TestCase
     }
 
     #[Test]
-    public function visitor_is_redirected_to_the_destination_without_source_query_parameters_if_option_set_to_false()
+    public function visitor_is_redirected_to_the_destination_without_source_query_parameters_if_option_set_to_false(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com?param1=abc',

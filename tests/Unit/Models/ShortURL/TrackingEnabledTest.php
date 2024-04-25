@@ -9,7 +9,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 class TrackingEnabledTest extends TestCase
 {
     #[Test]
-    public function true_is_returned_if_tracking_is_enabled_for_the_short_url()
+    public function true_is_returned_if_tracking_is_enabled_for_the_short_url(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -24,7 +24,7 @@ class TrackingEnabledTest extends TestCase
     }
 
     #[Test]
-    public function false_is_returned_if_tracking_is_disabled_for_the_short_url()
+    public function false_is_returned_if_tracking_is_disabled_for_the_short_url(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',

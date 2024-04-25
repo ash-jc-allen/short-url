@@ -9,7 +9,7 @@ use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 class TrackingFieldsTest extends TestCase
 {
     #[Test]
-    public function array_is_returned_with_tracked_fields()
+    public function array_is_returned_with_tracked_fields(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -37,7 +37,7 @@ class TrackingFieldsTest extends TestCase
     }
 
     #[Test]
-    public function empty_array_is_returned_if_no_fields_are_set_to_be_tracked()
+    public function empty_array_is_returned_if_no_fields_are_set_to_be_tracked(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',

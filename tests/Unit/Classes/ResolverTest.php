@@ -88,7 +88,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid()
+    public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid(): void
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('The config URL length is not a valid integer.');
@@ -99,7 +99,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function request_is_aborted_if_url_is_single_use_and_has_already_been_visited()
+    public function request_is_aborted_if_url_is_single_use_and_has_already_been_visited(): void
     {
         $this->expectException(NotFoundHttpException::class);
 
@@ -120,7 +120,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function request_is_not_aborted_if_url_is_single_use_and_has_not_been_visited()
+    public function request_is_not_aborted_if_url_is_single_use_and_has_not_been_visited(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -140,7 +140,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function request_is_not_aborted_if_url_is_not_single_use_and_has_been_visited()
+    public function request_is_not_aborted_if_url_is_not_single_use_and_has_been_visited(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -161,7 +161,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function visit_details_are_not_recorded_if_url_does_not_have_tracking_enabled()
+    public function visit_details_are_not_recorded_if_url_does_not_have_tracking_enabled(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -313,7 +313,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function only_specific_fields_are_recorded_if_enabled()
+    public function only_specific_fields_are_recorded_if_enabled(): void
     {
         // Disable default tracking for the IP address, browser
         // version and referer URL.
@@ -360,7 +360,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function request_is_aborted_if_url_is_single_use_and_the_tracking_is_not_enabled()
+    public function request_is_aborted_if_url_is_single_use_and_the_tracking_is_not_enabled(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
@@ -385,7 +385,7 @@ class ResolverTest extends TestCase
     }
 
     #[Test]
-    public function referer_url_is_stored_if_it_is_enabled()
+    public function referer_url_is_stored_if_it_is_enabled(): void
     {
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
