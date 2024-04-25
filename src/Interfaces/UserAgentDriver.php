@@ -6,7 +6,7 @@ namespace AshAllenDesign\ShortURL\Interfaces;
 
 interface UserAgentDriver
 {
-    public function usingUserAgentString(string $userAgentString): self;
+    public function usingUserAgentString(?string $userAgentString): self;
 
     public function getOperatingSystem(): ?string;
 

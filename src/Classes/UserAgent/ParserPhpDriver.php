@@ -11,7 +11,7 @@ class ParserPhpDriver implements UserAgentDriver
 {
     private Parser $parser;
 
-    public function usingUserAgentString(string $userAgentString): UserAgentDriver
+    public function usingUserAgentString(?string $userAgentString): UserAgentDriver
     {
         $this->parser = new Parser($userAgentString);
 
