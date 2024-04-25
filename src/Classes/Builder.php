@@ -209,8 +209,6 @@ class Builder
 
     /**
      * Register the routes to handle the Short URL visits.
-     *
-     * @return void
      */
     public function routes(): void
     {
@@ -225,9 +223,6 @@ class Builder
     /**
      * Set the destination URL that the shortened URL
      * will redirect to.
-     *
-     * @param  string  $url
-     * @return Builder
      *
      * @throws ShortURLException
      */
@@ -245,9 +240,6 @@ class Builder
     /**
      * Set whether if the shortened URL can be accessed
      * more than once.
-     *
-     * @param  bool  $isSingleUse
-     * @return Builder
      */
     public function singleUse(bool $isSingleUse = true): self
     {
@@ -259,9 +251,6 @@ class Builder
     /**
      * Set whether if the destination URL and shortened
      * URL should be forced to use HTTPS.
-     *
-     * @param  bool  $isSecure
-     * @return Builder
      */
     public function secure(bool $isSecure = true): self
     {
@@ -273,9 +262,6 @@ class Builder
     /**
      * Set whether if the short URL should forward
      * query params to the destination URL.
-     *
-     * @param  bool  $shouldForwardQueryParams
-     * @return Builder
      */
     public function forwardQueryParams(bool $shouldForwardQueryParams = true): self
     {
@@ -287,9 +273,6 @@ class Builder
     /**
      * Set whether if the short URL should track some
      * statistics of the visitors.
-     *
-     * @param  bool  $trackUrlVisits
-     * @return $this
      */
     public function trackVisits(bool $trackUrlVisits = true): self
     {
@@ -301,9 +284,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * IP address of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackIPAddress(bool $track = true): self
     {
@@ -315,9 +295,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * operating system of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackOperatingSystem(bool $track = true): self
     {
@@ -329,9 +306,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * operating system version of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackOperatingSystemVersion(bool $track = true): self
     {
@@ -343,9 +317,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * browser of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackBrowser(bool $track = true): self
     {
@@ -357,9 +328,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * browser version of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackBrowserVersion(bool $track = true): self
     {
@@ -371,9 +339,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * referer URL of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackRefererURL(bool $track = true): self
     {
@@ -385,9 +350,6 @@ class Builder
     /**
      * Set whether if the short URL should track the
      * device type of the visitor.
-     *
-     * @param  bool  $track
-     * @return $this
      */
     public function trackDeviceType(bool $track = true): self
     {
@@ -398,9 +360,6 @@ class Builder
 
     /**
      * Explicitly set a URL key for this short URL.
-     *
-     * @param  string  $key
-     * @return $this
      */
     public function urlKey(string $key): self
     {
@@ -423,9 +382,6 @@ class Builder
      * Override the HTTP status code that will be used
      * for redirecting the visitor.
      *
-     * @param  int  $statusCode
-     * @return $this
-     *
      * @throws ShortURLException
      */
     public function redirectStatusCode(int $statusCode): self
@@ -443,9 +399,6 @@ class Builder
      * Set the date and time that the short URL should
      * be activated and allowed to visit.
      *
-     * @param  Carbon  $activationTime
-     * @return $this
-     *
      * @throws ShortURLException
      */
     public function activateAt(Carbon $activationTime): self
@@ -462,9 +415,6 @@ class Builder
     /**
      * Set the date and time that the short URL should
      * be deactivated and not allowed to visit.
-     *
-     * @param  Carbon  $deactivationTime
-     * @return $this
      *
      * @throws ShortURLException
      */
@@ -485,9 +435,6 @@ class Builder
 
     /**
      * Set the seed to be used when generating a short URL key.
-     *
-     * @param  int  $generateUsing
-     * @return $this
      */
     public function generateKeyUsing(int $generateUsing): self
     {
@@ -498,9 +445,6 @@ class Builder
 
     /**
      * Pass the Short URL model into the callback before it is created.
-     *
-     * @param  Closure  $callback
-     * @return $this
      */
     public function beforeCreate(Closure $callback): self
     {
@@ -512,13 +456,11 @@ class Builder
     /**
      * Attempt to build a shortened URL and return it.
      *
-     * @return ShortURL
-     *
      * @throws ShortURLException
      */
     public function make(): ShortURL
     {
-        if (! $this->destinationUrl) {
+        if (! isset($this->destinationUrl)) {
             throw new ShortURLException('No destination URL has been set.');
         }
 
@@ -656,8 +598,6 @@ class Builder
      * different short URLs that are being
      * created with the same instance of
      * this class.
-     *
-     * @return $this
      */
     public function resetOptions(): self
     {
@@ -686,8 +626,6 @@ class Builder
     /**
      * Build and return the default short URL that will be stored in the
      * database.
-     *
-     * @return string
      */
     private function buildDefaultShortUrl(): string
     {
