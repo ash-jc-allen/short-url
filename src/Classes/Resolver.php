@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Classes;
 
 use AshAllenDesign\ShortURL\Events\ShortURLVisited;
@@ -35,10 +37,6 @@ class Resolver
      * enabled, track the visit in the database.
      * If this method is executed successfully,
      * return true.
-     *
-     * @param  Request  $request
-     * @param  ShortURL  $shortURL
-     * @return bool
      */
     public function handleVisit(Request $request, ShortURL $shortURL): bool
     {
@@ -60,9 +58,6 @@ class Resolver
      * the URL is not activated yet, return false.
      * If the URL has been deactivated, return
      * false.
-     *
-     * @param  ShortURL  $shortURL
-     * @return bool
      */
     protected function shouldAllowAccess(ShortURL $shortURL): bool
     {
@@ -87,10 +82,6 @@ class Resolver
      * tracking is not enabled. We do this so that
      * we can check if single-use URLs have been
      * visited before.
-     *
-     * @param  Request  $request
-     * @param  ShortURL  $shortURL
-     * @return ShortURLVisit
      */
     protected function recordVisit(Request $request, ShortURL $shortURL): ShortURLVisit
     {
@@ -112,10 +103,6 @@ class Resolver
      * Check which fields should be tracked and then
      * store them if needed. Otherwise, add them
      * as null.
-     *
-     * @param  ShortURL  $shortURL
-     * @param  ShortURLVisit  $visit
-     * @param  Request  $request
      */
     protected function trackVisit(ShortURL $shortURL, ShortURLVisit $visit, Request $request): void
     {
@@ -153,9 +140,6 @@ class Resolver
     /**
      * Guess and return the device type that was used to visit the short URL. Null
      * will be returned if we cannot determine the device type.
-     *
-     * @param  UserAgentDriver  $userAgentParser
-     * @return string|null
      */
     protected function guessDeviceType(UserAgentDriver $userAgentParser): ?string
     {

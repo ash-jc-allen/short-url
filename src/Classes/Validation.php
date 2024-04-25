@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Classes;
 
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
@@ -9,8 +11,6 @@ class Validation
     /**
      * Validate all of the config related to the
      * library.
-     *
-     * @return bool
      *
      * @throws ValidationException
      */
@@ -28,8 +28,6 @@ class Validation
     /**
      * Validate that the URL Length parameter specified
      * in the config is an integer that is above 0.
-     *
-     * @return bool
      *
      * @throws ValidationException
      */
@@ -52,8 +50,6 @@ class Validation
      * Assert that the key salt provided in the config is
      * valid.
      *
-     * @return bool
-     *
      * @throws ValidationException
      */
     protected function validateKeySalt(): bool
@@ -74,8 +70,6 @@ class Validation
     /**
      * Validate that each of the tracking options are
      * booleans.
-     *
-     * @return bool
      *
      * @throws ValidationException
      */
@@ -100,8 +94,6 @@ class Validation
      * Validate that the disable_default_route option
      * is a boolean.
      *
-     * @return bool
-     *
      * @throws ValidationException
      */
     protected function validateDefaultRouteOption(): bool
@@ -115,8 +107,6 @@ class Validation
 
     /**
      * Validate that the enforce_https option is a boolean.
-     *
-     * @return bool
      *
      * @throws ValidationException
      */
@@ -132,8 +122,6 @@ class Validation
     /**
      * Validate that the forward query params option is a boolean.
      *
-     * @return bool
-     *
      * @throws ValidationException
      */
     protected function validateForwardQueryParamsOption(): bool
@@ -147,8 +135,6 @@ class Validation
 
     /**
      * Validate that the default URL is a valid string or null.
-     *
-     * @return bool
      *
      * @throws ValidationException
      */
