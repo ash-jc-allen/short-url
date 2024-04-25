@@ -30,13 +30,13 @@ class ShortURLVisit extends Model
 {
     use HasFactory;
 
-    const DEVICE_TYPE_MOBILE = 'mobile';
+    public const DEVICE_TYPE_MOBILE = 'mobile';
 
-    const DEVICE_TYPE_DESKTOP = 'desktop';
+    public const DEVICE_TYPE_DESKTOP = 'desktop';
 
-    const DEVICE_TYPE_TABLET = 'tablet';
+    public const DEVICE_TYPE_TABLET = 'tablet';
 
-    const DEVICE_TYPE_ROBOT = 'robot';
+    public const DEVICE_TYPE_ROBOT = 'robot';
 
     /**
      * The table associated with the model.
