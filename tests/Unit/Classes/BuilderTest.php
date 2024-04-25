@@ -537,7 +537,7 @@ class BuilderTest extends TestCase
      */
     public function data_can_be_set_on_the_builder_using_when(bool $flag, string $destination): void
     {
-        $shortUrl = (app(Builder::class))
+        $shortUrl = app(Builder::class)
             ->when(
                 $flag,
                 fn (Builder $builder): Builder => $builder->destinationUrl('https://domain.com'),
@@ -551,7 +551,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function data_can_be_overridden_on_model_using_make_callback(): void
     {
-        $shortUrl = (app(Builder::class))
+        $shortUrl = app(Builder::class)
             ->destinationUrl('https://foo.com')
             ->beforeCreate(function (ShortURL $shortURL) {
                 $shortURL->destination_url = 'https://bar.com';
@@ -566,7 +566,7 @@ class BuilderTest extends TestCase
     {
         Config::set('short-url.default_url', null);
 
-        $shortUrl = (app(Builder::class))
+        $shortUrl = app(Builder::class)
             ->destinationUrl('https://domain.com')
             ->urlKey('abc123')
             ->make();
@@ -577,7 +577,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_with_a_custom_integer_seed(): void
     {
-        $shortUrlOne = (app(Builder::class))
+        $shortUrlOne = app(Builder::class)
             ->destinationUrl('https://domain.com')
             ->generateKeyUsing(123)
             ->make();
@@ -588,7 +588,7 @@ class BuilderTest extends TestCase
     /** @test */
     public function short_url_can_be_created_using_the_url_key_if_the_key_and_seeder_are_both_set(): void
     {
-        $shortUrl = (app(Builder::class))
+        $shortUrl = app(Builder::class)
             ->destinationUrl('https://domain.com')
             ->generateKeyUsing(111111)
             ->urlKey('abc123')
