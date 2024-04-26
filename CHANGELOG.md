@@ -1,6 +1,6 @@
 # Changelog
 
-**v8.0.0 (released 2024-04-XX):**
+**v8.0.0 (released 2024-04-26):**
 
 - Switch from `jenssegers/agent` to `whichbrowser/parser` for user agent parsing. [#261](https://github.com/ash-jc-allen/short-url/pull/261), [#256](https://github.com/ash-jc-allen/short-url/pull/256)
 - Added property types and strict type-checking. [#265](https://github.com/ash-jc-allen/short-url/pull/265)
