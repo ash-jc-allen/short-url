@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\ShortURL\Classes;
 
+use AshAllenDesign\ConfigValidator\Exceptions\InvalidConfigValueException;
+use AshAllenDesign\ConfigValidator\Services\ConfigValidator;
+use AshAllenDesign\ConfigValidator\Services\Rule;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 
 class Validation
@@ -15,54 +18,49 @@ class Validation
      */
     public function validateConfig(): bool
     {
-        return $this->validateKeyLength()
-               && $this->validateTrackingOptions()
-               && $this->validateDefaultRouteOption()
-               && $this->validateKeySalt()
-               && $this->validateEnforceHttpsOption()
-               && $this->validateForwardQueryParamsOption()
-               && $this->validateDefaultUrl();
+        try {
+            return app(ConfigValidator::class)->runInline([
+                'short-url' => [
+                    $this->validateKeyLength(),
+                    ...$this->validateTrackingOptions(),
+                    $this->validateKeySalt(),
+                    $this->validateDefaultRouteOption(),
+                    $this->validateEnforceHttpsOption(),
+                    $this->validateForwardQueryParamsOption(),
+                    $this->validateDefaultUrl(),
+                ],
+            ]);
+        } catch (InvalidConfigValueException $e) {
+            throw new ValidationException($e->getMessage());
+        }
     }
 
     /**
      * Validate that the URL Length parameter specified in the config is an integer
-     * that is above 0.
-     *
-     * @throws ValidationException
+     * that is above 3.
      */
-    protected function validateKeyLength(): bool
+    protected function validateKeyLength(): Rule
     {
-        $urlLength = config('short-url.key_length');
-
-        if (! is_int($urlLength)) {
-            throw new ValidationException('The config URL length is not a valid integer.');
-        }
-
-        if ($urlLength < 3) {
-            throw new ValidationException('The config URL length must be 3 or above.');
-        }
-
-        return true;
+        return Rule::make('key_length')
+            ->rules(['required', 'integer', 'min:3'])
+            ->messages([
+                'required' => 'The config URL length is not a valid integer.',
+                'integer' => 'The config URL length is not a valid integer.',
+                'min' => 'The config URL length must be 3 or above.'
+            ]);
     }
 
     /**
      * Assert that the key salt provided in the config is valid.
-     *
-     * @throws ValidationException
      */
-    protected function validateKeySalt(): bool
+    protected function validateKeySalt(): Rule
     {
-        $keySalt = config('short-url.key_salt');
-
-        if (! is_string($keySalt)) {
-            throw new ValidationException('The config key salt must be a string.');
-        }
-
-        if (! strlen($keySalt)) {
-            throw new ValidationException('The config key salt must be at least 1 character long.');
-        }
-
-        return true;
+        return Rule::make('key_salt')
+            ->rules(['required', 'string'])
+            ->messages([
+                'required' => 'The config key salt must be a string.',
+                'string' => 'The config key salt must be a string.',
+            ]);
     }
 
     /**
@@ -70,79 +68,84 @@ class Validation
      *
      * @throws ValidationException
      */
-    protected function validateTrackingOptions(): bool
+    protected function validateTrackingOptions(): array
     {
         $trackingOptions = config('short-url.tracking');
 
-        if (! is_bool($trackingOptions['default_enabled'])) {
+        $rules = [
+            Rule::make('tracking.default_enabled')
+                ->rules(['required', 'boolean'])
+                ->messages([
+                    'required' => 'The default_enabled config variable must be a boolean.',
+                    'boolean' => 'The default_enabled config variable must be a boolean.',
+                ]),
+        ];
+
+        if (!is_bool($trackingOptions['default_enabled'])) {
             throw new ValidationException('The default_enabled config variable must be a boolean.');
         }
 
         foreach ($trackingOptions['fields'] as $trackingOption => $value) {
-            if (! is_bool($value)) {
-                throw new ValidationException('The '.$trackingOption.' config variable must be a boolean.');
-            }
+            $rules[] = Rule::make('tracking.fields.' . $trackingOption)
+                ->rules(['required', 'boolean'])
+                ->messages([
+                    'required' => 'The ' . $trackingOption . ' config variable must be a boolean.',
+                    'boolean' => 'The ' . $trackingOption . ' config variable must be a boolean.',
+                ]);
         }
 
-        return true;
+        return $rules;
     }
 
     /**
      * Validate that the disable_default_route option is a boolean.
-     *
-     * @throws ValidationException
      */
-    protected function validateDefaultRouteOption(): bool
+    protected function validateDefaultRouteOption(): Rule
     {
-        if (! is_bool(config('short-url.disable_default_route'))) {
-            throw new ValidationException('The disable_default_route config variable must be a boolean.');
-        }
-
-        return true;
+        return Rule::make('disable_default_route')
+            ->rules(['required', 'boolean'])
+            ->messages([
+                'required' => 'The disable_default_route config variable must be a boolean.',
+                'boolean' => 'The disable_default_route config variable must be a boolean.',
+            ]);
     }
 
     /**
      * Validate that the enforce_https option is a boolean.
-     *
-     * @throws ValidationException
      */
-    protected function validateEnforceHttpsOption(): bool
+    protected function validateEnforceHttpsOption(): Rule
     {
-        if (! is_bool(config('short-url.enforce_https'))) {
-            throw new ValidationException('The enforce_https config variable must be a boolean.');
-        }
-
-        return true;
+        return Rule::make('enforce_https')
+            ->rules(['required', 'boolean'])
+            ->messages([
+                'required' => 'The enforce_https config variable must be a boolean.',
+                'boolean' => 'The enforce_https config variable must be a boolean.',
+            ]);
     }
 
     /**
      * Validate that the forward query params option is a boolean.
-     *
-     * @throws ValidationException
      */
-    protected function validateForwardQueryParamsOption(): bool
+    protected function validateForwardQueryParamsOption(): Rule
     {
-        if (! is_bool(config('short-url.forward_query_params'))) {
-            throw new ValidationException('The forward_query_params config variable must be a boolean.');
-        }
-
-        return true;
+        return Rule::make('forward_query_params')
+            ->rules(['required', 'boolean'])
+            ->messages([
+                'required' => 'The forward_query_params config variable must be a boolean.',
+                'boolean' => 'The forward_query_params config variable must be a boolean.',
+            ]);
     }
 
     /**
      * Validate that the default URL is a valid string or null.
-     *
-     * @throws ValidationException
      */
-    protected function validateDefaultUrl(): bool
+    protected function validateDefaultUrl(): Rule
     {
-        $defaultUrl = config('short-url.default_url');
-        $isValid = is_string($defaultUrl) || is_null($defaultUrl);
-
-        if (! $isValid) {
-            throw new ValidationException('The default_url config variable must be a string or null.');
-        }
-
-        return true;
+        return Rule::make('default_url')
+            ->rules(['nullable', 'string'])
+            ->messages([
+                'nullable' => 'The default_url config variable must be a string or null.',
+                'string' => 'The default_url config variable must be a string or null.',
+            ]);
     }
 }

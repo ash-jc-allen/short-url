@@ -86,7 +86,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_key_salt_is_less_than_one_character_long(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config key salt must be at least 1 character long.');
+        $this->expectExceptionMessage('The config key salt must be a string.');
 
         Config::set('short-url.key_salt', '');
 
