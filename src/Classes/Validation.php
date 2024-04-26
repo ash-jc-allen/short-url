@@ -35,7 +35,7 @@ class Validation
                 ],
             ]);
 
-        if (!$passes) {
+        if (! $passes) {
             $validationMessage = $validator->errors()[array_key_first($validator->errors())][0];
 
             throw new ValidationException($validationMessage);
@@ -58,7 +58,7 @@ class Validation
         ];
 
         foreach ($trackingOptions as $trackingOption => $value) {
-            $rules[] = Rule::make('tracking.fields.' . $trackingOption)
+            $rules[] = Rule::make('tracking.fields.'.$trackingOption)
                 ->rules(['required', 'boolean']);
         }
 
