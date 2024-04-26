@@ -6,6 +6,7 @@
 - Added property types and strict type-checking. [#265](https://github.com/ash-jc-allen/short-url/pull/265)
 - Added support for PHPUnit 11. [#268](https://github.com/ash-jc-allen/short-url/pull/268)
 - Added Pest architecture tests. [#274](https://github.com/ash-jc-allen/short-url/pull/274)
+- Switch to `ashallendesign/laravel-config-validator` to validate the package's config. [#278](https://github.com/ash-jc-allen/short-url/pull/278)
 - Dropped support for PHP 8.0. [#257](https://github.com/ash-jc-allen/short-url/pull/257)
 - Dropped support for Laravel 8 and 9. [#257](https://github.com/ash-jc-allen/short-url/pull/257)
 - Dropped support for PHPUnit 8 and 9. [#268](https://github.com/ash-jc-allen/short-url/pull/268)
