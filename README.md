@@ -49,6 +49,8 @@
             - [Tracking Fields](#tracking-fields)
         - [Config Validation](#config-validation)
         - [Custom Database Connection](#custom-database-connection)
+        - [Specifying the Key Generator](#specifying-the-key-generator)
+        - [Specifying the User Agent Parser](#specifying-the-user-agent-parser)
     - [Helper Methods](#helper-methods)
         - [Visits](#visits)
         - [Find by URL Key](#find-by-url-key)
@@ -600,6 +602,30 @@ To do this, you can set the connection name using the `connection` config value 
 'connection' => 'custom_database_connection_name',
 ```
 
+#### Specifying the Key Generator
+
+By default, Short URL uses the `AshAllenDesign\ShortURL\Classes\KeyGenerator` class to generate the keys for the short URL. However, you may want to use your own custom key generator class.
+
+To do this, you can define the class to be used in the `short-url.php` config file like so:
+
+```php
+'url_key_generator' => \AshAllenDesign\ShortURL\Classes\KeyGenerator::class,
+```
+
+You'll just need to ensure that your custom key generator class implements the `AshAllenDesign\ShortURL\Interfaces\KeyGenerator` interface.
+
+#### Specifying the User Agent Parser
+
+By default, Short URL uses `whichbrowser/parser` package to parse the user agent header of the visitor when tracking visits. However, you may want to use your own custom user agent parser.
+
+To do this, you can define the class to be used in the `short-url.php` config file like so:
+
+```php
+'user_agent_driver' => \AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver::class,
+```
+
+You'll just need to ensure that your custom user agent parser class implements the `AshAllenDesign\ShortURL\Interfaces\UserAgentDriver` interface.
+
 ### Helper Methods
 #### Visits
 The ShortURL model includes a relationship (that you can use just like any other Laravel model relation) for getting the
@@ -653,7 +679,7 @@ The following example shows how to get an array of all tracking-enabled fields f
 ```php
 $shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
 $shortURL->trackingFields();
-``` 
+```
 
 ### Model Factories
 
