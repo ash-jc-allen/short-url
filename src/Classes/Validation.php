@@ -35,7 +35,7 @@ class Validation
                 ],
             ]);
 
-        if (!$passes) {
+        if (! $passes) {
             $validationMessage = $validator->errors()[array_key_first($validator->errors())][0];
 
             throw new ValidationException($validationMessage);
@@ -57,12 +57,12 @@ class Validation
             Rule::make('tracking.default_enabled')->rules(['required', 'boolean']),
         ];
 
-        if (!is_bool($trackingOptions['default_enabled'])) {
+        if (! is_bool($trackingOptions['default_enabled'])) {
             throw new ValidationException('The default_enabled config variable must be a boolean.');
         }
 
         foreach ($trackingOptions['fields'] as $trackingOption => $value) {
-            $rules[] = Rule::make('tracking.fields.' . $trackingOption)
+            $rules[] = Rule::make('tracking.fields.'.$trackingOption)
                 ->rules(['required', 'boolean']);
         }
 
