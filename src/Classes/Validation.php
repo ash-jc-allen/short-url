@@ -46,7 +46,7 @@ class Validation
             ->messages([
                 'required' => 'The config URL length is not a valid integer.',
                 'integer' => 'The config URL length is not a valid integer.',
-                'min' => 'The config URL length must be 3 or above.'
+                'min' => 'The config URL length must be 3 or above.',
             ]);
     }
 
@@ -81,16 +81,16 @@ class Validation
                 ]),
         ];
 
-        if (!is_bool($trackingOptions['default_enabled'])) {
+        if (! is_bool($trackingOptions['default_enabled'])) {
             throw new ValidationException('The default_enabled config variable must be a boolean.');
         }
 
         foreach ($trackingOptions['fields'] as $trackingOption => $value) {
-            $rules[] = Rule::make('tracking.fields.' . $trackingOption)
+            $rules[] = Rule::make('tracking.fields.'.$trackingOption)
                 ->rules(['required', 'boolean'])
                 ->messages([
-                    'required' => 'The ' . $trackingOption . ' config variable must be a boolean.',
-                    'boolean' => 'The ' . $trackingOption . ' config variable must be a boolean.',
+                    'required' => 'The '.$trackingOption.' config variable must be a boolean.',
+                    'boolean' => 'The '.$trackingOption.' config variable must be a boolean.',
                 ]);
         }
 
