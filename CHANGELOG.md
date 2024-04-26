@@ -14,6 +14,8 @@
 - Abstract the key generator out to use an interface. [#262](https://github.com/ash-jc-allen/short-url/pull/262)
 - Updated the facade to include all methods in the docblock. [#252](https://github.com/ash-jc-allen/short-url/pull/252)
 
+Huge thank you to [@stevebauman](https://github.com/stevebauman) and [@marzvrover](https://github.com/marzvrover) for their contributions in this release. I really appreciate it! 🚀
+
 **v7.10.0 (released 2024-03-19):**
 
 - Added support for nesbot/carbon 3.0. [#246](https://github.com/ash-jc-allen/short-url/pull/246)
