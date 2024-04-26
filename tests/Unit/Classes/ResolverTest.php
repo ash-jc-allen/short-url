@@ -91,7 +91,7 @@ final class ResolverTest extends TestCase
     public function exception_is_thrown_in_the_constructor_if_the_config_variables_are_invalid(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config URL length is not a valid integer.');
+        $this->expectExceptionMessage('The short-url.key_length field must be an integer.');
 
         Config::set('short-url.key_length', 'INVALID');
 
