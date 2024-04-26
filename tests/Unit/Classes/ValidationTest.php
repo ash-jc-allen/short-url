@@ -14,7 +14,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_key_length_is_not_an_integer(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config URL length is not a valid integer.');
+        $this->expectExceptionMessage('The short-url.key_length field must be an integer.');
 
         Config::set('short-url.key_length', 'INVALID');
 
@@ -26,7 +26,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_key_length_is_below_3(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config URL length must be 3 or above.');
+        $this->expectExceptionMessage('The short-url.key_length field must be at least 3.');
 
         Config::set('short-url.key_length', 2);
 
@@ -50,7 +50,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_any_of_the_tracking_options_are_not_null(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The ip_address config variable must be a boolean.');
+        $this->expectExceptionMessage('The short-url.tracking.fields.ip_address field must be true or false.');
 
         Config::set('short-url.tracking.fields.ip_address', 'INVALID');
 
@@ -62,7 +62,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_disable_default_route_option_is_not_a_boolean(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The disable_default_route config variable must be a boolean.');
+        $this->expectExceptionMessage('The short-url.disable_default_route field must be true or false.');
 
         Config::set('short-url.disable_default_route', 'INVALID');
 
@@ -74,7 +74,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_key_salt_is_not_a_string(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config key salt must be a string.');
+        $this->expectExceptionMessage('The short-url.key_salt field must be a string.');
 
         Config::set('short-url.key_salt', true);
 
@@ -86,7 +86,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_key_salt_is_less_than_one_character_long(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The config key salt must be a string.');
+        $this->expectExceptionMessage('The short-url.key_salt field is required.');
 
         Config::set('short-url.key_salt', '');
 
@@ -98,7 +98,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_enforce_https_variable_is_not_a_boolean(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The enforce_https config variable must be a boolean.');
+        $this->expectExceptionMessage('The short-url.enforce_https field must be true or false.');
 
         Config::set('short-url.enforce_https', 'INVALID');
 
@@ -110,7 +110,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_forward_query_params_variable_is_not_a_boolean(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The forward_query_params config variable must be a boolean.');
+        $this->expectExceptionMessage('The short-url.forward_query_params field must be true or false.');
 
         Config::set('short-url.forward_query_params', 'INVALID');
 
@@ -122,7 +122,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_default_url_is_not_a_string(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The default_url config variable must be a string or null.');
+        $this->expectExceptionMessage('The short-url.default_url field must be a string.');
 
         Config::set('short-url.default_url', true);
 
