@@ -51,17 +51,13 @@ class Validation
      */
     protected function validateTrackingOptions(): array
     {
-        $trackingOptions = config('short-url.tracking');
+        $trackingOptions = config('short-url.tracking.fields');
 
         $rules = [
             Rule::make('tracking.default_enabled')->rules(['required', 'boolean']),
         ];
 
-        if (!is_bool($trackingOptions['default_enabled'])) {
-            throw new ValidationException('The default_enabled config variable must be a boolean.');
-        }
-
-        foreach ($trackingOptions['fields'] as $trackingOption => $value) {
+        foreach ($trackingOptions as $trackingOption => $value) {
             $rules[] = Rule::make('tracking.fields.' . $trackingOption)
                 ->rules(['required', 'boolean']);
         }

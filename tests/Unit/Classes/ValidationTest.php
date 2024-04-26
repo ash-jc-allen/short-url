@@ -38,7 +38,7 @@ final class ValidationTest extends TestCase
     public function exception_is_thrown_if_the_default_enabled_variable_is_not_a_boolean(): void
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The default_enabled config variable must be a boolean.');
+        $this->expectExceptionMessage('The short-url.tracking.default_enabled field must be true or false.');
 
         Config::set('short-url.tracking.default_enabled', 'INVALID');
 
