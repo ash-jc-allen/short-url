@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Events;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
@@ -14,24 +16,14 @@ class ShortURLVisited
 
     /**
      * The short URL that was visited.
-     *
-     * @var ShortURL
      */
-    public $shortURL;
+    public ShortURL $shortURL;
 
     /**
      * Details of the visitor that visited the short URL.
-     *
-     * @var ShortURLVisit
      */
-    public $shortURLVisit;
+    public ShortURLVisit $shortURLVisit;
 
-    /**
-     * Create a new event instance.
-     *
-     * @param  ShortURL  $shortURL
-     * @param  ShortURLVisit  $shortURLVisit
-     */
     public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit)
     {
         $this->shortURL = $shortURL;

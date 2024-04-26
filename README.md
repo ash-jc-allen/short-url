@@ -49,6 +49,8 @@
             - [Tracking Fields](#tracking-fields)
         - [Config Validation](#config-validation)
         - [Custom Database Connection](#custom-database-connection)
+        - [Specifying the Key Generator](#specifying-the-key-generator)
+        - [Specifying the User Agent Parser](#specifying-the-user-agent-parser)
     - [Helper Methods](#helper-methods)
         - [Visits](#visits)
         - [Find by URL Key](#find-by-url-key)
@@ -100,14 +102,18 @@ php artisan migrate
 ```
 
 ## Usage
-### Building Shortened URLs
-#### Quick Start
-The quickest way to get started with creating a shortened URL is by using the snippet below. The ``` ->make() ``` method
- returns a ShortURL model that you can grab the shortened URL from.
-```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->make();
+### Building Shortened URLs
+
+#### Quick Start
+
+The quickest way to get started with creating a shortened URL is by using the snippet below. The `->make()` method
+ returns a ShortURL model that you can grab the shortened URL from.
+
+```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->make();
 $shortURL = $shortURLObject->default_short_url;
 ```
 
@@ -120,9 +126,9 @@ You may wish to define a custom key yourself for that URL that is more meaningfu
 do this by using the ``` ->urlKey() ``` method. Example:
 
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->urlKey('custom-key')->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->urlKey('custom-key')->make();
 $shortURL = $shortURLObject->default_short_url;
 
 // Short URL: https://webapp.com/short/custom-key
@@ -147,17 +153,19 @@ If you want to override whether if tracking is enabled or not when creating a sh
 This method accepts a boolean but defaults to ``` true ``` if a parameter is not passed.
 
 The example below shows how to enable tracking for the URL and override the config variable:
-```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->make();
+```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->make();
 ```
 
 The example below shows how to disable tracking for the URL and override the default config variable:
-```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits(false)->make();
+```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits(false)->make();
 ```
 
 ##### Tracking IP Address
@@ -167,9 +175,9 @@ If you want to override whether if IP address tracking is enabled or not when cr
 
 The example below shows how to enable IP address tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackIPAddress()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackIPAddress()->make();
 ```
 
 ##### Tracking Browser & Browser Version
@@ -180,16 +188,16 @@ but defaults to ``` true ``` if a parameter is not passed.
 
 The example below shows how to enable browser name tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackBrowser()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackBrowser()->make();
 ```
 
 The example below shows how to enable browser version tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackBrowserVersion()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackBrowserVersion()->make();
 ```
 
 ##### Tracking Operating System & Operating System Version
@@ -200,16 +208,16 @@ methods. These methods accept a boolean but default to ``` true ``` if a paramet
 
 The example below shows how to enable operating system name tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystem()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystem()->make();
 ```
 
 The example below shows how to enable operating system version tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystemVersion()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystemVersion()->make();
 ```
 
 ##### Tracking Device Type
@@ -219,9 +227,9 @@ If you want to override whether if device type tracking is enabled or not when c
 
 The example below shows how to enable device type tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackDeviceType()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackDeviceType()->make();
 ```
 
 ##### Tracking Referer URL
@@ -231,9 +239,9 @@ If you want to override whether if referer URL tracking is enabled or not when c
 
 The example below shows how to enable referer URL tracking for the URL and override the default config variable:
 ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = $builder->destinationUrl('https://destination.com')->trackVisits()->trackRefererURL()->make();
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackRefererURL()->make();
 ```
 
 #### Custom Short URL Fields
@@ -268,9 +276,9 @@ To create a single use shortened URL, you can use the ``` ->singleUse() ``` meth
 
 The example below shows how to create a single use shortened URL:
  ```php
- $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
- $shortURLObject = $builder->destinationUrl('https://destination.com')->singleUse()->make();
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->singleUse()->make();
  ```
 
 #### Enforce HTTPS
@@ -282,9 +290,9 @@ To enforce HTTPS, you can use the ``` ->secure() ``` method when building the sh
 
 The example below shows how to create a secure shortened URL:
  ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
-$shortURLObject = $builder->destinationUrl('http://destination.com')->secure()->make();
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('http://destination.com')->secure()->make();
 
 // Destination URL: https://destination.com
  ```
@@ -295,9 +303,9 @@ When building a short URL, you might want to forward the query parameters sent i
 Alternatively, you can also use the `->forwardQueryParams()` method when building your shortened URL, as shown in the example below:
 
  ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
-$shortURLObject = $builder->destinationUrl('http://destination.com?param1=test')->forwardQueryParams()->make();
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('http://destination.com?param1=test')->forwardQueryParams()->make();
  ```
 
 Based on the example above, assuming that the original short URL's `destination_url` was `https://destination.com`, making a request to `https://webapp.com/short/xxx?param1=abc&param2=def` would redirect to `https://destination.com?param1=test&param2=def`
@@ -308,11 +316,12 @@ By default, all short URLs are redirected with a ``` 301 ``` HTTP status code. B
 the shortened URL using the ``` ->redirectStatusCode() ``` method.
 
 The example below shows how to create a shortened URL with a redirect HTTP status code of ``` 302 ```:
- ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
-$shortURLObject = $builder->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
- ```
+
+```php
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
+```
 
 #### Activation and Deactivation Times
 
@@ -325,18 +334,18 @@ a given date and then automatically deactivate that URL when the marketing campa
 The example below shows how to create a shortened URL that will be active from this time tomorrow onwards:
 
  ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
-$shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())->make();
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->activateAt(\Carbon\Carbon::now()->addDay())->make();
  ```
 
 The example below shows how to create a shortened URL that will be active from this time tomorrow onwards and then is
 deactivated the day after:
 
  ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
-$shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->activateAt(\Carbon\Carbon::now()->addDay())
                            ->deactivateAt(\Carbon\Carbon::now()->addDays(2))
                            ->make();
  ```
@@ -346,9 +355,9 @@ $shortURLObject = $builder->activateAt(\Carbon\Carbon::now()->addDay())
 By default, the package will use the ID of the last inserted short URL as the seed for generating a short URL's key. In some cases, you may want to use a custom seed instead. To do this, you can pass an integer to the `generateKeyUsing` method like so:
 
  ```php
-$builder = new \AshAllenDesign\ShortURL\Classes\Builder();
- 
-$shortURLObject = $builder->destinationUrl('https://destination.com')
+use AshAllenDesign\ShortURL\Classes\Builder;
+
+$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')
     ->generateKeyUsing(12345)
     ->make();
  ```
@@ -385,8 +394,7 @@ For example, let's take this block of code that uses `if` when building the shor
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
  
-$shortURLObject = (new Builder())
-    ->destinationUrl('https://destination.com');
+$builder = app(Builder::class)->destinationUrl('https://destination.com');
 
 if ($request->date('activation')) {
     $builder = $builder->activateAt($request->date('activation'));
@@ -401,7 +409,7 @@ This could be rewritten using `when` like so:
 use AshAllenDesign\ShortURL\Classes\Builder;
 use Carbon\Carbon;
  
-$shortURLObject = (new Builder())
+$shortURLObject = app(Builder::class)
     ->destinationUrl('https://destination.com')
     ->when(
         $request->date('activation'),
@@ -600,6 +608,30 @@ To do this, you can set the connection name using the `connection` config value 
 'connection' => 'custom_database_connection_name',
 ```
 
+#### Specifying the Key Generator
+
+By default, Short URL uses the `AshAllenDesign\ShortURL\Classes\KeyGenerator` class to generate the keys for the short URL. However, you may want to use your own custom key generator class.
+
+To do this, you can define the class to be used in the `short-url.php` config file like so:
+
+```php
+'url_key_generator' => \AshAllenDesign\ShortURL\Classes\KeyGenerator::class,
+```
+
+You'll just need to ensure that your custom key generator class implements the `AshAllenDesign\ShortURL\Interfaces\KeyGenerator` interface.
+
+#### Specifying the User Agent Parser
+
+By default, Short URL uses `whichbrowser/parser` package to parse the user agent header of the visitor when tracking visits. However, you may want to use your own custom user agent parser.
+
+To do this, you can define the class to be used in the `short-url.php` config file like so:
+
+```php
+'user_agent_driver' => \AshAllenDesign\ShortURL\Classes\UserAgent\ParserPhpDriver::class,
+```
+
+You'll just need to ensure that your custom user agent parser class implements the `AshAllenDesign\ShortURL\Interfaces\UserAgentDriver` interface.
+
 ### Helper Methods
 #### Visits
 The ShortURL model includes a relationship (that you can use just like any other Laravel model relation) for getting the
@@ -653,7 +685,7 @@ The following example shows how to get an array of all tracking-enabled fields f
 ```php
 $shortURL = \AshAllenDesign\ShortURL\Models\ShortURL::first();
 $shortURL->trackingFields();
-``` 
+```
 
 ### Model Factories
 

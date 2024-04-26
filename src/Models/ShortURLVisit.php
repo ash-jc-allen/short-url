@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
@@ -9,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class ShortURLVisit.
- *
  * @property int $id
  * @property int $short_url_id
  * @property string $ip_address
@@ -28,13 +28,13 @@ class ShortURLVisit extends Model
 {
     use HasFactory;
 
-    const DEVICE_TYPE_MOBILE = 'mobile';
+    public const DEVICE_TYPE_MOBILE = 'mobile';
 
-    const DEVICE_TYPE_DESKTOP = 'desktop';
+    public const DEVICE_TYPE_DESKTOP = 'desktop';
 
-    const DEVICE_TYPE_TABLET = 'tablet';
+    public const DEVICE_TYPE_TABLET = 'tablet';
 
-    const DEVICE_TYPE_ROBOT = 'robot';
+    public const DEVICE_TYPE_ROBOT = 'robot';
 
     /**
      * The table associated with the model.
@@ -58,20 +58,6 @@ class ShortURLVisit extends Model
         'visited_at',
         'referer_url',
         'device_type',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @deprecated This field is no longer used in Laravel 10 and above.
-     *             It will be removed in a future release.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'visited_at',
-        'created_at',
-        'updated_at',
     ];
 
     /**

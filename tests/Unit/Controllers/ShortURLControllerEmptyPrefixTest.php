@@ -4,8 +4,9 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Controllers;
 
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
-class ShortURLControllerEmptyPrefixTest extends TestCase
+final class ShortURLControllerEmptyPrefixTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
@@ -14,8 +15,8 @@ class ShortURLControllerEmptyPrefixTest extends TestCase
         parent::getEnvironmentSetUp($app);
     }
 
-    /** @test */
-    public function visitor_is_redirected_to_the_destination_url_with_null_prefix()
+    #[Test]
+    public function visitor_is_redirected_to_the_destination_url_with_null_prefix(): void
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',

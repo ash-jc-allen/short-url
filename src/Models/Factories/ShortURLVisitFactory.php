@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Models\Factories;
 
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
-use Jenssegers\Agent\Agent;
 
 /**
  * @extends Factory<ShortURLVisit>
@@ -18,18 +19,26 @@ class ShortURLVisitFactory extends Factory
     {
         return [
             'ip_address' => $this->faker->ipv4(),
-            'operating_system' => $this->faker->randomElement(
-                array_keys(Agent::getPlatforms()),
-            ),
+            'operating_system' => $this->faker->randomElement([
+                'OS X',
+                'iOS',
+                'Android',
+                'null',
+            ]),
             'operating_system_version' => $this->faker->randomFloat(8, 20),
-            'browser' => $this->faker->randomElement(Agent::getBrowsers()),
-            'browser_version' => $this->faker->userAgent(),
-            'device_type' => $this->faker->randomElement(
-                array_merge(
-                    array_keys(Agent::getPhoneDevices()),
-                    array_keys(Agent::getTabletDevices()),
-                    array_keys(Agent::getDesktopDevices()),
-                )),
+            'browser' => $this->faker->randomElement([
+                'Firefox',
+                'Safari',
+                'Chrome',
+                'Googlebot',
+            ]),
+            'browser_version' => $this->faker->randomFloat(8, 20),
+            'device_type' => $this->faker->randomElement([
+                'desktop',
+                'mobile',
+                'tablet',
+                'robot',
+            ]),
             'visited_at' => Carbon::now(),
             'referer_url' => $this->faker->url(),
             'created_at' => Carbon::now(),

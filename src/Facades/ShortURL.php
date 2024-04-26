@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -40,8 +42,6 @@ class ShortURL extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @return string
      *
      * @throws RuntimeException
      */

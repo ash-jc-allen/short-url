@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
@@ -10,8 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class ShortURL.
- *
  * @property int $id
  * @property string $destination_url
  * @property string $default_short_url
@@ -68,18 +68,23 @@ class ShortURL extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
-     * @deprecated This field is no longer used in Laravel 10 and above.
-     *             It will be removed in a future release.
-     *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = [
-        'activated_at',
-        'deactivated_at',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'single_use' => 'boolean',
+        'forward_query_params' => 'boolean',
+        'track_visits' => 'boolean',
+        'track_ip_address' => 'boolean',
+        'track_operating_system' => 'boolean',
+        'track_operating_system_version' => 'boolean',
+        'track_browser' => 'boolean',
+        'track_browser_version' => 'boolean',
+        'track_referer_url' => 'boolean',
+        'track_device_type' => 'boolean',
+        'activated_at' => 'datetime',
+        'deactivated_at' => 'datetime',
     ];
 
     public function __construct(array $attributes = [])
@@ -104,26 +109,6 @@ class ShortURL extends Model
     }
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'single_use' => 'boolean',
-        'forward_query_params' => 'boolean',
-        'track_visits' => 'boolean',
-        'track_ip_address' => 'boolean',
-        'track_operating_system' => 'boolean',
-        'track_operating_system_version' => 'boolean',
-        'track_browser' => 'boolean',
-        'track_browser_version' => 'boolean',
-        'track_referer_url' => 'boolean',
-        'track_device_type' => 'boolean',
-        'activated_at' => 'datetime',
-        'deactivated_at' => 'datetime',
-    ];
-
-    /**
      * A short URL can be visited many times.
      *
      * @return HasMany<ShortURLVisit>
@@ -134,11 +119,8 @@ class ShortURL extends Model
     }
 
     /**
-     * A helper method that can be used for finding
-     * a ShortURL model with the given URL key.
-     *
-     * @param  string  $URLKey
-     * @return ShortURL|null
+     * A helper method that can be used for finding a ShortURL model with the
+     * given URL key.
      */
     public static function findByKey(string $URLKey): ?self
     {
@@ -146,11 +128,9 @@ class ShortURL extends Model
     }
 
     /**
-     * A helper method that can be used for finding
-     * all of the ShortURL models with the given
-     * destination URL.
+     * A helper method that can be used for finding all the ShortURL models
+     * with the given destination URL.
      *
-     * @param  string  $destinationURL
      * @return Collection<int, ShortURL>
      */
     public static function findByDestinationURL(string $destinationURL): Collection
@@ -159,10 +139,8 @@ class ShortURL extends Model
     }
 
     /**
-     * A helper method to determine whether if tracking
-     * is currently enabled for the short URL.
-     *
-     * @return bool
+     * A helper method to determine whether if tracking is currently enabled
+     * for the short URL.
      */
     public function trackingEnabled(): bool
     {
@@ -170,10 +148,8 @@ class ShortURL extends Model
     }
 
     /**
-     * Return an array containing the fields that are
-     * set to be tracked for the short URL.
-     *
-     * @return array
+     * Return an array containing the fields that are set to be tracked for the
+     * short URL.
      */
     public function trackingFields(): array
     {

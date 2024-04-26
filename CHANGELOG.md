@@ -1,5 +1,22 @@
 # Changelog
 
+**v8.0.0 (released 2024-04-XX):**
+
+- Switch from `jenssegers/agent` to `whichbrowser/parser` for user agent parsing. [#261](https://github.com/ash-jc-allen/short-url/pull/261), [#256](https://github.com/ash-jc-allen/short-url/pull/256)
+- Added property types and strict type-checking. [#265](https://github.com/ash-jc-allen/short-url/pull/265)
+- Added support for PHPUnit 11. [#268](https://github.com/ash-jc-allen/short-url/pull/268)
+- Added Pest architecture tests. [#274](https://github.com/ash-jc-allen/short-url/pull/274)
+- Switch to `ashallendesign/laravel-config-validator` to validate the package's config. [#278](https://github.com/ash-jc-allen/short-url/pull/278)
+- Dropped support for PHP 8.0. [#257](https://github.com/ash-jc-allen/short-url/pull/257)
+- Dropped support for Laravel 8 and 9. [#257](https://github.com/ash-jc-allen/short-url/pull/257)
+- Dropped support for PHPUnit 8 and 9. [#268](https://github.com/ash-jc-allen/short-url/pull/268)
+- Switched from "nunomaduro/larastan" to "larastan/larastan". [#267](https://github.com/ash-jc-allen/short-url/pull/267)
+- Removed the `date` property from the `ShortURL` and `ShortURLVisit` models. [#266](https://github.com/ash-jc-allen/short-url/pull/266)
+- Abstract the key generator out to use an interface. [#262](https://github.com/ash-jc-allen/short-url/pull/262)
+- Updated the facade to include all methods in the docblock. [#252](https://github.com/ash-jc-allen/short-url/pull/252)
+
+Huge thank you to [@stevebauman](https://github.com/stevebauman) and [@marzvrover](https://github.com/marzvrover) for their contributions in this release. I really appreciate it! 🚀
+
 **v7.10.0 (released 2024-03-19):**
 
 - Added support for nesbot/carbon 3.0. [#246](https://github.com/ash-jc-allen/short-url/pull/246)

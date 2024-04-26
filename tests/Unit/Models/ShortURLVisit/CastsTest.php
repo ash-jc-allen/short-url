@@ -8,10 +8,11 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
 
 final class CastsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function carbon_date_objects_are_returned(): void
     {
         $shortUrlVisit = ShortURLVisit::factory()

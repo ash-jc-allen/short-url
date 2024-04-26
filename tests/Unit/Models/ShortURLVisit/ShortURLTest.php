@@ -5,10 +5,11 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
-class ShortURLTest extends TestCase
+final class ShortURLTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function short_url_can_be_fetched_from_visit(): void
     {
         $shortURL = ShortURL::create([
