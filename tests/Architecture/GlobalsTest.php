@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
 test('globals')
     ->expect(['dd', 'ddd', 'die', 'dump', 'ray', 'sleep'])
     ->toBeUsedInNothing();
