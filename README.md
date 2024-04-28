@@ -400,7 +400,7 @@ if ($request->date('activation')) {
     $builder = $builder->activateAt($request->date('activation'));
 };
 
-$shortURLObject = $builder->make();)
+$shortURLObject = $builder->make();
 ```
 
 This could be rewritten using `when` like so:
