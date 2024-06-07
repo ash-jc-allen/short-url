@@ -9,8 +9,11 @@ use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Date;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use ShortURL as ShortURLAlias;
@@ -464,6 +467,30 @@ final class BuilderTest extends TestCase
             'activated_at' => $activateTime->format('Y-m-d H:i:s'),
             'deactivated_at' => $deactivateTime->format('Y-m-d H:i:s'),
         ]);
+    }
+
+    #[Test]
+    public function short_url_can_be_created_with_date_facade_configured_to_use_carbon_immutable(): void
+    {
+        Date::use(CarbonImmutable::class);
+
+        $activateTime = now()->addMinutes();
+        $deactivateTime = now()->addHour();
+
+        ShortURLAlias::destinationUrl('http://domain.com')
+            ->urlKey('customKey')
+            ->activateAt($activateTime)
+            ->deactivateAt($deactivateTime)
+            ->make();
+
+        $this->assertDatabaseHas('short_urls', [
+            'default_short_url' => 'https://short-url.com/short/customKey',
+            'url_key' => 'customKey',
+            'activated_at' => $activateTime->format('Y-m-d H:i:s'),
+            'deactivated_at' => $deactivateTime->format('Y-m-d H:i:s'),
+        ]);
+
+        Date::use(Carbon::class);
     }
 
     #[Test]
