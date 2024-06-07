@@ -31,6 +31,7 @@ final class CastsTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $shortUrl->created_at);
         $this->assertInstanceOf(Carbon::class, $shortUrl->updated_at);
     }
+
     #[Test]
     public function carbon_immutable_date_objects_are_returned(): void
     {
