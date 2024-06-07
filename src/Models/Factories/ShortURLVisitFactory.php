@@ -6,7 +6,7 @@ namespace AshAllenDesign\ShortURL\Models\Factories;
 
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 /**
  * @extends Factory<ShortURLVisit>
@@ -39,10 +39,10 @@ class ShortURLVisitFactory extends Factory
                 'tablet',
                 'robot',
             ]),
-            'visited_at' => Carbon::now(),
+            'visited_at' => Date::now(),
             'referer_url' => $this->faker->url(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'created_at' => Date::now(),
+            'updated_at' => Date::now(),
         ];
     }
 }

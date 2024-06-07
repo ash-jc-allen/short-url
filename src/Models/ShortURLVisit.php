@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +20,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $browser
  * @property string $browser_version
  * @property string $device_type
- * @property Carbon $visited_at
+ * @property Carbon|CarbonImmutable $visited_at
  * @property string $referer_url
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon|CarbonImmutable $created_at
+ * @property Carbon|CarbonImmutable $updated_at
  */
 class ShortURLVisit extends Model
 {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AshAllenDesign\ShortURL\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,10 +28,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool $track_browser_version
  * @property bool $track_referer_url
  * @property bool $track_device_type
- * @property Carbon $activated_at
- * @property Carbon|null $deactivated_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon|CarbonImmutable $activated_at
+ * @property Carbon|CarbonImmutable|null $deactivated_at
+ * @property Carbon|CarbonImmutable $created_at
+ * @property Carbon|CarbonImmutable $updated_at
  */
 class ShortURL extends Model
 {

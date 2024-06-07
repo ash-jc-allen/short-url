@@ -10,6 +10,7 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Interfaces\UrlKeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Closure;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -110,14 +111,14 @@ class Builder
      * The date and time that the short URL should become active so that it can
      * be visited. If this is not set, the current date and time will be used.
      */
-    protected ?Carbon $activateAt = null;
+    protected Carbon|CarbonImmutable|null $activateAt = null;
 
     /**
      * The date and time that the short URL should be deactivated so that it
      * cannot be visited. If this is not set, the short URL will never
      * be deactivated.
      */
-    protected ?Carbon $deactivateAt = null;
+    protected Carbon|CarbonImmutable|null $deactivateAt = null;
 
     /**
      * Define an optional seed that can be used when generating a short URL key.
@@ -341,7 +342,7 @@ class Builder
      *
      * @throws ShortURLException
      */
-    public function activateAt(Carbon $activationTime): self
+    public function activateAt(Carbon|CarbonImmutable $activationTime): self
     {
         if ($activationTime->isPast()) {
             throw new ShortURLException('The activation date must not be in the past.');
@@ -357,7 +358,7 @@ class Builder
      *
      * @throws ShortURLException
      */
-    public function deactivateAt(Carbon $deactivationTime): self
+    public function deactivateAt(Carbon|CarbonImmutable $deactivationTime): self
     {
         if ($deactivationTime->isPast()) {
             throw new ShortURLException('The deactivation date must not be in the past.');
