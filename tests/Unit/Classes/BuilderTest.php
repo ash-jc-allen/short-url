@@ -9,7 +9,6 @@ use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
