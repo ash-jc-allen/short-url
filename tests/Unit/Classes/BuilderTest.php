@@ -9,8 +9,10 @@ use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
+use Carbon\CarbonImmutable;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Date;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use ShortURL as ShortURLAlias;
@@ -592,5 +594,19 @@ final class BuilderTest extends TestCase
             ->make();
 
         $this->assertSame('https://short-url.com/short/abc123', $shortUrl->default_short_url);
+    }
+
+    #[Test]
+    public function builder_works_when_the_date_facade_is_set_to_use_carbon_immutable(): void
+    {
+        Date::use(CarbonImmutable::class);
+
+        $shortUrl = app(Builder::class)
+            ->destinationUrl('https://domain.com')
+            ->make();
+
+        $this->assertInstanceOf(CarbonImmutable::class, $shortUrl->activated_at);
+
+        Date::useDefault();
     }
 }
