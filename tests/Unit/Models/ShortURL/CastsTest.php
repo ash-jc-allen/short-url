@@ -7,6 +7,8 @@ namespace AshAllenDesign\ShortURL\Tests\Unit\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Date;
 use PHPUnit\Framework\Attributes\Test;
 
 final class CastsTest extends TestCase
@@ -28,6 +30,29 @@ final class CastsTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $shortUrl->deactivated_at);
         $this->assertInstanceOf(Carbon::class, $shortUrl->created_at);
         $this->assertInstanceOf(Carbon::class, $shortUrl->updated_at);
+    }
+
+    #[Test]
+    public function carbon_immutable_date_objects_are_returned_when_the_date_facade_is_set_to_use_carbon_immutable(): void
+    {
+        Date::use(CarbonImmutable::class);
+
+        $shortUrl = ShortURL::factory()
+            ->create([
+                'activated_at' => now(),
+                'deactivated_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+        $shortUrl->refresh();
+
+        $this->assertInstanceOf(CarbonImmutable::class, $shortUrl->activated_at);
+        $this->assertInstanceOf(CarbonImmutable::class, $shortUrl->deactivated_at);
+        $this->assertInstanceOf(CarbonImmutable::class, $shortUrl->created_at);
+        $this->assertInstanceOf(CarbonImmutable::class, $shortUrl->updated_at);
+
+        Date::useDefault();
     }
 
     #[Test]
