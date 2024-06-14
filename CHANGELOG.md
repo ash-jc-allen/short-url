@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.0.1 (released 2024-06-14):**
+
+- Fixed bug that threw an exception when creating a new Short URL and Laravel is set to use `\Carbon\CarbonImmutable` dates. [#285](https://github.com/ash-jc-allen/short-url/pull/285)
+
 **v8.0.0 (released 2024-04-26):**
 
 - Switch from `jenssegers/agent` to `whichbrowser/parser` for user agent parsing. [#261](https://github.com/ash-jc-allen/short-url/pull/261), [#256](https://github.com/ash-jc-allen/short-url/pull/256)
