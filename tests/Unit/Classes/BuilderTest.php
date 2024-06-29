@@ -42,7 +42,7 @@ final class BuilderTest extends TestCase
     public function exception_is_thrown_if_the_destination_url_does_not_begin_with_http_or_https(): void
     {
         $this->expectException(ShortURLException::class);
-        $this->expectExceptionMessage('The destination URL must begin with http:// or https://');
+        $this->expectExceptionMessage('The destination URL must begin with an allowed prefix: http://, https://');
 
         $builder = app(Builder::class);
         $builder->destinationUrl('INVALID');
@@ -608,5 +608,29 @@ final class BuilderTest extends TestCase
         $this->assertInstanceOf(CarbonImmutable::class, $shortUrl->activated_at);
 
         Date::useDefault();
+    }
+
+    #[Test]
+    public function custom_url_schemes_allowed_if_configured(): void
+    {
+        Config::set('short-url.additional_url_schemes', ['whatsapp://']);
+    
+        $shortUrl = app(Builder::class)
+            ->destinationUrl('whatsapp://callMe')
+            ->make();
+        
+            $this->assertSame('whatsapp://callMe', $shortUrl->destination_url);
+    }
+
+    #[Test]
+    public function exception_is_thrown_if_invalid_scheme(): void
+    {
+        Config::set('short-url.additional_url_schemes', ['whatsapp://']);
+
+        $this->expectException(ShortURLException::class);
+        $this->expectExceptionMessage('The destination URL must begin with an allowed prefix: http://, https://, whatsapp://');
+
+        $builder = app(Builder::class);
+        $builder->destinationUrl('INVALID');
     }
 }
