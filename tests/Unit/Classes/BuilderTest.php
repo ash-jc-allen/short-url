@@ -618,7 +618,7 @@ final class BuilderTest extends TestCase
         $shortUrl = app(Builder::class)
             ->destinationUrl('whatsapp://callMe')
             ->make();
-        
+
         $this->assertSame('whatsapp://callMe', $shortUrl->destination_url);
     }
 

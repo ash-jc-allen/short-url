@@ -186,7 +186,7 @@ class Builder
         $allowedPrefixes = array_merge($defaultAllowedPrefixes, $additionalAllowedPrefixes);
 
         if (! Str::startsWith($url, $allowedPrefixes)) {
-            throw new ShortURLException('The destination URL must begin with an allowed prefix: ' . implode(', ', $allowedPrefixes));
+            throw new ShortURLException('The destination URL must begin with an allowed prefix: '. implode(', ', $allowedPrefixes));
         }
 
         $this->destinationUrl = $url;
