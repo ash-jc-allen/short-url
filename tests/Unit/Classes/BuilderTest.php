@@ -614,12 +614,12 @@ final class BuilderTest extends TestCase
     public function custom_url_schemes_allowed_if_configured(): void
     {
         Config::set('short-url.additional_url_schemes', ['whatsapp://']);
-    
+
         $shortUrl = app(Builder::class)
             ->destinationUrl('whatsapp://callMe')
             ->make();
         
-            $this->assertSame('whatsapp://callMe', $shortUrl->destination_url);
+        $this->assertSame('whatsapp://callMe', $shortUrl->destination_url);
     }
 
     #[Test]
