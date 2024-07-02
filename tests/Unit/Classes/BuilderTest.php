@@ -613,7 +613,7 @@ final class BuilderTest extends TestCase
     #[Test]
     public function custom_url_schemes_allowed_if_configured(): void
     {
-        Config::set('short-url.additional_url_schemes', ['whatsapp://']);
+        Config::set('short-url.allowed_url_schemes', ['http://', 'https://', 'whatsapp://']);
 
         $shortUrl = app(Builder::class)
             ->destinationUrl('whatsapp://callMe')
@@ -625,12 +625,12 @@ final class BuilderTest extends TestCase
     #[Test]
     public function exception_is_thrown_if_invalid_scheme(): void
     {
-        Config::set('short-url.additional_url_schemes', ['whatsapp://']);
+        Config::set('short-url.allowed_url_schemes', ['https://', 'whatsapp://']);
 
         $this->expectException(ShortURLException::class);
-        $this->expectExceptionMessage('The destination URL must begin with an allowed prefix: http://, https://, whatsapp://');
+        $this->expectExceptionMessage('The destination URL must begin with an allowed prefix: https://, whatsapp://');
 
         $builder = app(Builder::class);
-        $builder->destinationUrl('INVALID');
+        $builder->destinationUrl('phpstorm://');
     }
 }
