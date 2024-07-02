@@ -181,11 +181,9 @@ class Builder
      */
     public function destinationUrl(string $url): self
     {
-        $defaultAllowedPrefixes = ['http://', 'https://'];
-        $additionalAllowedPrefixes = config('short-url.additional_url_schemes', []);
-        $allowedPrefixes = array_merge($defaultAllowedPrefixes, $additionalAllowedPrefixes);
+        $allowedPrefixes = config('short-url.allowed_url_schemes');
 
-        if (! Str::startsWith($url, $allowedPrefixes)) {
+        if (! Str::startsWith($url, config('short-url.allowed_url_schemes'))) {
             throw new ShortURLException('The destination URL must begin with an allowed prefix: '.implode(', ', $allowedPrefixes));
         }
 

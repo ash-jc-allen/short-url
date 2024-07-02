@@ -107,14 +107,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Additional URL Schemes
+    | Allowed URL Schemes
     |--------------------------------------------------------------------------
     |
-    | Here you may specify additional URL schemes to shorten, eg 'mailto://' or
-    | ones for your own app, eg 'whatsapp://', 'yourapp://'
+    | Here you may specify the allowed URL schemes to shorten, eg 'mailto://'
+    | or ones for your own app, eg 'whatsapp://', 'yourapp://'.
     |
     */
-    'additional_url_schemes' => [],
+    'allowed_url_schemes' => [
+        'http://',
+        'https://',
+    ],
 
     /*
     |--------------------------------------------------------------------------
