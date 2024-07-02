@@ -32,6 +32,7 @@ class Validation
                     Rule::make('enforce_https')->rules(['required', 'boolean']),
                     Rule::make('forward_query_params')->rules(['required', 'boolean']),
                     Rule::make('default_url')->rules(['nullable', 'string']),
+                    Rule::make('allowed_url_schemes')->rules(['required', 'array']),
                 ],
             ]);
 

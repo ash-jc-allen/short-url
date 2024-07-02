@@ -51,6 +51,7 @@
         - [Custom Database Connection](#custom-database-connection)
         - [Specifying the Key Generator](#specifying-the-key-generator)
         - [Specifying the User Agent Parser](#specifying-the-user-agent-parser)
+        - [Specifying the Allowed URL Schemes](#specifying-the-allowed-url-schemes)
     - [Helper Methods](#helper-methods)
         - [Visits](#visits)
         - [Find by URL Key](#find-by-url-key)
@@ -631,6 +632,23 @@ To do this, you can define the class to be used in the `short-url.php` config fi
 ```
 
 You'll just need to ensure that your custom user agent parser class implements the `AshAllenDesign\ShortURL\Interfaces\UserAgentDriver` interface.
+
+#### Specifying the Allowed URL Schemes
+
+By default, Short URL will allow you to create a shortened URL for any URLs beginning with `http://` or `https://`.
+
+However, you may want to change this list of allowed URL schemes. For example, this may be to restrict the creation to only `https://` URLs. Or, it may be to allow URLs to be created using other schemes such as `mailto://` or even custom schemes for your own applications.
+
+To change the list of allowed URL schemes, you can define the list using the `allowed_url_schemes` field in your `short-url.php` config file like so:
+
+```php
+'allowed_url_schemes' => [
+    'http://',
+    'https://',
+    'mailto://',
+    'myapp://',
+],
+```
 
 ### Helper Methods
 #### Visits

@@ -181,8 +181,10 @@ class Builder
      */
     public function destinationUrl(string $url): self
     {
-        if (! Str::startsWith($url, ['http://', 'https://'])) {
-            throw new ShortURLException('The destination URL must begin with http:// or https://');
+        $allowedPrefixes = config('short-url.allowed_url_schemes');
+
+        if (! Str::startsWith($url, config('short-url.allowed_url_schemes'))) {
+            throw new ShortURLException('The destination URL must begin with an allowed prefix: '.implode(', ', $allowedPrefixes));
         }
 
         $this->destinationUrl = $url;
