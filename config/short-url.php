@@ -110,8 +110,8 @@ return [
     | Allowed URL Schemes
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the allowed URL schemes to shorten, eg 'mailto://'
-    | or ones for your own app, eg 'whatsapp://', 'yourapp://'.
+    | Here you may specify the allowed URL schemes to shorten. For example:
+    | 'mailto://', 'whatsapp://', 'yourapp://'.
     |
     */
     'allowed_url_schemes' => [
