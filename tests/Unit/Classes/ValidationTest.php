@@ -129,4 +129,16 @@ final class ValidationTest extends TestCase
         $validation = new Validation();
         $validation->validateConfig();
     }
+
+    #[Test]
+    public function exception_is_thrown_if_the_allowed_url_schemes_is_not_an_array(): void
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The short-url.allowed_url_schemes field must be an array.');
+
+        Config::set('short-url.allowed_url_schemes', 'INVALID');
+
+        $validation = new Validation();
+        $validation->validateConfig();
+    }
 }
