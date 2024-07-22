@@ -9,4 +9,6 @@ interface UrlKeyGenerator
     public function generateRandom(): string;
 
     public function generateKeyUsing(int $seed = null): string;
+
+    public function generateIncrementalKey(int $id): string;
 }

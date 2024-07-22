@@ -53,6 +53,16 @@ class KeyGenerator implements UrlKeyGenerator
     }
 
     /**
+     * Generate a key for the short URL with the respective short URL database ID.
+     * 
+     * Much more database-efficient than generateKeyUsing and should therefore be preferred.
+     */
+    public function generateIncrementalKey(int $id): string
+    {
+        return $this->hashids->encode($id);
+    }
+
+    /**
      * Get the ID of the last inserted ShortURL. This is done so that we can predict
      * what the ID of the ShortURL that will be inserted will be called. From doing
      * this, we can create a unique hash without a reduced chance of a collision.

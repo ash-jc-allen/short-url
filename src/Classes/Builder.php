@@ -407,12 +407,40 @@ class Builder
 
         $data = $this->toArray();
 
-        $this->checkKeyDoesNotExist();
+        if ($this->urlKey === null) {
+            if ($this->generateKeyUsing === null) {
+                // Generate the URL key incrementally.
+                unset($data['id']);
+                $data['url_key'] = null;
 
-        $shortURL = new ShortURL($data);
+                $shortURL = new ShortURL($data);
+                $shortURL->save();
+
+                $shortURL->url_key = $this->urlKey = $this->keyGenerator->generateIncrementalKey($shortURL->id);
+                $shortURL->default_short_url = $this->buildDefaultShortUrl();
+            } else {
+                // Generate the URL randomly using the provided seed.
+                $data['url_key'] = $this->urlKey = $this->keyGenerator->generateKeyUsing($this->generateKeyUsing);
+                $data['default_short_url'] = $this->buildDefaultShortUrl();
+            }
+        } else {
+            $this->checkKeyDoesNotExist();
+        }
+
+        $shortURL = $shortURL ?? new ShortURL($data);
 
         if ($this->beforeCreateCallback) {
-            value($this->beforeCreateCallback, $shortURL);
+            try {
+                value($this->beforeCreateCallback, $shortURL);
+            } catch (\Exception $exception) {
+                if ($shortURL->id != null) {
+                    // This was generated incrementally, let's delete it so we don't
+                    // fill the database with garbage over time from exceptions.
+                    $shortURL->delete();
+                }
+
+                throw $exception;
+            }
         }
 
         $shortURL->save();
@@ -479,10 +507,6 @@ class Builder
 
         if ($this->forwardQueryParams === null) {
             $this->forwardQueryParams = config('short-url.forward_query_params') ?? false;
-        }
-
-        if (! $this->urlKey) {
-            $this->urlKey = $this->keyGenerator->generateKeyUsing($this->generateKeyUsing);
         }
 
         if (! $this->activateAt) {

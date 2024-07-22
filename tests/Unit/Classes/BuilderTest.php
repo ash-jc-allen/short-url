@@ -633,4 +633,95 @@ final class BuilderTest extends TestCase
         $builder = app(Builder::class);
         $builder->destinationUrl('phpstorm://');
     }
+
+    #[Test]
+    public function test_new_incremental_key_generation_in_old_random_environment(): void
+    {
+        // Make sure that the new incremental key generation method still works in an environment
+        // where short URLs were generated using the old random generation algorithm.
+
+        $generateOldShortURL = fn($i) => app(Builder::class)
+            ->destinationUrl('https://foo.com')
+            ->generateKeyUsing(123 + $i)
+            ->make();
+
+        $shortURLs = array_map(
+            $generateOldShortURL,
+            range(1, 10)
+        );
+
+        $shortURLs[] = app(Builder::class)
+            ->destinationUrl('https://foo.com')
+            ->make();
+
+        $this->assertCount(11, $shortURLs);
+
+        for ($i = 0; $i < count($shortURLs); $i++) {
+            for ($j = 0; $j < count($shortURLs); $j++) {
+                if ($i === $j) continue;
+                $this->assertNotSame($shortURLs[$i]->url_key, $shortURLs[$j]->url_key);
+            }
+        }
+    }
+
+    #[Test]
+    public function test_incremental_key_generation_deletes_short_url_on_callback_exception() {
+        $id = null;
+        $exceptionThrown = false;
+
+        try {
+            app(Builder::class)
+                ->destinationUrl('https://foo.com')
+                ->beforeCreate(function ($shortURL) use (&$id) {
+                    $this->assertNotNull($shortURL->id);
+                    $this->assertNotNull($shortURL->url_key);
+                    
+                    $id = $shortURL->id;
+
+                    throw new \Exception('Test exception');
+                })
+                ->make();
+        } catch (\Exception $e) {
+            if ($e->getMessage() === 'Test exception') {
+                $exceptionThrown = true;
+            } else {
+                throw $e; // Rethrow unexpected exceptions
+            }
+        }
+
+        $this->assertTrue($exceptionThrown, 'Exception was not thrown');
+        $this->assertNotNull($id, 'Short URL was not created');
+        $this->assertDatabaseMissing('short_urls', ['id' => $id]);
+    }
+
+    #[Test]
+    public function test_old_random_key_generation_callback_exception() {
+        $urlKey = null;
+        $exceptionThrown = false;
+
+        try {
+            app(Builder::class)
+                ->destinationUrl('https://foo.com')
+                ->beforeCreate(function ($shortURL) use (&$urlKey) {
+                    $this->assertNull($shortURL->id);
+                    $this->assertNotNull($shortURL->url_key);
+                    
+                    $urlKey = $shortURL->url_key;
+
+                    throw new \Exception('Test exception');
+                })
+                ->generateKeyUsing(123)
+                ->make();
+        } catch (\Exception $e) {
+            if ($e->getMessage() === 'Test exception') {
+                $exceptionThrown = true;
+            } else {
+                throw $e; // Rethrow unexpected exceptions
+            }
+        }
+
+        $this->assertTrue($exceptionThrown, 'Exception was not thrown');
+        $this->assertNotNull($urlKey, 'Short URL was missing its URL key');
+        $this->assertDatabaseMissing('short_urls', ['url_key' => $urlKey]);
+    }
 }

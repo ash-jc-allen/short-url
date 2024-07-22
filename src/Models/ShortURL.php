@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $destination_url
  * @property string $default_short_url
- * @property string $url_key
+ * @property ?string $url_key
  * @property bool $single_use
  * @property bool $forward_query_params
  * @property bool $track_visits
