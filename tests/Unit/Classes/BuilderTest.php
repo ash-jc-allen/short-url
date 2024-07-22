@@ -640,7 +640,7 @@ final class BuilderTest extends TestCase
         // Make sure that the new incremental key generation method still works in an environment
         // where short URLs were generated using the old random generation algorithm.
 
-        $generateOldShortURL = fn($i) => app(Builder::class)
+        $generateOldShortURL = fn ($i) => app(Builder::class)
             ->destinationUrl('https://foo.com')
             ->generateKeyUsing(123 + $i)
             ->make();
@@ -658,14 +658,17 @@ final class BuilderTest extends TestCase
 
         for ($i = 0; $i < count($shortURLs); $i++) {
             for ($j = 0; $j < count($shortURLs); $j++) {
-                if ($i === $j) continue;
+                if ($i === $j) {
+                    continue;
+                }
                 $this->assertNotSame($shortURLs[$i]->url_key, $shortURLs[$j]->url_key);
             }
         }
     }
 
     #[Test]
-    public function test_incremental_key_generation_deletes_short_url_on_callback_exception() {
+    public function test_incremental_key_generation_deletes_short_url_on_callback_exception(): void
+    {
         $id = null;
         $exceptionThrown = false;
 
@@ -675,7 +678,7 @@ final class BuilderTest extends TestCase
                 ->beforeCreate(function ($shortURL) use (&$id) {
                     $this->assertNotNull($shortURL->id);
                     $this->assertNotNull($shortURL->url_key);
-                    
+
                     $id = $shortURL->id;
 
                     throw new \Exception('Test exception');
@@ -695,7 +698,8 @@ final class BuilderTest extends TestCase
     }
 
     #[Test]
-    public function test_old_random_key_generation_callback_exception() {
+    public function test_old_random_key_generation_callback_exception(): void
+    {
         $urlKey = null;
         $exceptionThrown = false;
 
@@ -705,7 +709,7 @@ final class BuilderTest extends TestCase
                 ->beforeCreate(function ($shortURL) use (&$urlKey) {
                     $this->assertNull($shortURL->id);
                     $this->assertNotNull($shortURL->url_key);
-                    
+
                     $urlKey = $shortURL->url_key;
 
                     throw new \Exception('Test exception');
