@@ -30,11 +30,24 @@ class KeyGenerator implements UrlKeyGenerator
      */
     public function generateRandom(): string
     {
-        $ID = $this->getLastInsertedID();
+        $id = $this->getLastInsertedID();
+
+        $minKeyLength = $this->getKeyLength();
+
+        $currentLength = strlen((string) $id);
+
+        if ($currentLength > $minKeyLength) {
+            $minKeyLength = $currentLength;
+        }
 
         do {
-            $ID++;
-            $key = $this->hashids->encode($ID);
+            $id++;
+
+            $key = $this->hashids->encodeHex(
+                str_pad((string) $id, $minKeyLength - 1, uniqid())
+            );
+
+            $minKeyLength++;
         } while (ShortURL::where('url_key', $key)->exists());
 
         return $key;
@@ -50,6 +63,14 @@ class KeyGenerator implements UrlKeyGenerator
         return $seed
             ? $this->hashids->encode($seed)
             : $this->generateRandom();
+    }
+
+    /**
+     * Get the minimum length of the Short URL key to generate.
+     */
+    protected function getKeyLength(): int
+    {
+        return config('short-url.key_length');
     }
 
     /**
