@@ -21,9 +21,12 @@ class KeyGenerator implements UrlKeyGenerator
     }
 
     /**
-     * Generate a unique and random URL key using the Hashids package.
-     *
-     * @return string
+     * Generate a unique and random URL key using the Hashids package. We start by
+     * predicting the unique ID that the ShortURL will have in the database.
+     * Then we can encode the ID to create a unique hash. On the very
+     * unlikely chance that a generated key collides with another
+     * key, we increment the ID and then attempt to create a new
+     * unique key again.
      */
     public function generateRandom(): string
     {
