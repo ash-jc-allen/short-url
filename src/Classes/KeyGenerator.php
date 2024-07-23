@@ -7,6 +7,7 @@ namespace AshAllenDesign\ShortURL\Classes;
 use AshAllenDesign\ShortURL\Interfaces\UrlKeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Hashids\Hashids;
+use Illuminate\Support\Str;
 
 class KeyGenerator implements UrlKeyGenerator
 {
@@ -32,16 +33,22 @@ class KeyGenerator implements UrlKeyGenerator
     {
         $id = $this->getLastInsertedID();
 
-        $keyLength = $this->getKeyLength() - 1;
+        $minKeyLength = $this->getKeyLength();
+
+        $currentLength = strlen((string) $id);
+
+        if ($currentLength > $minKeyLength) {
+            $minKeyLength = $currentLength;
+        }
 
         do {
             $id++;
 
             $key = $this->hashids->encodeHex(
-                substr(uniqid((string) $id), -$keyLength)
+                str_pad((string) $id, $minKeyLength - 1, uniqid())
             );
 
-            $keyLength++;
+            $minKeyLength++;
         } while (ShortURL::where('url_key', $key)->exists());
 
         return $key;
