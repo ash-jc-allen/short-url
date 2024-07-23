@@ -27,8 +27,11 @@ class KeyGenerator implements UrlKeyGenerator
      */
     public function generateRandom(): string
     {
+        $ID = $this->getLastInsertedID();
+
         do {
-            $key = $this->hashids->encodeHex($this->getLastInsertedID().uniqid());
+            $ID++;
+            $key = $this->hashids->encodeHex($ID.uniqid());
         } while (ShortURL::where('url_key', $key)->exists());
 
         return $key;
