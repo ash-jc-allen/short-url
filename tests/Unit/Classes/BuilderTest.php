@@ -300,7 +300,19 @@ final class BuilderTest extends TestCase
         $shortURL = $builder->destinationUrl('https://domain.com')->make();
 
         $this->assertNotNull($shortURL->url_key);
-        $this->assertSame(12, strlen($shortURL->url_key));
+        $this->assertSame(5, strlen($shortURL->url_key));
+    }
+
+    #[Test]
+    public function short_url_key_length_is_used(): void
+    {
+        Config::set('short-url.key_length', 3);
+
+        $builder = app(Builder::class);
+        $shortURL = $builder->destinationUrl('https://domain.com')->make();
+
+        $this->assertNotNull($shortURL->url_key);
+        $this->assertSame(3, strlen($shortURL->url_key));
     }
 
     #[Test]
