@@ -28,7 +28,7 @@ class KeyGenerator implements UrlKeyGenerator
     public function generateRandom(): string
     {
         do {
-            $key = $this->hashids->encodeHex(uniqid());
+            $key = $this->hashids->encodeHex($this->getLastInsertedID().uniqid());
         } while (ShortURL::where('url_key', $key)->exists());
 
         return $key;
@@ -44,5 +44,15 @@ class KeyGenerator implements UrlKeyGenerator
         return $seed
             ? $this->hashids->encode($seed)
             : $this->generateRandom();
+    }
+
+    /**
+     * Get the ID of the last inserted ShortURL. This is done so that we can predict
+     * what the ID of the ShortURL that will be inserted will be called. From doing
+     * this, we can create a unique hash without a reduced chance of a collision.
+     */
+    protected function getLastInsertedID(): int
+    {
+        return ShortURL::max('id') ?? 0;
     }
 }
