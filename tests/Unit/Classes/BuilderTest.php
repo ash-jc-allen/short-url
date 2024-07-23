@@ -300,7 +300,7 @@ final class BuilderTest extends TestCase
         $shortURL = $builder->destinationUrl('https://domain.com')->make();
 
         $this->assertNotNull($shortURL->url_key);
-        $this->assertSame(5, strlen($shortURL->url_key));
+        $this->assertSame(12, strlen($shortURL->url_key));
     }
 
     #[Test]
