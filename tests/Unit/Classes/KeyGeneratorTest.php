@@ -2,9 +2,9 @@
 
 namespace AshAllenDesign\ShortURL\Tests\Unit\Classes;
 
+use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Tests\Unit\TestCase;
-use AshAllenDesign\ShortURL\Classes\KeyGenerator;
 use PHPUnit\Framework\Attributes\Test;
 
 final class KeyGeneratorTest extends TestCase

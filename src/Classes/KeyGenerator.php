@@ -7,7 +7,6 @@ namespace AshAllenDesign\ShortURL\Classes;
 use AshAllenDesign\ShortURL\Interfaces\UrlKeyGenerator;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Hashids\Hashids;
-use Illuminate\Support\Str;
 
 class KeyGenerator implements UrlKeyGenerator
 {
