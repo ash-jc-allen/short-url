@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ShortURLVisit extends Model
 {
+    /**
+     * @extends Factory<ShortURLVisit>
+     */
     use HasFactory;
 
     public const DEVICE_TYPE_MOBILE = 'mobile';
