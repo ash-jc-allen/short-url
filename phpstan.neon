@@ -9,5 +9,7 @@ parameters:
     level: 6
 
     ignoreErrors:
+       - '#PHPDoc tag \@use contains generic type Illuminate\\Database\\Eloquent\\Factories\\HasFactory\<AshAllenDesign\\ShortURL\\Models\\ShortURL\> but trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory is not generic\.#'
+       - '#PHPDoc tag \@use contains generic type Illuminate\\Database\\Eloquent\\Factories\\HasFactory\<AshAllenDesign\\ShortURL\\Models\\ShortURLVisit\> but trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory is not generic\.#'
 
     checkMissingIterableValueType: false
