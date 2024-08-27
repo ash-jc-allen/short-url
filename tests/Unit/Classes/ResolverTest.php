@@ -84,6 +84,19 @@ final class ResolverTest extends TestCase
                     'device_type' => 'robot',
                 ],
             ],
+
+            // UC Browser 7
+            [
+                'Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999',
+                [
+                    'operating_system' => null,
+                    'operating_system_version' => null,
+                    'browser' => 'UC Browser',
+                    'browser_version' => '7.0',
+                    'referer_url' => null,
+                    'device_type' => 'mobile',
+                ],
+            ],
         ];
     }
 

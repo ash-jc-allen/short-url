@@ -24,7 +24,7 @@ class ParserPhpDriver implements UserAgentDriver
             return null;
         }
 
-        return $this->parser->os->name ?: null;
+        return $this->parser->os->name ?? null;
     }
 
     public function getOperatingSystemVersion(): ?string
