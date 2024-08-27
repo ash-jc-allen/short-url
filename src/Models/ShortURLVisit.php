@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\ShortURL\Models;
 
+use AshAllenDesign\ShortURL\Models\Factories\ShortURLVisitFactory;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ShortURLVisit extends Model
 {
     /**
-     * @use HasFactory<ShortURLVisit>
+     * @use HasFactory<ShortURLVisitFactory>
      */
     use HasFactory;
 
