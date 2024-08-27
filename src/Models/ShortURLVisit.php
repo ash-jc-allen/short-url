@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ShortURLVisit extends Model
 {
     /**
-     * @use Factory<ShortURLVisit>
+     * @use HasFactory<ShortURLVisit>
      */
     use HasFactory;
 

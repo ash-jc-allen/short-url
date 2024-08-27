@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ShortURL extends Model
 {
     /**
-     * @use Factory<ShortURL>
+     * @use HasFactory<ShortURL>
      */
     use HasFactory;
 
