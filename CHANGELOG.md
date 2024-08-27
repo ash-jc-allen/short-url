@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.1.1 (released 2024-08-27):**
+
+- Fixed bug that threw an exception if the OS name could not be determined from the user agent. [#295](https://github.com/ash-jc-allen/short-url/pull/295)
+
 **v8.1.0 (released 2024-07-02):**
 
 - Added `allowable_url_schemes` config value to allow for custom URL schemes to be used when creating short URLs. [#287](https://github.com/ash-jc-allen/short-url/pull/287), [#288](https://github.com/ash-jc-allen/short-url/pull/288)
