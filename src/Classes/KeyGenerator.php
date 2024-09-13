@@ -59,6 +59,6 @@ class KeyGenerator implements UrlKeyGenerator
      */
     protected function getLastInsertedID(): int
     {
-        return ShortURL::max('id') ?? 0;
+        return intval(ShortURL::max('id') ?? 0);
     }
 }
