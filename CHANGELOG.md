@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.1.2 (released 2024-09-17):**
+
+- Fixed bug that threw an exception if the `short_url.id` column was returned as a string from the database. [#297](https://github.com/ash-jc-allen/short-url/pull/297)
+
 **v8.1.1 (released 2024-08-27):**
 
 - Fixed bug that threw an exception if the OS name could not be determined from the user agent. [#295](https://github.com/ash-jc-allen/short-url/pull/295)
