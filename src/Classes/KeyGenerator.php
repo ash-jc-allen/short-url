@@ -55,10 +55,10 @@ class KeyGenerator implements UrlKeyGenerator
     /**
      * Get the ID of the last inserted ShortURL. This is done so that we can predict
      * what the ID of the ShortURL that will be inserted will be called. From doing
-     * this, we can create a unique hash without a reduced chance of a collision.
+     * this, we can create a unique hash with a reduced chance of a collision.
      */
     protected function getLastInsertedID(): int
     {
-        return ShortURL::max('id') ?? 0;
+        return (int) ShortURL::max('id');
     }
 }
