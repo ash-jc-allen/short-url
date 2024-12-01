@@ -44,5 +44,10 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-suggest
+
+      - name: Copy PhpStan config for Laravel 10
+        if: matrix.laravel == '10.*'
+        run: cp phpstan-laravel-10.neon phpstan.neon
+
       - name: Run Larastan
         run: vendor/bin/phpstan analyse

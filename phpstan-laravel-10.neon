@@ -1,0 +1,18 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - src
+
+    level: 6
+
+    ignoreErrors:
+        - '#PHPDoc tag @use contains generic type Illuminate\\Database\\Eloquent\\Factories\\HasFactory<AshAllenDesign\\ShortURL\\Models\\Factories\\ShortURLVisitFactory> but trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory is not generic.#'
+        - '#Method AshAllenDesign\\ShortURL\\Models\\ShortURLVisit::shortURL\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<AshAllenDesign\\ShortURL\\Models\\ShortURL, \$this\(AshAllenDesign\\ShortURL\\Models\\ShortURLVisit\)> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<AshAllenDesign\\ShortURL\\Models\\ShortURL, AshAllenDesign\\ShortURL\\Models\\ShortURLVisit>.#'
+        - '#Method AshAllenDesign\\ShortURL\\Models\\ShortURL::visits\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany<AshAllenDesign\\ShortURL\\Models\\ShortURLVisit, \$this\(AshAllenDesign\\ShortURL\\Models\\ShortURL\)> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany<AshAllenDesign\\ShortURL\\Models\\ShortURLVisit>.#'
+        - '#Generic type Illuminate\\Database\\Eloquent\\Relations\\HasMany<AshAllenDesign\\ShortURL\\Models\\ShortURLVisit, \$this\(AshAllenDesign\\ShortURL\\Models\\ShortURL\)> in PHPDoc tag @return specifies 2 template types, but class Illuminate\\Database\\Eloquent\\Relations\\HasMany supports only 1: TRelatedModel#'
+        - '#PHPDoc tag @use contains generic type Illuminate\\Database\\Eloquent\\Factories\\HasFactory<AshAllenDesign\\ShortURL\\Models\\Factories\\ShortURLFactory> but trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory is not generic.#'
+
+    checkMissingIterableValueType: false
