@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.2.0 (released 2024-12-01):**
+
+- Added support for PHP 8.4. [#301](https://github.com/ash-jc-allen/short-url/pull/301)
+
 **v8.1.2 (released 2024-09-17):**
 
 - Fixed bug that threw an exception if the `short_url.id` column was returned as a string from the database. [#297](https://github.com/ash-jc-allen/short-url/pull/297)
