@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [8.1, 8.2, 8.3]
+        php: [8.1, 8.2, 8.3, 8.4]
         laravel: [10.*, 11.*]
         include:
           - laravel: 11.*
@@ -44,5 +44,10 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-suggest
+
+      - name: Copy PhpStan config for Laravel 10
+        if: matrix.laravel == '10.*'
+        run: cp phpstan-laravel-10.neon phpstan.neon
+
       - name: Run Larastan
         run: vendor/bin/phpstan analyse

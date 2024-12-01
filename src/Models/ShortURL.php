@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\ShortURL\Models;
 
+use AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -34,6 +35,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class ShortURL extends Model
 {
+    /**
+     * @use HasFactory<ShortURLFactory>
+     */
     use HasFactory;
 
     /**
@@ -111,7 +115,7 @@ class ShortURL extends Model
     /**
      * A short URL can be visited many times.
      *
-     * @return HasMany<ShortURLVisit>
+     * @return HasMany<ShortURLVisit, $this>
      */
     public function visits(): HasMany
     {

@@ -45,7 +45,7 @@ class KeyGenerator implements UrlKeyGenerator
      * seed value to the key generator. If no seed is passed, a random
      * key will be generated.
      */
-    public function generateKeyUsing(int $seed = null): string
+    public function generateKeyUsing(?int $seed = null): string
     {
         return $seed
             ? $this->hashids->encode($seed)
