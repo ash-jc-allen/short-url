@@ -115,7 +115,7 @@ class ShortURL extends Model
     /**
      * A short URL can be visited many times.
      *
-     * @return HasMany<ShortURLVisit, ShortURL>
+     * @return HasMany<ShortURLVisit, $this>
      */
     public function visits(): HasMany
     {

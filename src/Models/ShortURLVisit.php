@@ -98,7 +98,7 @@ class ShortURLVisit extends Model
     /**
      * A URL visit belongs to one specific shortened URL.
      *
-     * @return BelongsTo<ShortURL, ShortURLVisit>
+     * @return BelongsTo<ShortURL, $this>
      */
     public function shortURL(): BelongsTo
     {
