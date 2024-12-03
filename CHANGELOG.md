@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.2.1 (released 2024-12-03):**
+
+- Removed `laravel/framework` dependency that was accidentally added. [7f3bc3b](https://github.com/ash-jc-allen/short-url/commit/7f3bc3b4beee87850f8172bd4ca3f86722910649)
+
 **v8.2.0 (released 2024-12-01):**
 
 - Added support for PHP 8.4. [#301](https://github.com/ash-jc-allen/short-url/pull/301)
