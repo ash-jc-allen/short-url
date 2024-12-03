@@ -24,8 +24,7 @@
         "illuminate/database": "^10.0|^11.0",
         "hashids/hashids": "^4.0|^5.0",
         "whichbrowser/parser": "^2.1",
-        "ashallendesign/laravel-config-validator": "^2.6.1",
-        "laravel/framework": "^10.0"
+        "ashallendesign/laravel-config-validator": "^2.6.1"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
