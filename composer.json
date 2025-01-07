@@ -31,7 +31,9 @@
         "orchestra/testbench": "^8.0|^9.0",
         "phpunit/phpunit": "^10.0|^11.0",
         "larastan/larastan": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.3"
+        "pestphp/pest-plugin-laravel": "^2.3",
+        "rector/rector": "^1.2",
+        "driftingly/rector-laravel": "^1.2"
     },
     "autoload": {
         "psr-4": {

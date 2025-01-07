@@ -418,7 +418,7 @@ final class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
-            'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0],
+            'HTTP_USER_AGENT' => self::trackingFieldsProvider()[1][0],
         ]);
 
         $resolver = app(Resolver::class);
@@ -454,7 +454,7 @@ final class ResolverTest extends TestCase
 
         $request = Request::create(config('short-url.default_url').'/short/12345', 'GET', [], [], [], [
             'HTTP_referer' => 'https://google.com',
-            'HTTP_USER_AGENT' => static::trackingFieldsProvider()[1][0],
+            'HTTP_USER_AGENT' => self::trackingFieldsProvider()[1][0],
         ]);
 
         $resolver = app(Resolver::class);

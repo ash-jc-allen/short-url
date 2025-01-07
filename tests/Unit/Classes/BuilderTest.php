@@ -307,7 +307,7 @@ final class BuilderTest extends TestCase
     public function short_url_can_be_created_and_stored_in_the_database(): void
     {
         $builder = app(Builder::class);
-        $shortURL = $builder->destinationUrl('http://domain.com')
+        $builder->destinationUrl('http://domain.com')
             ->urlKey('customKey')
             ->secure()
             ->trackVisits(false)
@@ -552,7 +552,7 @@ final class BuilderTest extends TestCase
     {
         $shortUrl = app(Builder::class)
             ->destinationUrl('https://foo.com')
-            ->beforeCreate(function (ShortURL $shortURL) {
+            ->beforeCreate(function (ShortURL $shortURL): void {
                 $shortURL->destination_url = 'https://bar.com';
             })
             ->make();
