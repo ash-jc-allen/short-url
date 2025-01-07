@@ -15,6 +15,6 @@ return RectorConfig::configure()
     //->withPhpSets(php80: true)
     ->withPreparedSets(
         deadCode: true,
-        //codeQuality: true
+        codeQuality: true
     )
     ->withTypeCoverageLevel(0);

@@ -59,12 +59,7 @@ class Resolver
         if (now()->isBefore($shortURL->activated_at)) {
             return false;
         }
-
-        if ($shortURL->deactivated_at && now()->isAfter($shortURL->deactivated_at)) {
-            return false;
-        }
-
-        return true;
+        return !($shortURL->deactivated_at && now()->isAfter($shortURL->deactivated_at));
     }
 
     /**

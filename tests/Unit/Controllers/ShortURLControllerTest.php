@@ -67,12 +67,7 @@ final class ShortURLControllerTest extends TestCase
             if ($shortURL->toArray() != $event->shortURL->fresh()->toArray()) {
                 return false;
             }
-
-            if ($visit->toArray() != $event->shortURLVisit->fresh()->toArray()) {
-                return false;
-            }
-
-            return true;
+            return $visit->toArray() == $event->shortURLVisit->fresh()->toArray();
         });
     }
 
