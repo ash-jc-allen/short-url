@@ -552,7 +552,7 @@ final class BuilderTest extends TestCase
     {
         $shortUrl = app(Builder::class)
             ->destinationUrl('https://foo.com')
-            ->beforeCreate(function (ShortURL $shortURL) {
+            ->beforeCreate(function (ShortURL $shortURL): void {
                 $shortURL->destination_url = 'https://bar.com';
             })
             ->make();
