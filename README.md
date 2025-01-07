@@ -114,7 +114,10 @@ The quickest way to get started with creating a shortened URL is by using the sn
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->make();
+
 $shortURL = $shortURLObject->default_short_url;
 ```
 
@@ -129,7 +132,11 @@ do this by using the ``` ->urlKey() ``` method. Example:
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->urlKey('custom-key')->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->urlKey('custom-key')
+    ->make();
+
 $shortURL = $shortURLObject->default_short_url;
 
 // Short URL: https://webapp.com/short/custom-key
@@ -158,7 +165,10 @@ The example below shows how to enable tracking for the URL and override the conf
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->make();
 ```
 
 The example below shows how to disable tracking for the URL and override the default config variable:
@@ -166,7 +176,10 @@ The example below shows how to disable tracking for the URL and override the def
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits(false)->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits(false)
+    ->make();
 ```
 
 ##### Tracking IP Address
@@ -178,7 +191,11 @@ The example below shows how to enable IP address tracking for the URL and overri
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackIPAddress()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackIPAddress()
+    ->make();
 ```
 
 ##### Tracking Browser & Browser Version
@@ -191,14 +208,22 @@ The example below shows how to enable browser name tracking for the URL and over
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackBrowser()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackBrowser()
+    ->make();
 ```
 
 The example below shows how to enable browser version tracking for the URL and override the default config variable:
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackBrowserVersion()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackBrowserVersion()
+    ->make();
 ```
 
 ##### Tracking Operating System & Operating System Version
@@ -211,14 +236,22 @@ The example below shows how to enable operating system name tracking for the URL
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystem()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackOperatingSystem()
+    ->make();
 ```
 
 The example below shows how to enable operating system version tracking for the URL and override the default config variable:
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackOperatingSystemVersion()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackOperatingSystemVersion()
+    ->make();
 ```
 
 ##### Tracking Device Type
@@ -230,7 +263,11 @@ The example below shows how to enable device type tracking for the URL and overr
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackDeviceType()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackDeviceType()
+    ->make();
 ```
 
 ##### Tracking Referer URL
@@ -242,7 +279,11 @@ The example below shows how to enable referer URL tracking for the URL and overr
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->trackVisits()->trackRefererURL()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->trackVisits()
+    ->trackRefererURL()
+    ->make();
 ```
 
 #### Custom Short URL Fields
@@ -279,7 +320,10 @@ The example below shows how to create a single use shortened URL:
  ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')->singleUse()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
+    ->singleUse()
+    ->make();
  ```
 
 #### Enforce HTTPS
@@ -293,7 +337,10 @@ The example below shows how to create a secure shortened URL:
  ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('http://destination.com')->secure()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('http://destination.com')
+    ->secure()
+    ->make();
 
 // Destination URL: https://destination.com
  ```
@@ -306,7 +353,10 @@ Alternatively, you can also use the `->forwardQueryParams()` method when buildin
  ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('http://destination.com?param1=test')->forwardQueryParams()->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('http://destination.com?param1=test')
+    ->forwardQueryParams()
+    ->make();
  ```
 
 Based on the example above, assuming that the original short URL's `destination_url` was `https://destination.com`, making a request to `https://webapp.com/short/xxx?param1=abc&param2=def` would redirect to `https://destination.com?param1=test&param2=def`
@@ -321,7 +371,10 @@ The example below shows how to create a shortened URL with a redirect HTTP statu
 ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('http://destination.com')->redirectStatusCode(302)->make();
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('http://destination.com')
+    ->redirectStatusCode(302)
+    ->make();
 ```
 
 #### Activation and Deactivation Times
@@ -337,7 +390,9 @@ The example below shows how to create a shortened URL that will be active from t
  ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->activateAt(\Carbon\Carbon::now()->addDay())->make();
+$shortURLObject = app(Builder::class)
+    ->activateAt(\Carbon\Carbon::now()->addDay())
+    ->make();
  ```
 
 The example below shows how to create a shortened URL that will be active from this time tomorrow onwards and then is
@@ -346,9 +401,10 @@ deactivated the day after:
  ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->activateAt(\Carbon\Carbon::now()->addDay())
-                           ->deactivateAt(\Carbon\Carbon::now()->addDays(2))
-                           ->make();
+$shortURLObject = app(Builder::class)
+    ->activateAt(\Carbon\Carbon::now()->addDay())
+    ->deactivateAt(\Carbon\Carbon::now()->addDays(2))
+    ->make();
  ```
 
 #### Using a Custom Seed
@@ -358,7 +414,8 @@ By default, the package will use the ID of the last inserted short URL as the se
  ```php
 use AshAllenDesign\ShortURL\Classes\Builder;
 
-$shortURLObject = app(Builder::class)->destinationUrl('https://destination.com')
+$shortURLObject = app(Builder::class)
+    ->destinationUrl('https://destination.com')
     ->generateKeyUsing(12345)
     ->make();
  ```
@@ -579,13 +636,13 @@ For example, the snippet below shows how we could record all of the fields apart
 'tracking'   => [
         ...
         'fields' => [
-            'ip_address'               => false,
-            'operating_system'         => true,
+            'ip_address' => false,
+            'operating_system' => true,
             'operating_system_version' => true,
-            'browser'                  => true,
-            'browser_version'          => true,
-            'referer_url'              => true,
-            'device_type'              => true,
+            'browser' => true,
+            'browser_version' => true,
+            'referer_url' => true,
+            'device_type' => true,
         ],
     ],
 ```
