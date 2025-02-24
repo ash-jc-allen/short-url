@@ -49,6 +49,7 @@ class Validation
      * Validate that each of the tracking options are booleans.
      *
      * @return Rule[]
+     *
      * @throws ValidationException
      */
     protected function validateTrackingOptions(): array

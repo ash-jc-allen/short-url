@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AshAllenDesign\ShortURL\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use RuntimeException;
 
 /**
  * @method static string|null prefix()
