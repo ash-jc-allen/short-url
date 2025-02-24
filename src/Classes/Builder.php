@@ -155,6 +155,8 @@ class Builder
 
     /**
      * Get the middleware for short URL route.
+     *
+     * @return array<class-string>
      */
     public function middleware(): array
     {

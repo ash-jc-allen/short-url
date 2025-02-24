@@ -9,7 +9,7 @@ use RuntimeException;
 
 /**
  * @method static string|null prefix()
- * @method static array middleware()
+ * @method static array<class-string> middleware()
  * @method static void routes()
  * @method static \AshAllenDesign\ShortURL\Classes\Builder destinationUrl(string $url)
  * @method static \AshAllenDesign\ShortURL\Classes\Builder singleUse(bool $isSingleUse = true)
@@ -31,7 +31,7 @@ use RuntimeException;
  * @method static \AshAllenDesign\ShortURL\Classes\Builder generateKeyUsing(int $generateUsing)
  * @method static \AshAllenDesign\ShortURL\Classes\Builder beforeCreate(\Closure $callback)
  * @method static \AshAllenDesign\ShortURL\Models\ShortURL make()
- * @method static array toArray()
+ * @method static array<string,mixed> toArray()
  * @method static \AshAllenDesign\ShortURL\Classes\Builder resetOptions()
  * @method static \AshAllenDesign\ShortURL\Classes\Builder|mixed when(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
  * @method static \AshAllenDesign\ShortURL\Classes\Builder|mixed unless(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
@@ -42,8 +42,6 @@ class ShortURL extends Facade
 {
     /**
      * Get the registered name of the component.
-     *
-     * @throws RuntimeException
      */
     protected static function getFacadeAccessor(): string
     {

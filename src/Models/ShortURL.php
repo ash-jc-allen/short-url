@@ -50,7 +50,7 @@ class ShortURL extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int,string>
+     * @var list<string>
      */
     protected $fillable = [
         'destination_url',
@@ -91,6 +91,9 @@ class ShortURL extends Model
         'deactivated_at' => 'datetime',
     ];
 
+    /**
+     * @param array<string,mixed> $attributes
+     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -154,6 +157,8 @@ class ShortURL extends Model
     /**
      * Return an array containing the fields that are set to be tracked for the
      * short URL.
+     *
+     * @return string[]
      */
     public function trackingFields(): array
     {
