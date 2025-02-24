@@ -50,7 +50,7 @@ class ShortURLVisit extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int,string>
+     * @var list<string>
      */
     protected $fillable = [
         'short_url_id',
@@ -74,6 +74,9 @@ class ShortURLVisit extends Model
         'visited_at' => 'datetime',
     ];
 
+    /**
+     * @param  array<string,mixed>  $attributes
+     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
