@@ -9,5 +9,3 @@ parameters:
     level: 6
 
     ignoreErrors:
-
-    checkMissingIterableValueType: false
