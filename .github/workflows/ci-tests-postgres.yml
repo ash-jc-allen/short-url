@@ -64,7 +64,7 @@ jobs:
       - name: Execute tests
         run: vendor/bin/pest
         env:
-          DB_CONNECTION: postgres
+          DB_CONNECTION: pgsql
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           DB_DATABASE: postgres
