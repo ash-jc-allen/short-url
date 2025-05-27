@@ -17,12 +17,11 @@ class CreateShortUrlsTable extends Migration
             $table->bigIncrements('id');
             $table->text('destination_url');
 
-            $table->string('url_key')->unique()->when(
-                Schema::getConnection()->getConfig('driver') === 'mysql',
-                function (Blueprint $column) {
-                    $column->collation('utf8mb4_bin');
-                }
-            );
+            $urlKeyColumn = $table->string('url_key')->unique();
+
+            if (Schema::getConnection()->getConfig('driver') === 'mysql') {
+                $urlKeyColumn->collation('utf8mb4_bin');
+            }
 
             $table->string('default_short_url');
             $table->boolean('single_use');
