@@ -68,3 +68,4 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           DB_DATABASE: postgres
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
