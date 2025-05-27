@@ -1,5 +1,10 @@
 # Changelog
 
+**v8.3.1 (released 2025-05-27):**
+
+- Fixed bug that prevented the migrations from running when using MySQL. [#315](https://github.com/ash-jc-allen/short-url/pull/315)
+- Added GitHub Actions workflows to run the tests with MySQL and PostgreSQL. [#314](https://github.com/ash-jc-allen/short-url/pull/314)
+
 **v8.3.0 (released 2025-02-24):**
 
 - Added support for Laravel 12. [#308](https://github.com/ash-jc-allen/short-url/pull/308)
