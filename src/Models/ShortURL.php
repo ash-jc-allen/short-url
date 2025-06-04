@@ -6,9 +6,11 @@ namespace AshAllenDesign\ShortURL\Models;
 
 use AshAllenDesign\ShortURL\Models\Factories\ShortURLFactory;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -35,6 +37,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class ShortURL extends Model
 {
+    use MassPrunable;
+    
     /**
      * @use HasFactory<ShortURLFactory>
      */
@@ -193,5 +197,10 @@ class ShortURL extends Model
         }
 
         return $fields;
+    }
+
+    public function prunable(): Builder
+    {
+        return static::query()->wherePast('deactivated_at');
     }
 }
