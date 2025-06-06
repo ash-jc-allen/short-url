@@ -413,7 +413,7 @@ class Builder
 
         $shortURL = new ShortURL($data);
 
-        if ($this->beforeCreateCallback) {
+        if ($this->beforeCreateCallback instanceof \Closure) {
             value($this->beforeCreateCallback, $shortURL);
         }
 
@@ -487,7 +487,7 @@ class Builder
             $this->urlKey = $this->keyGenerator->generateKeyUsing($this->generateKeyUsing);
         }
 
-        if (! $this->activateAt) {
+        if (!$this->activateAt instanceof \Carbon\Carbon) {
             $this->activateAt = Carbon::now();
         }
 
