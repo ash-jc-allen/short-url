@@ -26,4 +26,15 @@ final class ShortURLTest extends TestCase
     {
         $this->assertNull((new ShortURL())->getConnectionName());
     }
+
+    #[Test]
+    public function short_url_keys_are_case_sensitive(): void
+    {
+        ShortURL::factory()->create(['url_key' => 'test']);
+        $shortUrlTwo = ShortURL::factory()->create(['url_key' => 'Test']);
+
+        $fetchedShortUrl = ShortURL::query()->where('url_key', 'Test')->sole();
+
+        $this->assertSame($shortUrlTwo->id, $fetchedShortUrl->id);
+    }
 }

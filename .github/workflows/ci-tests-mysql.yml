@@ -1,4 +1,4 @@
-name: run-tests
+name: Run tests (MySQL)
 
 on:
   pull_request:
@@ -6,17 +6,32 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     strategy:
       fail-fast: false
       matrix:
         php: [8.1, 8.2, 8.3, 8.4]
-        laravel: [10.*, 11.*]
+        laravel: [10.*, 11.*, 12.*]
         include:
+          - laravel: 12.*
+            testbench: 10.*
           - laravel: 11.*
             testbench: 9.*
           - laravel: 10.*
             testbench: 8.*
         exclude:
+          - laravel: 12.*
+            php: 8.1
           - laravel: 11.*
             php: 8.1
 
@@ -44,5 +59,11 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-suggest
+
       - name: Execute tests
         run: vendor/bin/pest
+        env:
+          DB_CONNECTION: mysql
+          DB_USERNAME: root
+          DB_PASSWORD: password
+          DB_DATABASE: testing

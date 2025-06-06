@@ -1,4 +1,4 @@
-name: run-phpstan
+name: Run tests (PostgreSQL)
 
 on:
   pull_request:
@@ -6,6 +6,18 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
     strategy:
       fail-fast: false
       matrix:
@@ -49,9 +61,11 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-suggest
 
-      - name: Copy PhpStan config for Laravel 10
-        if: matrix.laravel == '10.*'
-        run: cp phpstan-laravel-10.neon phpstan.neon
-
-      - name: Run Larastan
-        run: vendor/bin/phpstan analyse
+      - name: Execute tests
+        run: vendor/bin/pest
+        env:
+          DB_CONNECTION: pgsql
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_DATABASE: postgres
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
