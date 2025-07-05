@@ -7,6 +7,7 @@ namespace AshAllenDesign\ShortURL\Events;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -24,9 +25,15 @@ class ShortURLVisited
      */
     public ShortURLVisit $shortURLVisit;
 
-    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit)
+    /**
+     * The authenticated user.
+     */
+    public ?Authenticatable $user;
+
+    public function __construct(ShortURL $shortURL, ShortURLVisit $shortURLVisit, ?Authenticatable $user = null)
     {
         $this->shortURL = $shortURL;
         $this->shortURLVisit = $shortURLVisit;
+        $this->user = $user;
     }
 }
