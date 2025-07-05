@@ -11,6 +11,7 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 use AshAllenDesign\ShortURL\Models\ShortURLVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Auth;
 
 class Resolver
 {
@@ -39,7 +40,7 @@ class Resolver
 
         $visit = $this->recordVisit($request, $shortURL);
 
-        Event::dispatch(new ShortURLVisited($shortURL, $visit));
+        Event::dispatch(new ShortURLVisited($shortURL, $visit, Auth::user()));
 
         return true;
     }
