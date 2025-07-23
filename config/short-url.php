@@ -151,6 +151,11 @@ return [
     */
     'key_salt' => 'AshAllenDesign\ShortURL',
 
+    /**
+     * NOTE:Sqids doesn't use a salt parameter, so there should be another way
+     * to ensure the keys are unique.
+     */
+
     /*
     |--------------------------------------------------------------------------
     | Alphabet
