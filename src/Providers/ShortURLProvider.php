@@ -11,6 +11,7 @@ use AshAllenDesign\ShortURL\Exceptions\ValidationException;
 use AshAllenDesign\ShortURL\Interfaces\UrlKeyGenerator;
 use AshAllenDesign\ShortURL\Interfaces\UserAgentDriver;
 use Hashids\Hashids;
+//use Sqids\Sqids; # Add Sqids
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,6 +38,16 @@ class ShortURLProvider extends ServiceProvider
                 minHashLength: (int) config('short-url.key_length'),
                 alphabet: config('short-url.alphabet')
             ));
+
+        // Tentative code (I may be wrong, just wondering how to implement this)
+
+        // $this->app->when(KeyGenerator::class)
+        //     ->needs(Sqids::class)
+        //     ->give(fn (): Sqids => new Sqids(
+        //         // Sqids doesn't have a salt parameter, was removed
+        //         minHashLength: (int) config('short-url.key_length'),
+        //         alphabet: config('short-url.alphabet')
+        //     ));
     }
 
     /**
