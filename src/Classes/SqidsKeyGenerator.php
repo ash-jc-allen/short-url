@@ -21,7 +21,7 @@ class SqidsKeyGenerator implements UrlKeyGenerator
 
     public function __construct(Sqids $sqids)
     {
-        $this->sqids = sqids;
+        $this->sqids = $sqids;
     }
 
     /**
