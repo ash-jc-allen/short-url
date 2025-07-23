@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * This could be the new class, I'm open to corrections and suggestions.
+ */
+
 declare(strict_types=1);
 
 namespace AshAllenDesign\ShortURL\Classes;
