@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool $track_browser
  * @property bool $track_browser_version
  * @property bool $track_referer_url
+ * @property bool $truncate_referer_url
  * @property bool $track_device_type
  * @property CarbonInterface $activated_at
  * @property CarbonInterface|null $deactivated_at
@@ -66,6 +67,7 @@ class ShortURL extends Model
         'track_browser',
         'track_browser_version',
         'track_referer_url',
+        'truncate_referer_url',
         'track_device_type',
         'activated_at',
         'deactivated_at',
@@ -86,6 +88,7 @@ class ShortURL extends Model
         'track_browser' => 'boolean',
         'track_browser_version' => 'boolean',
         'track_referer_url' => 'boolean',
+        'truncate_referer_url' => 'boolean',
         'track_device_type' => 'boolean',
         'activated_at' => 'datetime',
         'deactivated_at' => 'datetime',

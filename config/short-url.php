@@ -176,6 +176,7 @@ return [
     */
     'tracking' => [
         'default_enabled' => true,
+        'truncate_referer_url' => false,
 
         'fields' => [
             'ip_address' => true,

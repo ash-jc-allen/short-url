@@ -23,7 +23,7 @@ final class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
@@ -41,7 +41,7 @@ final class ShortURLControllerTest extends TestCase
 
         $shortURL = ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'forward_query_params' => false,
@@ -53,6 +53,7 @@ final class ShortURLControllerTest extends TestCase
             'track_browser' => true,
             'track_browser_version' => true,
             'track_referer_url' => false,
+            'truncate_referer_url' => false,
             'track_device_type' => true,
             'activated_at' => now()->subMinute(),
             'deactivated_at' => null,
@@ -81,7 +82,7 @@ final class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
@@ -97,7 +98,7 @@ final class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
@@ -114,7 +115,7 @@ final class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
@@ -131,7 +132,7 @@ final class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url' => 'https://google.com',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'single_use' => true,
             'track_visits' => true,
@@ -148,7 +149,7 @@ final class ShortURLControllerTest extends TestCase
     {
         ShortURL::create([
             'destination_url' => 'https://google.com?param1=abc',
-            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'default_short_url' => config('short-url.default_url') . '/short/12345',
             'url_key' => '12345',
             'forward_query_params' => false,
             'redirect_status_code' => 301,

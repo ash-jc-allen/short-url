@@ -101,6 +101,12 @@ class Builder
     protected ?bool $trackRefererURL = null;
 
     /**
+     * Whether the visitor's referer URL should be truncated when it exceeds database field limit. Null means the default
+     * value (set in the config) will be used.
+     */
+    protected ?bool $truncateRefererURL = null;
+
+    /**
      * Whether the visitor's device type should be recorded. Null means the default
      * value (set in the config) will be used.
      */
@@ -170,7 +176,7 @@ class Builder
     {
         Route::middleware($this->middleware())->group(function (): void {
             Route::get(
-                '/'.$this->prefix().'/{shortURLKey}',
+                '/' . $this->prefix() . '/{shortURLKey}',
                 ShortURLController::class
             )->name('short-url.invoke');
         });
@@ -186,7 +192,7 @@ class Builder
         $allowedPrefixes = config('short-url.allowed_url_schemes');
 
         if (! Str::startsWith($url, config('short-url.allowed_url_schemes'))) {
-            throw new ShortURLException('The destination URL must begin with an allowed prefix: '.implode(', ', $allowedPrefixes));
+            throw new ShortURLException('The destination URL must begin with an allowed prefix: ' . implode(', ', $allowedPrefixes));
         }
 
         $this->destinationUrl = $url;
@@ -290,6 +296,16 @@ class Builder
     public function trackRefererURL(bool $track = true): self
     {
         $this->trackRefererURL = $track;
+
+        return $this;
+    }
+
+    /**
+     * Set whether if the short URL should track the referer URL of the visitor.
+     */
+    public function truncateRefererURL(bool $truncate = false): self
+    {
+        $this->truncateRefererURL = $truncate;
 
         return $this;
     }
@@ -447,6 +463,7 @@ class Builder
             'track_browser' => $this->trackBrowser,
             'track_browser_version' => $this->trackBrowserVersion,
             'track_referer_url' => $this->trackRefererURL,
+            'truncate_referer_url' => $this->truncateRefererURL,
             'track_device_type' => $this->trackDeviceType,
             'activated_at' => $this->activateAt,
             'deactivated_at' => $this->deactivateAt,
@@ -527,6 +544,10 @@ class Builder
             $this->trackRefererURL = config('short-url.tracking.fields.referer_url');
         }
 
+        if ($this->truncateRefererURL === null) {
+            $this->truncateRefererURL = config('short-url.tracking.truncate_referer_url');
+        }
+
         if ($this->trackDeviceType === null) {
             $this->trackDeviceType = config('short-url.tracking.fields.device_type');
         }
@@ -552,6 +573,7 @@ class Builder
         $this->trackBrowser = null;
         $this->trackBrowserVersion = null;
         $this->trackRefererURL = null;
+        $this->truncateRefererURL = null;
         $this->trackDeviceType = null;
 
         $this->activateAt = null;
@@ -571,9 +593,9 @@ class Builder
         $baseUrl .= '/';
 
         if ($this->prefix() !== null) {
-            $baseUrl .= $this->prefix().'/';
+            $baseUrl .= $this->prefix() . '/';
         }
 
-        return $baseUrl.$this->urlKey;
+        return $baseUrl . $this->urlKey;
     }
 }
