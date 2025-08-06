@@ -117,7 +117,14 @@ class Resolver
         }
 
         if ($shortURL->track_referer_url) {
-            $visit->referer_url = $request->headers->get('referer');
+            $refererURL = $request->headers->get('referer');
+
+            // Truncate url when exceeds database limit.
+            if (strlen($refererURL) > 255 && $shortURL->truncate_referer_url) {
+                $refererURL = substr($refererURL, 0, 255);
+            }
+
+            $visit->referer_url = $refererURL;
         }
 
         if ($shortURL->track_device_type) {
