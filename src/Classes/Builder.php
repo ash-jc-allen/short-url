@@ -176,7 +176,7 @@ class Builder
     {
         Route::middleware($this->middleware())->group(function (): void {
             Route::get(
-                '/' . $this->prefix() . '/{shortURLKey}',
+                '/'.$this->prefix().'/{shortURLKey}',
                 ShortURLController::class
             )->name('short-url.invoke');
         });
@@ -192,7 +192,7 @@ class Builder
         $allowedPrefixes = config('short-url.allowed_url_schemes');
 
         if (! Str::startsWith($url, config('short-url.allowed_url_schemes'))) {
-            throw new ShortURLException('The destination URL must begin with an allowed prefix: ' . implode(', ', $allowedPrefixes));
+            throw new ShortURLException('The destination URL must begin with an allowed prefix: '.implode(', ', $allowedPrefixes));
         }
 
         $this->destinationUrl = $url;
@@ -593,9 +593,9 @@ class Builder
         $baseUrl .= '/';
 
         if ($this->prefix() !== null) {
-            $baseUrl .= $this->prefix() . '/';
+            $baseUrl .= $this->prefix().'/';
         }
 
-        return $baseUrl . $this->urlKey;
+        return $baseUrl.$this->urlKey;
     }
 }
