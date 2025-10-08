@@ -1,0 +1,11 @@
+# Ignore all test and documentation with "export-ignore".
+/.github            export-ignore
+/tests              export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/.styleci.yml       export-ignore
+/phpstan*           export-ignoreç
+/phpunit*           export-ignore
+/testbench*         export-ignore
+/CHANGELOG.md       export-ignore
+/UPGRADE.md         export-ignore
