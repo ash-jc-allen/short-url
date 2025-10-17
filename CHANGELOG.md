@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.4.1 (released 2025-10-17):**
+
+- Updated `.gitattributes` file to include correct files. [#321](https://github.com/ash-jc-allen/short-url/pull/321)
+
 **v8.4.0 (released 2025-10-17):**
 
 - Added `.gitattributes` file. [#320](https://github.com/ash-jc-allen/short-url/pull/320)
