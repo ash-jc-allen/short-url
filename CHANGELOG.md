@@ -1,5 +1,9 @@
 # Changelog
 
+**v8.4.0 (released 2025-10-17):**
+
+- Added `.gitattributes` file. [#320](https://github.com/ash-jc-allen/short-url/pull/320)
+
 **v8.3.1 (released 2025-05-27):**
 
 - Fixed bug that prevented the migrations from running when using MySQL. [#315](https://github.com/ash-jc-allen/short-url/pull/315)
