@@ -133,6 +133,26 @@ final class ResolverTest extends TestCase
     }
 
     #[Test]
+    public function request_is_aborted_if_url_has_not_been_activated_yet(): void
+    {
+        $this->expectException(NotFoundHttpException::class);
+
+        $shortURL = ShortURL::create([
+            'destination_url' => 'https://google.com',
+            'default_short_url' => config('short-url.default_url').'/short/12345',
+            'url_key' => '12345',
+            'single_use' => false,
+            'track_visits' => false,
+            'activated_at' => null,
+        ]);
+
+        $request = Request::create(config('short-url.default_url').'/short/12345');
+
+        $resolver = app(Resolver::class);
+        $resolver->handleVisit($request, $shortURL);
+    }
+
+    #[Test]
     public function request_is_not_aborted_if_url_is_single_use_and_has_not_been_visited(): void
     {
         $shortURL = ShortURL::create([
