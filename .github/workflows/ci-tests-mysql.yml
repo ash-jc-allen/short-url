@@ -57,6 +57,12 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+      # Keep the exception in CI and scoped to known advisory IDs, with audit reporting enabled.
+      # audit.ignore supports both Composer 2.9 and the newer policy configuration fallback.
+      - name: Allow known Laravel advisories for compatibility testing
+        if: matrix.laravel == '10.*' || matrix.laravel == '11.*'
+        run: composer config --json audit.ignore "$(cat .github/known-laravel-advisories.json)"
+
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
