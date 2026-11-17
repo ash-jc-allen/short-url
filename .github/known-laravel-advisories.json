@@ -34,5 +34,9 @@
     "PKSA-qzrn-rnz3-85w1": {
         "apply": "block",
         "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-yxbx-3c9s-cjt9": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
     }
 }
