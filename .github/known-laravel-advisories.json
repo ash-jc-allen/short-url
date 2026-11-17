@@ -1,0 +1,42 @@
+{
+    "PKSA-b41t-wbzk-9q51": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-d5tc-s1qs-h781": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-3r5d-mb8f-1qw9": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-m5cs-t1y6-qpcs": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-mdq4-51ck-6kdq": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-8qx3-n5y5-vvnd": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-w7xr-vk7n-rstm": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-q46n-4fdk-zjr4": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-qzrn-rnz3-85w1": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    },
+    "PKSA-yxbx-3c9s-cjt9": {
+        "apply": "block",
+        "reason": "Allow Laravel 10/11 compatibility testing in CI; keep reporting this advisory in audits."
+    }
+}
