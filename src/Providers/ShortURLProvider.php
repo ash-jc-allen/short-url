@@ -23,12 +23,10 @@ class ShortURLProvider extends ServiceProvider
         $this->app->bind(UserAgentDriver::class, config('short-url.user_agent_driver'));
         $this->app->bind(UrlKeyGenerator::class, config('short-url.url_key_generator'));
 
-        $this->app->bind('short-url.builder', function (Application $app): Builder {
-            return new Builder(
-                validation: $app->make(Validation::class),
-                urlKeyGenerator: $app->make(UrlKeyGenerator::class),
-            );
-        });
+        $this->app->bind('short-url.builder', fn (Application $app): Builder => new Builder(
+            validation: $app->make(Validation::class),
+            urlKeyGenerator: $app->make(UrlKeyGenerator::class),
+        ));
 
         $this->app->when(KeyGenerator::class)
             ->needs(Hashids::class)

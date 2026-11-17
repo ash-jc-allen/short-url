@@ -44,20 +44,16 @@ class ShortURLFactory extends Factory
 
     public function deactivated(): ShortURLFactory
     {
-        return $this->state(function () {
-            return [
-                'deactivated_at' => now()->subDay(),
-            ];
-        });
+        return $this->state(fn () => [
+            'deactivated_at' => now()->subDay(),
+        ]);
     }
 
     public function inactive(): ShortURLFactory
     {
-        return $this->state(function () {
-            return [
-                'activated_at' => null,
-                'deactivated_at' => null,
-            ];
-        });
+        return $this->state(fn () => [
+            'activated_at' => null,
+            'deactivated_at' => null,
+        ]);
     }
 }
