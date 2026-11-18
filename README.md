@@ -7,6 +7,7 @@
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/dt/ashallendesign/short-url.svg?style=flat-square" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/ashallendesign/short-url"><img src="https://img.shields.io/packagist/php-v/ashallendesign/short-url?style=flat-square" alt="PHP from Packagist"></a>
 <a href="https://github.com/ash-jc-allen/short-url/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ash-jc-allen/short-url?style=flat-square" alt="GitHub license"></a>
+<a href="https://github.com/ash-jc-allen/short-url/blob/master/composer.json"><img src="https://badge.laravel.cloud/badge/ashallendesign/short-url?style=flat" alt="Laravel Compatibility"></a>
 </p>
 
 ## Table of Contents
@@ -79,7 +80,7 @@ A Laravel package that can be used for adding shortened URLs to your existing we
 The package has been developed and tested to work with the following minimum requirements:
 
 - PHP 8.2
-- Laravel 10.0
+- Laravel 11.0
 
 Short URL requires either the [BC Math](https://secure.php.net/manual/en/book.bc.php) or [GMP](https://secure.php.net/manual/en/book.gmp.php) PHP extensions in order to work.
 

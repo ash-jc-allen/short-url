@@ -24,7 +24,6 @@ class ParserPhpDriver implements UserAgentDriver
             return null;
         }
 
-        /** @phpstan-ignore-next-line  */
         return $this->parser->os->name ?? null;
     }
 
