@@ -1,5 +1,15 @@
 # Changelog
 
+**v8.6.0 (released 2026-11-18):**
+
+- Added support for `ashallendesign/laravel-config-validator` 3.0. [#330](https://github.com/ash-jc-allen/short-url/pull/330)
+- Added Rector and a GitHub Actions workflow. [#332](https://github.com/ash-jc-allen/short-url/pull/332)
+- Updated migrations to use anonymous classes and added return types. [#326](https://github.com/ash-jc-allen/short-url/pull/326)
+- Updated CI workflows to allow known Laravel advisories when testing compatibility with Laravel 11. [#331](https://github.com/ash-jc-allen/short-url/pull/331)
+- Switched from StyleCI to PHP CS Fixer. [#334](https://github.com/ash-jc-allen/short-url/pull/334)
+- Pinned GitHub Actions to specific versions. [#328](https://github.com/ash-jc-allen/short-url/pull/328)
+- Dropped support for Laravel 10. [#333](https://github.com/ash-jc-allen/short-url/pull/333)
+
 **v8.5.0 (released 2026-03-13):**
 
 - Added support for Laravel 13. [#324](https://github.com/ash-jc-allen/short-url/pull/324)
