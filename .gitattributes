@@ -5,7 +5,6 @@
 /.gitignore                  export-ignore
 /.styleci.yml                export-ignore
 /phpstan.neon                export-ignore
-/phpstan-laravel-10.neon     export-ignore
 /phpunit.xml                 export-ignore
 /rector.php                  export-ignore
 /testbench.yaml              export-ignore
