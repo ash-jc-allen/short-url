@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         php: [8.2, 8.3, 8.4, 8.5]
-        laravel: [10.*, 11.*, 12.*, 13.*]
+        laravel: [11.*, 12.*, 13.*]
         include:
           - laravel: 13.*
             testbench: 11.*
@@ -18,13 +18,9 @@ jobs:
             testbench: 10.*
           - laravel: 11.*
             testbench: 9.*
-          - laravel: 10.*
-            testbench: 8.*
         exclude:
           - laravel: 13.*
             php: 8.2
-          - laravel: 10.*
-            php: 8.5
 
     name: PHP${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
@@ -49,7 +45,7 @@ jobs:
       # Keep the exception in CI and scoped to known advisory IDs, with audit reporting enabled.
       # audit.ignore supports both Composer 2.9 and the newer policy configuration fallback.
       - name: Allow known Laravel advisories for compatibility testing
-        if: matrix.laravel == '10.*' || matrix.laravel == '11.*'
+        if: matrix.laravel == '11.*'
         run: composer config --json audit.ignore "$(cat .github/known-laravel-advisories.json)"
 
       - name: Install dependencies
