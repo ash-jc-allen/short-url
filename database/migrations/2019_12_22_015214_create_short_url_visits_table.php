@@ -33,4 +33,4 @@ return new class extends Migration
     {
         Schema::connection(config('short-url.connection'))->dropIfExists('short_url_visits');
     }
-}
+};

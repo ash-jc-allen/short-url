@@ -20,10 +20,10 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public function down(): void
     {
         Schema::connection(config('short-url.connection'))->table('short_url_visits', function (Blueprint $table): void {
             $table->dropColumn(['referer_url', 'device_type']);
         });
     }
-}
+};

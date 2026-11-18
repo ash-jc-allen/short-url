@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('short-url.connection'))->table('short_urls', function (Blueprint $table) {
+        Schema::connection(config('short-url.connection'))->table('short_urls', function (Blueprint $table): void {
             $table->timestamp('activated_at')->after('track_device_type')->nullable()->default(now());
             $table->timestamp('deactivated_at')->after('activated_at')->nullable();
         });
@@ -26,4 +26,4 @@ return new class extends Migration
             $table->dropColumn(['activated_at', 'deactivated_at']);
         });
     }
-}
+};

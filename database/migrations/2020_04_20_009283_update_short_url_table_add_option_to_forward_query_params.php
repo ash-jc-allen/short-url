@@ -25,4 +25,4 @@ return new class extends Migration
             $table->dropColumn(['forward_query_params']);
         });
     }
-}
+};
