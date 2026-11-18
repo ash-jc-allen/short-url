@@ -56,7 +56,7 @@ class Resolver
             return false;
         }
 
-        if (now()->isBefore($shortURL->activated_at)) {
+        if ($shortURL->activated_at === null || now()->isBefore($shortURL->activated_at)) {
             return false;
         }
 
